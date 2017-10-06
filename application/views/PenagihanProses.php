@@ -91,7 +91,7 @@
                                       <th style="width: 20%">Shipping Method</th>
                                       <th style="width: 10%">Total</th>
                                       <th style="width: 20%">Status</th>
-                                      <!-- <th style="width: 5%">Aksi</th> -->
+                                      <th style="width: 5%">Aksi</th>
 
                                   </tr>
                               </thead>
@@ -107,6 +107,8 @@
                                   <td><?php echo $data->bill_status;?>  
                                   </td>
                                   <td>
+                                  <a href="<?php echo base_url();?>index.php/Admin/DetailTagihan/<?php echo $data->id_bill;?>"><button id="" class="btn btn-info">
+                                  <i class="fa fa-search"></i>&nbsp Detail</button></a>
                                   <input type="hidden" name="amount" placeholder="Nama Produk" class="form-control" value="<?php echo $data->amount;?>">
                                   <!-- <button id="Accept" class="btn btn-primary">
                                   <i class="fa fa-print"></i>&nbsp Print</button> -->

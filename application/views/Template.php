@@ -350,7 +350,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             </li> -->
             <li id="menu-comunicacao" ><a href="<?php echo base_url(); ?>index.php/Admin/Discussion" title="Discussion"><i class="fa fa-comments"></i><span>Discussion</span><span class="badge">1</span></a></li>
             <li id="menu-comunicacao" ><a href="<?php echo base_url(); ?>index.php/Admin/Feedback" title="Feedback"><i class="fa fa-arrow-circle-down"></i><span>Feedback</span></a></li>
-            <li id="menu-comunicacao" ><a href="<?php echo base_url(); ?>index.php/Admin/Broadcast" title="Feedback" data-toggle="modal" data-target="#Broadcast"><i class="fa fa-bullhorn"></i><span>Broadcast</span></a></li>
+            <li id="menu-comunicacao" ><a href="<?php echo base_url(); ?>index.php/Admin/Broadcast" title="Broadcast"><i class="fa fa-bullhorn"></i><span>Broadcast</span></a></li>
 
           </ul>
         </div>

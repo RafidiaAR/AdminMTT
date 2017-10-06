@@ -23,8 +23,8 @@
                                       <th style="width: 10%;">Produk</th>
                                       <th style="width: 10%;">Shipping</th>
                                       <th style="width: 2%;">Total Fees</th>
-                                      <th style="width: 5%;">Status Order</th>
-                                      <th style="width: 10%; text-align: center;">Action</th>
+                                      <th style="width: 10%;">Status Order</th>
+                                      <th style="width: 5%; text-align: center;">Action</th>
 
                                   </tr>
                               </thead>
@@ -34,7 +34,7 @@
                                  $i = 1;
                                  foreach ($transaksi as $data):?>
                                 <tr>
-                                   <td><?php echo $data->code;?></td>
+                                  <td><?php echo $data->code;?></td>
                                   <td><?php echo $data->buyer;?></td>
                                   <td><?php echo $data->username;?></td>
                                   <td><?php echo $data->product_name;?></td>
@@ -43,10 +43,8 @@
                                   <td><?php echo $data->bill_status;?></td>
                                   <td>
                                   
-                                 <button id="Accept" class="btn btn-info">
+                                  <a href="<?php echo base_url();?>index.php/Admin/DetailTagihan/<?php echo $data->id_bill;?>"><button id="" class="btn btn-info">
                                   <i class="fa fa-search"></i>&nbsp Detail</button>
-                                  <button id="Accept" class="btn btn-danger">
-                                  <i class="fa fa-trash"></i>&nbsp Delete</button>
                                   </td>
                                   </td>
                               </tr>
@@ -84,10 +82,10 @@
                                       <th style="width: 10%">Nama Pemesan</th>
                                       <th style="width: 15%">Alamat</th>
                                       <th style="width: 15%">Nama Produk</th>
-                                      <th style="width: 10%">Shipping Method</th>
+                                      <th style="width: 15%">Shipping Method</th>
                                       <th style="width: 10%">Total</th>
-                                      <th style="width: 10%">Status</th>
-                                      <th style="width: 20%">Aksi</th>
+                                      <th style="width: 15%">Status</th>
+                                      <th style="width: 5%">Aksi</th>
 
                                   </tr>
                               </thead>
@@ -103,15 +101,8 @@
                                   <td><?php echo $data->bill_status;?>  
                                   </td>
                                   <td>
-                                  <input type="hidden" name="amount" placeholder="Nama Produk" class="form-control" value="<?php echo $data->amount;?>">
-                                  <button id="Accept" class="btn btn-info">
-                                  <i class="fa fa-search"></i>&nbsp Detail</button>
-                                  <button id="Accept" class="btn btn-danger">
-                                  <i class="fa fa-trash"></i>&nbsp Delete</button>
-                                  <input type="hidden" name="product_id" placeholder="Nama Produk" class="form-control" value="<?php echo $data->product_id;?>">
-                                  <!-- <button id="Decline" class="btn btn-danger">
-                                  <i class="fa fa-close"></i>&nbsp Decline</button> -->
-                                  <input id="order_id" type="hidden" class="form-control" value="<?php echo $data->id;?>">
+                                 <a href="<?php echo base_url();?>index.php/Admin/DetailTagihan/<?php echo $data->id_bill;?>"><button id="" class="btn btn-info">
+                                  <i class="fa fa-search"></i>&nbsp Detail</button></a>
                                   </td>
                               </tr>
                               <?php endforeach; ?>

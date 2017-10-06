@@ -67,7 +67,8 @@ class Product_model extends CI_Model {
                     ->join('bill','bill.product_id = product.id')
                     ->group_by('bill.product_id')
                     ->get('product')
-                    ->result();}
+                    ->result();
+    }
     public function AdminProduct($where){
     return $this->db->select('*, product.name as product_name, product.id as pro_id, product_order_detail.merchant_id as merchant_detail, product_order_detail.status as detail_status')
                     

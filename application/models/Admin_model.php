@@ -57,6 +57,26 @@ class Admin_model extends CI_Model {
                     ->get()
                     ->result();
     }
+    public function DataPrintBill($where)
+    {
+    return $this->db->select('*, bill.status as status_print, bill.id as id_print, product_order_detail.id as id_detail')
+                    ->where($where)
+                    ->join('product_order', 'product_order.id = product_order_detail.order_id')
+                    ->join('bill','bill.id = product_order_detail.id')
+                    ->join('user_merchant','user_merchant.id = bill.merchant_id')
+                    ->group_by('bill.product_id')
+                    ->get('product_order_detail')
+                    ->row();
+    }
+    public function DataPrintTransaction($where)
+    {
+    return $this->db->select('*, product_order_detail.status as status_print, product_order_detail.id as id_print')
+                    ->where($where)
+                    ->join('product_order', 'product_order.id = product_order_detail.order_id')
+                    ->join('user_merchant','product_order_detail.merchant_id = user_merchant.id')
+                    ->get('product_order_detail')
+                    ->row();
+    }
     public function GetDataMerchants()
     {
         return $this->db->select('*')
@@ -125,6 +145,16 @@ class Admin_model extends CI_Model {
                     ->order_by('product_order.id','ASC')
                     ->get('product_order')
                     ->row();
+    }
+    public function GetDataProsesKirim($where)
+    {
+        return $this->db->select('*, product_order_detail.id as id_detail')
+                    ->join('product_order_detail', 'product_order.id = product_order_detail.order_id')
+                    ->join('user_merchant','product_order_detail.merchant_id = user_merchant.id')
+                    ->where($where)
+                    ->order_by('product_order.id','ASC')
+                    ->get('product_order')
+                    ->row(); 
     }
      public function GetData($where, $table)
     {

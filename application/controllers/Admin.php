@@ -886,22 +886,22 @@ class Admin extends CI_Controller {
 				$this->form_validation->set_rules('last_update', 'Date', 'trim|required');
 				if ($this->form_validation->run() == TRUE) {
 					if ($this->Product_model->UpdateBill() == TRUE) {
-						redirect('Admin/Product_List');
+						redirect('Admin/Penagihan');
 					}
 					else {
 						$data['notif'] = 'Update gagal';
-						$data['main_view'] = 'dashboard';
+						$data['main_view'] = 'Penagihan';
 						$this->load->view('template', $data);
 					}
 				}
 				else {
 					$data['notif'] = validation_errors();
-					$data['main_view'] = 'edit_Product';
+					$data['main_view'] = 'Penagihan';
 					$this->load->view('template', $data);
 				}
 			}
 			else {
-				$data['main_view'] = 'penagihan';
+				$data['main_view'] = 'Penagihan';
 				$this->load->view('template', $data);
 			}
 		}
@@ -1181,10 +1181,128 @@ class Admin extends CI_Controller {
 		];
 		$this->load->view('template',$data);
 	}
-	public function broadcast()
+	public function cariProsesKirim()
 	{
+		$id = $this->input->post('id');
+        $data = $this->Admin_model->GetDataProsesKirim(array('product_order_detail.id' => $id));
+        echo $data->id_detail."|".$data->order_id."|".$data->product_id."|".$data->product_name."|".$data->merchant_id."|".$data->username."|".
+        	 $data->phone."|".$data->email."|".$data->amount."|".$data->price_item."|".$data->code;
+
 	}
-	
+	public function Broadcast()
+	{
+		if ($this->session->userdata('logged_in') == TRUE) {
+			if($this->session->userdata('leveluser') == 1){
+				$leveluser = 'Administrator';
+			}else{
+				$leveluser = 'Merchant';
+			}
+			$id 				= $this->session->userdata('logged_id');
+			$masuk				= "Pesanan ditujukan ke Merchant";
+			$Selesai 			= "Selesai";
+			$feedback	 		= $this->Product_model->Get_Feedback(array("merchant_id" => $id, "product_order_detail.status" => $Selesai), 'product_order_detail');
+			$trans	 			= count($this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $masuk), 'product_order_detail'));
+			$record 			= $this->Product_model->GetData(array("id" => $id) , 'user_merchant');
+			$Count_Product = $this->Product_model->CountProductMerchant(array("product.merchant_id" => $id));
+			$bill = array('bill.status' => 'Tagihkan Ke Admin');
+			$end = array('bill.status' => 'Penagihan Selesai');
+			$data 				= 
+			[
+				'Confirm'		=> $this->Product_model->Count_OrderMerchant(),
+				'Sent'			=> $this->Product_model->Count_OrderSent(),
+				'Finish'		=> $this->Product_model->Count_OrderFinish(),
+				'Cancel'		=> $this->Product_model->Count_OrderCancel(),
+				'Penagihan'  	=> $this->Product_model->Count_Penagihan(),
+				'ProsesPenagihan'=> $this->Product_model->Count_ProsesPenagihan(),
+				'PenagihanSelesai'=> $this->Product_model->Count_PenagihanSelesai(),
+				'PenagihanMasuk'=> $this->Product_model->CountBillSent($bill),
+				'PenagihanEnd' 	=> $this->Product_model->CountBillSent($end),
+				'CMerchant'		=> $this->Admin_model->Count_Merchant() - 1, 
+				'CBuyer'		=> $this->Admin_model->Count_Buyer(),
+				'A_AmountProduct'=>  $this->Admin_model->Count_Product(),
+				'C_Product' => $Count_Product,
+				'username'	=> $record->username,
+				'trans'		=> $trans,
+				'feedback'	=> $feedback,
+				'main_view'	=> 'Broadcast',
+				'nameAccess'	=> $leveluser
+			];
+			$this->load->view('template', $data);
+		}
+		else {
+			redirect('Auth');
+		}
+	}
+	public function feedback()
+	{
+		if ($this->session->userdata('logged_in') == TRUE) {
+			if($this->session->userdata('leveluser') == 1){
+				$leveluser = 'Administrator';
+			}else{
+				$leveluser = 'Merchant';
+			}
+			$id 				= $this->session->userdata('logged_id');
+			$masuk				= "Pesanan ditujukan ke Merchant";
+			$Selesai 			= "Selesai";
+			$feedback	 		= $this->Product_model->Get_Feedback(array("merchant_id" => $id, "product_order_detail.status" => $Selesai), 'product_order_detail');
+			$trans	 			= count($this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $masuk), 'product_order_detail'));
+			$record 			= $this->Product_model->GetData(array("id" => $id) , 'user_merchant');
+			$Count_Product = $this->Product_model->CountProductMerchant(array("product.merchant_id" => $id));
+			$bill = array('bill.status' => 'Tagihkan Ke Admin');
+			$end = array('bill.status' => 'Penagihan Selesai');
+			$data 				= 
+			[
+				'Confirm'		=> $this->Product_model->Count_OrderMerchant(),
+				'Sent'			=> $this->Product_model->Count_OrderSent(),
+				'Finish'		=> $this->Product_model->Count_OrderFinish(),
+				'Cancel'		=> $this->Product_model->Count_OrderCancel(),
+				'Penagihan'  	=> $this->Product_model->Count_Penagihan(),
+				'ProsesPenagihan'=> $this->Product_model->Count_ProsesPenagihan(),
+				'PenagihanSelesai'=> $this->Product_model->Count_PenagihanSelesai(),
+				'PenagihanMasuk'=> $this->Product_model->CountBillSent($bill),
+				'PenagihanEnd' 	=> $this->Product_model->CountBillSent($end),
+				'CMerchant'		=> $this->Admin_model->Count_Merchant() - 1, 
+				'CBuyer'		=> $this->Admin_model->Count_Buyer(),
+				'A_AmountProduct'=>  $this->Admin_model->Count_Product(),
+				'C_Product' => $Count_Product,
+				'username'	=> $record->username,
+				'trans'		=> $trans,
+				'feedback'	=> $feedback,
+				'main_view'	=> 'feedback',
+				'nameAccess'	=> $leveluser
+			];
+			$this->load->view('template', $data);
+		}
+		else {
+			redirect('Auth');
+		}
+	}
+	public function DetailTagihan()
+	{
+		$id= $this->uri->segment(3);
+		$where = array('bill.id' => $id);
+		$payment = $this->Admin_model->DataPrintBill($where);
+		$data = 
+		[
+			'list_payment' => $payment,
+		];
+		$this->load->view('Print',$data);
+	}
+	public function DetailTransaction()
+	{
+		$id= $this->uri->segment(3);
+		$where = array('product_order_detail.id' => $id);
+		$payment = $this->Admin_model->DataPrintTransaction($where);
+		$data = 
+		[
+			'list_payment' => $payment,
+		];
+		$this->load->view('Print',$data);
+	}
+	public function BroadcastBill()
+	{
+		$this->load->view('Broadcast', $data);
+	}
 
 }
 

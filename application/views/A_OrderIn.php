@@ -34,14 +34,14 @@
                                   <thead>
                                     <tr>
                                       <th style="width: 2%;">No. Order</th>
-                                      <th style="width: 1%;">Buyer</th>
-                                      <th style="width: 1%;">Merchant</th>
-                                      <th style="width: 2%;">Product</th>
+                                      <th style="width: 3%;">Buyer</th>
+                                      <th style="width: 3%;">Merchant</th>
+                                      <th style="width: 10%;">Product</th>
                                       <th style="width: 1%;">Amount</th>
-                                      <th style="width: 1%;">Shipping</th>
-                                      <th style="width: 1%;">Total Fees</th>
-                                      <th style="width: 3%;">Status Order</th>
-                                      <th style="width: 10%; text-align: center;">Action</th>
+                                      <th style="width: 7%;">Shipping</th>
+                                      <th style="width: 3%;">Total Fees</th>
+                                      <th style="width: 8%;">Status Order</th>
+                                      <th style="width: 15%; text-align: center;">Action</th>
 
                                   </tr>
                               </thead>
@@ -64,8 +64,10 @@
                                   <td><?php echo $data->status;?></td>
                                   <td>
                                   
-                                  <button id="detail" class="btn btn-info" data-toggle="modal" data-target="modal-body">
-                                  <i class="fa fa-search"></i>&nbsp Detail</button>
+                                  <!-- <button id="detail" class="btn btn-info" data-toggle="modal" data-target="modal-body">
+                                  <i class="fa fa-search"></i>&nbsp Detail</button> -->
+                                  <a href="<?php echo base_url();?>index.php/Admin/DetailTransaction/<?php echo $data->id_detail;?>"><button id="detail" class="btn btn-info" data-toggle="modal" data-target="modal-body">
+                                  <i class="fa fa-search"></i>&nbsp Detail</button></a>
                                   <input type="hidden" name="amount" placeholder="Nama Produk" class="form-control" value="<?php echo $data->amount;?>">
                                   <button id="showaccept" class="btn btn-success" data-toggle="modal" data-target="#myModalll">
                                   <i class="fa fa-check"></i>&nbsp Accept</button>

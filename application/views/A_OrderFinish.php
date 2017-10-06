@@ -17,15 +17,15 @@
                                 <table class="table table-hover">
                                   <thead>
                                     <tr>
-                                      <th style="width: 1%;">No.</th>
                                       <th style="width: 2%;">No. Order</th>
-                                      <th style="width: 1%;">Buyer</th>
-                                      <th style="width: 1%;">Email Buyer</th>
-                                      <th style="width: 1%;">Shipping</th>
-                                      <th style="width: 1%;">Product</th>
-                                      <th style="width: 5%;">Total Fees</th>
-                                      <th style="width: 3%;">Status Order</th>
-                                      <th style="width: 10%; text-align: center;">Action</th>
+                                      <th style="width: 5%;">Buyer</th>
+                                      <th style="width: 5%;">Merchant</th>
+                                      <th style="width: 15%;">Product</th>
+                                      <th style="width: 1%;">Amount</th>
+                                      <th style="width: 15%;">Shipping</th>
+                                      <th style="width: 3%;">Total Fees</th>
+                                      <th style="width: 10%;">Status Order</th>
+                                      <th style="width: 5%; text-align: center;">Action</th>
 
                                   </tr>
                               </thead>
@@ -35,22 +35,22 @@
                                  $i = 1;
                                  foreach ($A_Transaction as $data):?>
                                 <tr>
-                                  <td><?php echo $i++; ?></td>
                                   <td><?php echo $data->code;?></td>
                                   <td><?php echo $data->buyer;?></td>
-                                  <td><?php echo $data->email;?></td>
-                                  <td><?php echo $data->shipping;?></td>
+                                  <td><?php echo $data->username;?></td>
+                                  <td><?php echo $data->product_name;?></td>
                                   <td><?php echo $data->amount;?></td>
+                                  <td><?php echo $data->shipping;?></td>
                                   <td><?php echo $data->total_fees;?></td>
                                   <td><?php echo $data->status;?></td>
-                                  <td>
+                                  <td style="text-align: center;">
                                   
-                                 <button id="Accept" class="btn btn-info">
-                                  <i class="fa fa-search"></i>&nbsp Detail</button>
-                                  <button id="Accept" class="btn btn-primary">
-                                  <i class="fa fa-print"></i>&nbsp Print</button>
-                                  <button id="Accept" class="btn btn-danger">
-                                  <i class="fa fa-trash"></i>&nbsp Delete</button>
+                                <a href="<?php echo base_url();?>index.php/Admin/DetailTransaction/<?php echo $data->id_detail;?>"><button id="detail" class="btn btn-info" data-toggle="modal" data-target="modal-body">
+                                  <i class="fa fa-search"></i>&nbsp Detail</button></a>
+                                  <!-- <button id="Accept" class="btn btn-primary">
+                                  <i class="fa fa-print"></i>&nbsp Print</button> -->
+                                  <!-- <button id="Accept" class="btn btn-danger">
+                                  <i class="fa fa-trash"></i>&nbsp Delete</button> -->
                                   </td>
                                   </td>
                               </tr>

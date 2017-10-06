@@ -33,15 +33,15 @@
                                 <table class="table table-hover">
                                   <thead>
                                     <tr>
-                                      <th style="width: 2%;">No. Order</th>
-                                      <th style="width: 1%;">Buyer</th>
-                                      <th style="width: 1%;">Merchant</th>
-                                      <th style="width: 5%;">Product</th>
+                                     <th style="width: 2%;">No. Order</th>
+                                      <th style="width: 3%;">Buyer</th>
+                                      <th style="width: 3%;">Merchant</th>
+                                      <th style="width: 10%;">Product</th>
                                       <th style="width: 1%;">Amount</th>
-                                      <th style="width: 1%;">Shipping</th>
-                                      <th style="width: 1%;">Total Fees</th>
-                                      <th style="width: 3%;">Status Order</th>
-                                      <th style="width: 10%; text-align: center;">Action</th>
+                                      <th style="width: 7%;">Shipping</th>
+                                      <th style="width: 3%;">Total Fees</th>
+                                      <th style="width: 5%;">Status Order</th>
+                                      <th style="width: 14%; text-align: center;">Action</th>
 
                                   </tr>
                               </thead>
@@ -61,8 +61,8 @@
                                   <td><?php echo $data->status;?></td>
                                   <td>
                                   
-                                  <button id="detail" class="btn btn-info" data-toggle="modal" data-target="modal-body">
-                                  <i class="fa fa-search"></i>&nbsp Detail</button>
+                                  <a href="<?php echo base_url();?>index.php/Admin/DetailTransaction/<?php echo $data->id_detail;?>"><button id="detail" class="btn btn-info" data-toggle="modal" data-target="modal-body">
+                                  <i class="fa fa-search"></i>&nbsp Detail</button></a>
                                   <input type="hidden" name="amount" placeholder="Nama Produk" class="form-control" value="<?php echo $data->amount;?>">
                                   <button id="showaccept" class="btn btn-success" data-toggle="modal" data-target="#myModalll">
                                   <i class="fa fa-check"></i>&nbsp Accept</button>
@@ -184,15 +184,26 @@
                                    </div>
                                    <div class="modal-body">
 
-                                         <p>Pengiriman Pesanan dengan No. Order <b id="transs_code"></b>  produk <b id="transs_product"></b> sejumlah <b id="transs_amount"> 3 </b> Pieces telah sampai tujuan</p>
+                                         <p>Pengiriman Pesanan dengan No. Order <b id="a_code"></b>  produk <b id="a_productname1"></b> sejumlah <b id="a_amount1"> 3 </b> Pieces telah sampai tujuan</p>
 
                                    </div>
                                    <div class="modal-footer">
-                                         <input type="hidden" class="form-control" name="search" id="transs_amountt" value="" placeholder="">
+                                         
                                          <button type="button" class="btn btn-success" id="Sent">Yes</button>
-                                         <input type="hidden" class="form-control" name="search" id="transs_id" value="" placeholder="">
+                                         <input type="hidden" class="form-control" name="search" id="a_iddetail1" value="" placeholder="">
                                          <button id="ADecline" type="button" class="btn btn-danger" data-dismiss="modal">No</button>
-                                         <input type="hidden" class="form-control" name="search" id="product_id" value="" placeholder="">
+                                  
+                                  <input id="a_iddetail" type="hidden" class="form-control" value="">
+                                  <input id="a_orderid" type="hidden" class="form-control" value="">
+                                  <input id="a_productid" type="hidden" class="form-control" value="">
+                                  <input id="a_productname" type="hidden" class="form-control" value="">
+                                  <input id="a_merchantid" type="hidden" class="form-control" value="">
+                                  <input id="a_username" type="hidden" class="form-control" value="">
+                                  <input id="a_phone" type="hidden" class="form-control" value="">
+                                  <input id="a_email" type="hidden" class="form-control" value="">
+                                  <input id="a_amount" type="hidden" class="form-control" value="">
+                                  <input id="a_priceitem" type="hidden" class="form-control" value=""> 
+                                  <input id="date" type="hidden" name="last_update" placeholder="" class="form-control" value="<?php echo strtotime(date('Y-m-d H:i:s'))?>">
                                    </div>
                         </div>
 
@@ -283,15 +294,37 @@ $('button#Cancel').click(function(event) {
     });
 });
 $('button#Sent').click(function(event) {
-    var product_order = $(this).next().val();
+    var id_detail = $(this).next().val();
     var stats = "Selesai";
+    var order_id = document.getElementById("a_orderid").value;
+    var product_id = document.getElementById("a_productid").value;
+    var product_name = document.getElementById("a_productname").value;
+    var merchant_id = document.getElementById("a_merchantid").value;
+    var merchant_name = document.getElementById("a_username").value;
+    var merchant_phone = document.getElementById("a_phone").value;
+    var merchant_email = document.getElementById("a_email").value;
+    var statusbill = "Belum Ditagihkan";
+    var amount = document.getElementById("a_amount").value;
+    var price_item = document.getElementById("a_priceitem").value;
+    var date = document.getElementById("date").value;
  /*   alert(product_order);*/
     $.ajax({
-        url: '<?php echo base_url(); ?>index.php/Page/Change_Status',
+        url: '<?php echo base_url(); ?>index.php/Page/Change_Bill',
         type: 'post',
         data: {
-            id : product_order,
+            id : id_detail,
             status : stats,
+            order_id : order_id,
+            product_id : product_id,
+            product_name : product_name,
+            merchant_id : merchant_id,
+            merchant_name : merchant_name,
+            merchant_phone : merchant_phone,
+            merchant_email : merchant_email,
+            statusbill : statusbill,
+            amount : amount,
+            price : price_item,
+            date : date,
         },
         success: function(e) {
             if (e == "true") {
@@ -330,23 +363,31 @@ $("button#deletetrans").click(function(event) {
     }
 });
 $("button#showaccept").click(function(event) {
-    var product_id = $('button#deletetrans').next().val();
+    var product_id = $(this).next().val();
     //alert(product_id);
     if (product_id != "") {
         $.ajax({
-            url: "<?php echo base_url()?>index.php/Admin/CariTransaction",
+            url: "<?php echo base_url()?>index.php/Admin/CariProsesKirim",
             type: 'post',
             data: {
                 id: product_id,
             },
             success: function(e) {
                 var data = e.split("|");  
-                $('#transs_id').val(data[0]);
-                $('#transs_product').html(data[1]);
-                $('#transs_amount').html(data[2]);
-                $('#transs_amountt').val(data[2]);
-                $('#transs_code').html(data[3]);
-                $('#product_id').val(data[4]);
+                $('#a_iddetail1').val(data[0]);
+                $('#a_iddetail').val(data[0]);
+                $('#a_orderid').val(data[1]);
+                $('#a_productid').val(data[2]);
+                $('#a_productname1').html(data[3]);
+                $('#a_productname').val(data[3]);
+                $('#a_merchantid').val(data[4]);
+                $('#a_username').val(data[5]);
+                $('#a_phone').val(data[6]);
+                $('#a_email').val(data[7]);
+                $('#a_amount1').html(data[8]);
+                $('#a_amount').val(data[8]);
+                $('#a_priceitem').val(data[9]);
+                $('#a_code').html(data[10]);
             }
         });
     } else {

@@ -63,9 +63,8 @@
                                   <td><?php echo $data->price_item;?></td>
                                   <td><?php echo $data->bill_status;?></td>
                                   <td>
-                                  
-                                  <button id="detail" class="btn btn-info" data-toggle="modal" data-target="modal-body">
-                                  <i class="fa fa-search"></i>&nbsp Detail</button>
+                                  <a href="<?php echo base_url();?>index.php/Admin/DetailTagihan/<?php echo $data->id_bill;?>"><button id="detail" class="btn btn-info" data-toggle="modal" data-target="modal-body">
+                                  <i class="fa fa-search"></i>&nbsp Detail</button></a>
                                   <input type="hidden" name="amount" placeholder="Nama Produk" class="form-control" value="<?php echo $data->amount;?>">
                                   <a href="<?php echo base_url();?>index.php/Admin/Checkout/<?php echo $data->id_bill;?>" id=""><button class="btn btn-success"><i class="fa fa-money"></i>&nbsp Transfer Ke Merchant</button></a>
                                   <input type="hidden" name="amount" placeholder="Nama Produk" class="form-control" value="<?php echo $data->order_id;?>">
@@ -106,14 +105,14 @@
                                 <table class="table table-hover">
                                   <thead>
                                     <tr>
-                                      <th style="width: 10%">#ID Transaksi</th>
+                                      <th style="width: 5%">#ID Transaksi</th>
                                       <th style="width: 10%">Nama Pemesan</th>
                                       <th style="width: 15%">Alamat</th>
                                       <th style="width: 15%">Nama Produk</th>
                                       <th style="width: 10%">Shipping Method</th>
                                       <th style="width: 10%">Total</th>
                                       <th style="width: 10%">Status</th>
-                                      <th style="width: 20%">Aksi</th>
+                                      <th style="width: 25%">Aksi</th>
 
                                   </tr>
                               </thead>
@@ -129,6 +128,8 @@
                                   <td><?php echo $data->bill_status;?>  
                                   </td>
                                   <td>
+                                  <a href="<?php echo base_url();?>index.php/Admin/DetailTagihan/<?php echo $data->id_bill;?>"><button id="" class="btn btn-info">
+                                  <i class="fa fa-search"></i>&nbsp Detail</button> 
                                   <button id="Tagih_Admin" class="btn btn-success">
                                   <i class="fa fa-money"></i>&nbsp Tagihkan Ke Admin</button>
                                   <input id="order_id" type="hidden" class="form-control" value="<?php echo $data->id_bill;?>">

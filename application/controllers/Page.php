@@ -393,6 +393,8 @@ class Page extends CI_Controller
 				'Finish'		=> $this->Product_model->Count_OrderFinish(),
 				'Cancel'		=> $this->Product_model->Count_OrderCancel(),
 				'Penagihan'  	=> $this->Product_model->Count_Penagihan(),
+				'ProsesPenagihan'=> $this->Product_model->Count_ProsesPenagihan(),
+				'PenagihanSelesai'=> $this->Product_model->Count_PenagihanSelesai(),
 				'C_Product' => $Count_Product,
 				'trans'     => $trans,
 				'main_view' => 'edit_Product', 

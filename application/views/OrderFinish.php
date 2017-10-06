@@ -31,9 +31,8 @@
                                   <td><?php echo $data->status;?>  
                                   </td>
                                   <td>
-                                  <input type="hidden" name="amount" placeholder="Nama Produk" class="form-control" value="<?php echo $data->amount;?>">
-                                  <button id="" class="btn btn-primary">
-                                  <i class="fa fa-print"></i>&nbsp Print</button>
+                                 <a href="<?php echo base_url();?>index.php/Admin/DetailTransaction/<?php echo $data->id_detail;?>"><button id="detail" class="btn btn-info" data-toggle="modal" data-target="modal-body">
+                                  <i class="fa fa-search"></i>&nbsp Detail</button></a>
                                    <input type="hidden" name="product_id" placeholder="Nama Produk" class="form-control" value="<?php echo $data->product_id;?>">
                                   <input id="order_id" type="hidden" class="form-control" value="<?php echo $data->id;?>">
                                   </td>
