@@ -157,7 +157,7 @@
     padding: 3em;
 }
 </style>
-<div class="inner-block"><h2>Add Product</h2></div>
+<div class="inner-block"><h2>Tambah Produk</h2></div>
 <div class="form-style-5">
     <?php if(!empty($notif)) {
             echo '<div class="alert alert-warning alert-dismissible" role="alert">
@@ -165,22 +165,22 @@
                 '.$notif.'
             </div>';
              } ?>
-    <form action="<?php echo base_url(); ?>index.php/Page/add_product" method="post" enctype="multipart/form-data">
+    <form action="<?php echo base_url(); ?>index.php/Admin/Tambah_product" method="post" enctype="multipart/form-data">
         <fieldset>
-            <legend><span class="number">1</span> Product Info</legend>
-            <label>ID Produk</label>
+            <legend><span class="number">1</span> Informasi Produk</legend>
+            <!-- <label>ID Produk</label> -->
             <input type="hidden" name="merchant_id" placeholder="ID Produk" class="form-control" value="<?php echo $merchant_id; ?>" readonly>
-            <input type="text" name="id_produk" placeholder="ID Produk" class="form-control" value="<?php echo $id_product; ?>" readonly>
+            <!-- <input type="text" name="id_produk" placeholder="ID Produk" class="form-control" value="<?php echo $id_product; ?>" readonly> -->
             <label>Nama Produk</label>
             <input type="text" name="product" placeholder="Nama Produk" class="form-control" required="">
             <br>
-            <label>Stock</label>
+            <label>Stok</label>
             <input type="number" name="stock" placeholder="0" class="form-control" required="">
             <br>
             <label>Harga</label>
             <input type="number" name="harga" placeholder="Harga" class="form-control" required="">
             <br>
-            <label>Category</label>
+            <label>Kategori</label>
             <select class="form-control" id="sel1" name="category">
                 <option value="">--- Pilih Category ---</option>
                 <?php foreach ($category as $record): ?>
@@ -199,14 +199,17 @@
             </select>
             <br>
             <fieldset>
-                <legend><span class="number">2</span> Product Description</legend>
+                <legend><span class="number">2</span> Deskripsi Produk</legend>
+                <input id="last_update" type="hidden" name="created_at" placeholder="" class="form-control" value="<?php echo strtotime(date('Y-m-d H:i:s'))?>">
+               <!--  <input type="hidden" name="adminfee" value="0" class="form-control" required="" readonly=""> -->
+                <input type="hidden" name="status" placeholder="ID Produk" class="form-control" value="READY STOCK" readonly>
                 <textarea class="form-control" rows="5" placeholder="Deksripsi produk" name="description" required=""></textarea>
                 <br>
 
             </fieldset>
         </fieldset>
         <fieldset>
-            <legend><span class="number">3</span> Upload Photo Product</legend>
+            <legend><span class="number">3</span> Upload Foto Produk</legend>
             <label>Photo Product</label>
             <input type="file" id="img" name="foto" class="form-control">
             <img id="preview"  width="300px" height="300px" style="display:none" /><br>

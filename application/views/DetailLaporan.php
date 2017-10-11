@@ -70,12 +70,7 @@
             <aside class="right-side">                
                
 
-                <div class="pad margin no-print">
-                    <div class="alert alert-info" style="margin-bottom: 0!important;">
-                        <i class="fa fa-money"></i>      
-                        <b>Status Pembayaran:</b> <?php echo $list_payment->status_print; ?>
-                    </div>
-                </div>
+           
 
                 <!-- Main content -->
                 <section class="content invoice">                    
@@ -93,25 +88,25 @@
                         <div class="col-sm-4 invoice-col">
                             From
                             <address>
-                                <strong><?php echo $list_payment->merchant_name;?></strong><br>
+                                <strong>AdminMTT</strong><br>
                                <?php 
 
-            if (substr($list_payment->merchant_phone, 0,1) == '8') {
-                $phone = '+62 '.$list_payment->merchant_phone;
+            if (substr($list_laporan->merchant_phone, 0,1) == '8') {
+                $phone = '+62 '.$list_laporan->merchant_phone;
                
               }
-              else if (substr($list_payment->merchant_phone, 0,1) == '0') {
-                $phone = $list_payment->merchant_phone;
+              else if (substr($list_laporan->merchant_phone, 0,1) == '0') {
+                $phone = $list_laporan->merchant_phone;
               
               }
-              else if (substr($list_payment->merchant_phone, 0,1)== '6') {
-                $phone = '+62 '.substr($list_payment->merchant_phone,2);
+              else if (substr($list_laporan->merchant_phone, 0,1)== '6') {
+                $phone = '+62 '.substr($list_laporan->merchant_phone,2);
                
               }
-              else if (substr($list_payment->merchant_phone, 0,1) == '+' ){
-                $phone = '+62 '.substr($list_payment->merchant_phone,3);
+              else if (substr($list_laporan->merchant_phone, 0,1) == '+' ){
+                $phone = '+62 '.substr($list_laporan->merchant_phone,3);
                
-              }else if(empty($list_payment->merchant_phone))
+              }else if(empty($list_laporan->merchant_phone))
               {
                 $phone = 'No Phone Number';
               }
@@ -120,31 +115,31 @@
 
                ?>
                                 Phone: <?php echo $phone ?><br/>
-                                Email: <?php echo $list_payment->merchant_email ?>
+                                Email: <?php echo $list_laporan->merchant_email ?>
                             </address>
                         </div><!-- /.col -->
                         <div class="col-sm-4 invoice-col">
                             To
                             <address>
-                                <strong><?php echo $list_payment->buyer ?></strong><br>
+                                <strong><?php echo $list_laporan->buyer ?></strong><br>
                     <?php 
 
-            if (substr($list_payment->phone, 0,1) == '8') {
-                $phone2 = '+62 '.$list_payment->phone;
+            if (substr($list_laporan->phone, 0,1) == '8') {
+                $phone2 = '+62 '.$list_laporan->phone;
                
               }
-              else if (substr($list_payment->phone, 0,1) == '0') {
-                $phone2 = $list_payment->merchant_phone;
+              else if (substr($list_laporan->phone, 0,1) == '0') {
+                $phone2 = $list_laporan->merchant_phone;
               
               }
-              else if (substr($list_payment->phone, 0,1)== '6') {
-                $phone2 = '+62 '.substr($list_payment->phone,2);
+              else if (substr($list_laporan->phone, 0,1)== '6') {
+                $phone2 = '+62 '.substr($list_laporan->phone,2);
                
               }
-              else if (substr($list_payment->phone, 0,1) == '+' ){
-                $phone2 = '+62 '.substr($list_payment->phone,3);
+              else if (substr($list_laporan->phone, 0,1) == '+' ){
+                $phone2 = '+62 '.substr($list_laporan->phone,3);
                
-              }else if(empty($list_payment->phone))
+              }else if(empty($list_laporan->phone))
               {
                 $phone = 'No Phone Number';
               }
@@ -152,19 +147,19 @@
 
                ?>              
                                 Phone: <?php echo $phone2 ?><br/>
-                                Email: <?php echo $list_payment->email ?>
+                                Email: <?php echo $list_laporan->email ?>
                             </address>
                         </div><!-- /.col -->
                         <div class="col-sm-4 invoice-col">
-                            <b>Invoice Order <?php echo $list_payment->code?></b><br/>
+                            <b>Invoice Order <?php echo $list_laporan->code?></b><br/>
                             <?php 
-                        $date = gmdate('dmY/His', $list_payment->created_at/1000);
+                        $date = gmdate('dmY/His', $list_laporan->created_at/1000);
                         ?>
-                            <b>Invoice Order Detail <?php echo $date ?>/<?php echo $list_payment->id_print?></b><br/>
+                            <b>Invoice Order Detail <?php echo $date ?>/<?php echo $list_laporan->id_detail?></b><br/>
                             <br/>
                             <!-- <b>Order ID:</b> 4F3S8J<br/> -->
-                            <b>Shipping:</b> <?php echo $list_payment->shipping?><br/>
-                            <b>Date Shipping:</b> <?php echo gmdate('D, Y-m-d H:i:s', $list_payment->date_ship/1000) ?><br/>
+                            <b>Shipping:</b> <?php echo $list_laporan->shipping?><br/>
+                            <b>Date Shipping:</b> <?php echo gmdate('D, Y-m-d H:i:s', $list_laporan->date_ship/1000) ?><br/>
                             
                         </div><!-- /.col -->
                     </div><!-- /.row -->
@@ -177,22 +172,38 @@ $price = 0;
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th>Qty</th>
+                                    	<th>No.</th>
+                                    	<th>Merchant</th>
                                         <th>Product</th>
-                                        <!-- <th>Serial #</th> -->
                                         <th>Description</th>
+                                        <th>Amount</th>
+                                        <th>Price Item</th>
+                                        <th>Biaya Admin</th>
+                                        <th>Fee Delivery</th>
+                                        <!-- <th>Serial #</th> -->
+                                        
                                         <th>Subtotal</th>
                                     </tr>                                    
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><?php echo $list_payment->amount?></td>
-                                        <td><?php echo $list_payment->product_name?></td>
-                                        <!-- <td>455-981-221</td> -->
-                                        <td><?php echo $list_payment->comment?></td>
+                                    	<td>
+                                    		<?php 
+                                    			$i=1;
+                                    			echo $i++;
+                                    		 ?>
+
+                                    	</td>
+                                        <td><?php echo $list_laporan->username?></td>
+                                        <td><?php echo $list_laporan->product_name?></td>
+                                        <td><?php echo $list_laporan->comment?></td>
+                                        <td><?php echo $list_laporan->amount?></td>
+                                        <td><?php echo number_format($list_laporan->price_item)?></td>
+                                        <td><?php echo number_format($list_laporan->fee)?></td>
+                                        <td><?php echo number_format($list_laporan->fee_delivery)?></td>
                                         <?php 
 
-                                        $price += $list_payment->amount * $list_payment->price_item; 
+                                        $price += $list_laporan->amount * $list_laporan->price_item; 
                                          ?>
                                         <td>Rp. <?php echo $price?></td>
                                     </tr>
@@ -217,34 +228,29 @@ $price = 0;
                                 <table class="table">
                                     <tr>
                                         <th style="width:50%">Subtotal:</th>
-                                        <td>Rp. <?php echo number_format($price) ?></td>
+                                        <td>Rp. <?php echo $price ?></td>
                                     </tr>
                                     <tr>
                                         <th>Ongkos Kirim:</th>
-                                        <td><?php if($list_payment->fee_delivery == 0){
+                                        <td><?php if($list_laporan->fee_delivery == 0){
                                           echo 'FREE DELIVERY';
                                           }else {
-                                            echo 'Rp. '.number_format($list_payment->fee_delivery);
+                                            echo 'Rp. '.$list_laporan->fee_delivery;
                                             }?></td>
                                     </tr>
-                                    
                                     <tr>
                                         <th>Infaq:</th>
-                                        <td>Rp. <?php echo number_format($list_payment->fee_infaq); ?></td>
+                                        <td>Rp. <?php echo $list_laporan->fee_infaq; ?></td>
                                     </tr>
                                     <tr>
                                         <th>Total:</th>
                                         <?php 
-                                        $deliv= $list_payment->fee_delivery;
-                                        $infaq= $list_payment->fee_infaq;
+                                        $deliv= $list_laporan->fee_delivery;
+                                        $infaq= $list_laporan->fee_infaq;
                                         $total = $price+$deliv+$infaq; 
                                         // +$ongkir + $infaq 
                                          ?>
-                                        <td>Rp. <?php echo number_format($total);?></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Biaya Admin:</th>
-                                        <td>Rp. <?php echo $list_payment->admin_fee; ?></td>
+                                        <td>Rp. <?php echo $total ?></td>
                                     </tr>
                                 </table>
                             </div>

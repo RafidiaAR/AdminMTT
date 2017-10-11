@@ -39,7 +39,7 @@
     <div class="col-md-12 chart-layer2-left">
                <div class="work-progres">
                             <div class="chit-chat-heading">
-                                  List of Merchant
+                                  Daftar Merchant JualBeli MTT
                             </div>
                             <div class="table-responsive">
                                 <table class="table table-hover">

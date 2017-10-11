@@ -8,7 +8,7 @@
           <div class="col-md-8 market-update-left">
             <h3><?php echo $A_AmountTransaction;?></h3>
             <h4>Total Transaksi</h4>
-            <p>Semua transaksi berhasil melalui JualBeli MTT</p>
+            <p>Semua transaksi yang dilakukan melalui JualBeli MTT</p>
           </div>
           <div class="col-md-4 market-update-right">
             <i class="fa fa-shopping-cart"> </i>
@@ -23,7 +23,7 @@
          <div class="col-md-8 market-update-left">
           <h3><?php echo $A_AmountMerchant;?></h3>
           <h4>Jumlah Merchant</h4>
-          <p>Jumlah merchant yang bekerjasaman dengan JualBeli MTT.</p>
+          <p>Jumlah merchant yang bekerjasama dengan JualBeli MTT.</p>
           </div>
           <div class="col-md-4 market-update-right">
             <i class="fa fa-users"> </i>
@@ -61,7 +61,7 @@
       <div class="prograc-blocks">
          <!--Progress bars-->
           <div class="home-progres-main">
-             <h3>Product Terjual Sebulan</h3>
+             <h3>Produk Terjual Sebulan</h3>
            </div>
           <div class='bar_group'>
            
@@ -91,7 +91,7 @@
           <div class="col-md-8 market-update-left">
             <h3><?php echo $totaltrans;?></h3>
             <h4>Total Transaksi</h4>
-            <p>Semua transaksi berhasil melalui JualBeli MTT</p>
+            <p>Semua transaksi yang dilakukan melalui JualBeli MTT</p>
           </div>
           <div class="col-md-4 market-update-right">
             <i class="fa fa-shopping-cart"> </i>
@@ -142,7 +142,7 @@
       <div class="prograc-blocks">
          <!--Progress bars-->
           <div class="home-progres-main">
-             <h3>Product Terjual Sebulan</h3>
+             <h3>Produk Terjual Sebulan</h3>
            </div>
           <div class='bar_group'>
         

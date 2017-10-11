@@ -11,21 +11,21 @@
     <div class="col-md-12 chart-layer2-left">
                <div class="work-progres">
                             <div class="chit-chat-heading">
-                                  Transaction JualBeli MTT
+                                  Transaksi Dibatalkan
                             </div>
                             <div class="table-responsive">
                                 <table class="table table-hover">
                                   <thead>
                                     <tr>
                                       <th style="width: 2%;">No. Order</th>
-                                      <th style="width: 5%;">Buyer</th>
-                                      <th style="width: 5%;">Merchant</th>
+                                      <th style="width: 8%;">Buyer</th>
+                                      <th style="width: 8%;">Merchant</th>
                                       <th style="width: 15%;">Product</th>
                                       <th style="width: 1%;">Amount</th>
-                                      <th style="width: 10%;">Shipping</th>
                                       <th style="width: 3%;">Total Fees</th>
-                                      <th style="width: 10%;">Status Order</th>
-                                      <th style="width: 10%; text-align: center;">Action</th>
+                                      <th style="width: 5%;">Status Order</th>
+                                      <th style="width: 5%; text-align: center;">Action</th>
+
 
                                   </tr>
                               </thead>
@@ -35,13 +35,16 @@
                                  $i = 1;
                                  foreach ($A_Transaction as $data):?>
                                 <tr>
-                                 <td><?php echo $data->code;?></td>
+                                  <td><?php echo $data->code;?></td>
                                   <td><?php echo $data->buyer;?></td>
                                   <td><?php echo $data->username;?></td>
                                   <td><?php echo $data->product_name;?></td>
                                   <td><?php echo $data->amount;?></td>
-                                  <td><?php echo $data->shipping;?></td>
-                                  <td><?php echo $data->total_fees;?></td>
+                                  <!-- <td><?php echo $data->shipping;?></td> -->
+                                  <td><?php 
+                                  $amount = $data->amount;
+                                  $price  = $data->price_item;
+                                  echo 'Rp. '.number_format($amount*$price);?></td>
                                   <td><?php echo $data->status;?></td>
                                   <td style="text-align: center;">
                                   

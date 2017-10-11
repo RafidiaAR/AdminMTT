@@ -372,7 +372,7 @@
    <div class="product-block">
       <div class="pro-head">
 
-         <h2>All Products JualBeli MTT<a href="<?php echo base_url(); ?>index.php/progress/add_product"></a>
+         <h2>Daftar Produk di JualBeli MTT<a href="<?php echo base_url(); ?>index.php/progress/add_product"></a>
          </h2>
         <div>
         <div class="col-sm-5 col-md-5 " style="display: none;" id="alertdiv">
@@ -441,9 +441,9 @@
             <div class="row">
                <div class="col-md-20">
               <input type="hidden" name="adminpro" class="form-control" value="<?php echo $aw->proid;?>">
-                <button type="button" class="btn btn-info" href="#" id="detailpro" data-toggle="modal" data-target="#myDetail"><i class="fa fa-search"></i> View Product </button>
+                <button type="button" class="btn btn-info" href="#" id="detailpro" data-toggle="modal" data-target="#myDetail"><i class="fa fa-search"></i> Lihat Produk</button>
                 <input type="hidden" name="adminpro" class="form-control" value="<?php echo $aw->proid;?>">
-                <button type="button" class="btn btn-danger" href="#" id="trash" data-toggle="modal" data-target="#myModall"><i class="fa fa-trash"></i> Delete</button>
+                <button type="button" class="btn btn-danger" href="#" id="trash" data-toggle="modal" data-target="#myModall"><i class="fa fa-trash"></i> Hapus</button>
 
                </div>
             </div>
@@ -474,6 +474,21 @@
     padding: 15px;
     border-bottom: 1px solid #e5e5e5;
 }
+.alert-message
+{
+    margin: 20px 0;
+    padding: 20px;
+    border-left: 3px solid #eee;
+}
+.alert-message-success
+{
+    background-color: #F4FDF0;
+    border-color: #3C763D;
+}
+.alert-message-success h4
+{
+    color: #3C763D;
+}
 </style>
 <div class="inner-block">
 
@@ -483,7 +498,30 @@
             </h2> 
            
         </div>
-        
+        <?php if(!empty($notif)) {
+            if($notif == 1)
+            {
+            echo '<div class="alert-message alert-message-success alert-dismissible" role="alert">
+           
+               
+                    <h4>
+                        Upload Product Success
+                    </h4>
+                    <p>Terimakasih telah mempercayakan JualBeli MTT untuk menjual produk anda. <b> Segera kirimkan produk anda 
+                                            ke Sekretariat MTT untuk memperoleh approval. </b></p>
+                                         <sub><b>Note : </b>Produk yang tidak dikirimkan ke Sekretariat MTT tidak akan diproses lebih lanjut dan 
+                                            tidak dapat diperjualbelikan di JualBeli MTT</sub>
+                
+            </div>';
+            }
+            else{
+            echo '<div class="alert alert-warning alert-dismissible" role="alert">
+
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                '.$notif.'
+            </div>';
+             }
+            } ?>
 
 <?php foreach ($product as $aw ) : ?>
 
@@ -499,7 +537,7 @@
 
                     <h4 class="aw"><?php echo $aw->product_name; ?></h4>
                     <h5>Rp.<?php echo $aw->price; ?></h5><br>
-                    <h6>Stock:<span> <?php echo $aw->stock; ?></span></h6>
+                    <h6>Stok:<span> <?php echo $aw->stock; ?></span></h6>
                     <br/>
                     <input type="hidden" name="product_id" placeholder="Nama Produk" class="form-control" value="<?php echo $aw->pro_id;?>">
                     <button type="button" class="btn btn-primary" href="#" id="quickview" data-toggle="modal" data-target="#quickvieww"><i class="fa fa-search"></i> Quick View</button>
@@ -575,7 +613,7 @@
                              </tr>
                              
                              <tr>
-                                 <td class=""><p><strong>Category</strong></p></td>
+                                 <td class=""><p><strong>Kategori</strong></p></td>
                                  <td> </td>
                                  <td class="h5" id="a_pro_cat">TSO Cafe</td>
                              </tr>
@@ -586,7 +624,7 @@
                              </tr>
                             <tr>
                                  <td class="btn-mais-info text-primary">
-                                     <br><br><br><i class=""></i>Description
+                                     <br><br><br><i class=""></i>Deskripsi
                                  </td>
                              </tr>
                          </tbody>
@@ -613,7 +651,7 @@
                         <span class="h3 text-muted"><strong id="a_pro_price">Rp.15000</strong></span>
                     </div>
                     <div class="text-left pull-left col-md-3">
-                       <a href="<?php echo base_url()?>index.php/Admin/Edit_Product/" id="product_id"> <button type="button" class="btn btn-primary"><i class="fa fa-pencil-square-o"></i> Edit Product</button>
+                       <a href="<?php echo base_url()?>index.php/Admin/Edit_Product/" id="product_id"> <button type="button" class="btn btn-primary"><i class="fa fa-pencil-square-o"></i> Edit Produk</button>
                     </div>
                      
                 </div>

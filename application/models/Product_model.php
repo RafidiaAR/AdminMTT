@@ -4,16 +4,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Product_model extends CI_Model {
 
 	public function add_product($foto){
-        $this->db->insert('product', array(
+        if($this->session->userdata('level') == 1 )
+        {
+            $this->db->insert('product', array(
             'merchant_id'   => $this->input->post('merchant_id'),
-            'id'       		=> $this->input->post('id_produk'),
-            'name'         	=> $this->input->post('product'),
-            'image'      	=> $foto['file_name'],
-            'price'			=> $this->input->post('harga'),
-            'stock'        	=> $this->input->post('stock'),
-            'description'  	=> $this->input->post('description'),
+            /*'id'              => $this->input->post('id_produk'),*/
+            'name'          => $this->input->post('product'),
+            'image'         => $foto['file_name'],
+            'price'         => $this->input->post('harga'),
+            'stock'         => $this->input->post('stock'),
+            'description'   => $this->input->post('description'),
             'category_id'   => $this->input->post('category'),
-            'type'          => $this->input->post('type'),
+            /*'type'          => $this->input->post('type'),*/
+            'fee'           => $this->input->post('harga'),
             'status'        => $this->input->post('status'),
             'created_at'    => $this->input->post('created_at'),
             'last_update'    => $this->input->post('created_at')
@@ -23,6 +26,39 @@ class Product_model extends CI_Model {
         } else {
             return FALSE;
         }
+        }
+        if($this->session->userdata('leveluser') == 0 || $this->session->userdata('leveluser') == NULL)
+        {
+            $this->db->insert('product', array(
+            'merchant_id'   => $this->input->post('merchant_id'),
+            /*'id'              => $this->input->post('id_produk'),*/
+            'name'          => $this->input->post('product'),
+            'image'         => $foto['file_name'],
+            'price'         => $this->input->post('harga'),
+            'stock'         => $this->input->post('stock'),
+            'description'   => $this->input->post('description'),
+            'category_id'   => $this->input->post('category'),
+            /*'type'          => $this->input->post('type'),*/
+            'fee'           => $this->input->post('adminfee'),
+            'status'        => $this->input->post('status'),
+            'created_at'    => $this->input->post('created_at'),
+            'last_update'    => $this->input->post('created_at')
+        ));
+        if ($this->db->affected_rows() > 0) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+
+        }
+    }
+    public function GetDataPending($where)
+    {
+        return $this->db->select('*, product.id as id_product, product.name as product_name')
+                    ->where($where)
+                    ->join('user_merchant', 'product.merchant_id = user_merchant.id')
+                    ->get('product')
+                    ->result();
     }
     public function edit_product(){
         $id = $this->input->post('id_produk');
@@ -57,6 +93,14 @@ class Product_model extends CI_Model {
                     ->join('user_merchant', 'product.merchant_id = user_merchant.id')
                     ->join('product_order_detail','product_order_detail.product_id = product.id')
                     ->group_by('product_order_detail.product_id')
+                    ->get('product')
+                    ->result();
+    }
+    public function GetDataProduct($where)
+    {
+        return $this->db->select('*, product.name as product_name, user_merchant.name as merchant_name, product.id as pro_id')
+                    ->where($where)
+                    ->join('user_merchant', 'product.merchant_id = user_merchant.id')
                     ->get('product')
                     ->result();
     }
@@ -377,6 +421,15 @@ class Product_model extends CI_Model {
                         ->get()
                         ->result();
     }
+    public function Getproduct($where)
+    {
+        return $this->db->select('*, product.id as id_product, product.name as product_name')
+                    ->where($where)
+                    ->join('user_merchant', 'product.merchant_id = user_merchant.id')
+                    ->get('product')
+                    ->row();
+    }
+
     public function GetAllData($table)
     {
       return $this->db->get($table)->result();

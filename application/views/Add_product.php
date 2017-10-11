@@ -156,35 +156,65 @@
 .inner-block{
     padding: 3em;
 }
+.modal-header
+{
+    background:  #47d147;
+    color:white;
+    min-height: 16.42857143px;
+    padding: 15px;
+    border-bottom: 1px solid #e5e5e5;
+}
+.alert-message
+{
+    margin: 20px 0;
+    padding: 20px;
+    border-left: 3px solid #eee;
+}
+.alert-message-success
+{
+    background-color: #F4FDF0;
+    border-color: #3C763D;
+}
+.alert-message-success h4
+{
+    color: #3C763D;
+}
 </style>
 <div class="inner-block"><h2>Add Product</h2></div>
 <div class="form-style-5">
     <?php if(!empty($notif)) {
+        
             echo '<div class="alert alert-warning alert-dismissible" role="alert">
+
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
                 '.$notif.'
             </div>';
-             } ?>
+             
+            } ?>
+            
+
     <form action="<?php echo base_url(); ?>index.php/Page/add_product" method="post" enctype="multipart/form-data">
         <fieldset>
             <legend><span class="number">1</span> Product Info</legend>
             <input type="hidden" name="merchant_id" placeholder="ID Produk" class="form-control" value="<?php echo $merchant_id; ?>" readonly>
-            <input type="hidden" name="type" placeholder="ID Produk" class="form-control" value="1" readonly>
+            <!-- <input type="hidden" name="type" placeholder="ID Produk" class="form-control" value="1" readonly> -->
             <input type="hidden" name="status" placeholder="ID Produk" class="form-control" value="READY STOCK" readonly>
             <input id="last_update" type="hidden" name="created_at" placeholder="" class="form-control" value="<?php echo strtotime(date('Y-m-d H:i:s'))?>">
 
-            <label>ID Produk</label>
+            <!-- <label>ID Produk</label>
             
-            <input type="text" name="id_produk" placeholder="ID Produk" class="form-control" value="<?php echo $id_product; ?>" readonly>
+            <input type="text" name="id_produk" placeholder="ID Produk" class="form-control" value="<?php echo $id_product; ?>" readonly> -->
             <label>Nama Produk</label>
             <input type="text" name="product" placeholder="Nama Produk" class="form-control" required="">
             <br>
             <label>Stock</label>
             <input type="number" name="stock" placeholder="0" class="form-control" required="">
             <br>
-            <label>Harga</label>
-            <input type="number" name="harga" placeholder="Harga" class="form-control" required="">
-            <br>
+           
+
+
+
+
             <label>Category</label>
             <select class="form-control" id="sel1" name="category">
                 <option value="">--- Pilih Category ---</option>
@@ -194,10 +224,27 @@
                 <?php endforeach; ?>
             </select>
             <br>
-            <fieldset>
-                <legend><span class="number">2</span> Product Description</legend>
+            <label>Description</label>
                 <textarea class="form-control" rows="5" placeholder="Deksripsi produk" name="description" required=""></textarea>
                 <br>
+            <fieldset>
+                <legend><span class="number">2</span> Admin Agreement</legend>
+                <label>Harga(Rp.)</label>
+                <input id="harga" type="number" name="harga" placeholder="Harga" class="form-control" onchange="computeLoan()" required="">
+                <br>
+                <label>Besar Admin Fee(%)</label>
+                 <select class="form-control" id="interest_rate" name="adminfee" onchange="computeLoan()">
+                    <option value="5">5 %</option>
+                    <option value="10">10 %</option>
+                    <option value="15">15 %</option>
+                    <option value="20">20 %</option>
+                    <option value="25">25 %</option>
+                </select>
+                <!-- <input id="interest_rate" type="number" min="0" max="100" value="10" onchange="computeLoan()"> -->
+                <label>Admin Fee</label>
+                <input type="number" id="interest" name="interest" value="0" class="form-control" required="" readonly="">
+
+                
 
             </fieldset>
         </fieldset>
@@ -212,8 +259,53 @@
         </fieldset>
         <input type="submit" name="submit" value="Add Product"> 
     </form>
+
+
+</body>
+
+
+
+
+
+
+</div>
+<div id="myModalll" class="modal fade" role="dialog">
+             <div class="modal-dialog">
+                        <div class="modal-content">
+                                   <div class="modal-header">
+                                         <button type="button" class="close" data-dismiss="modal">×</button>
+                                         <h4 class="modal-title"><i class="fa fa-hdd-o"></i> Sent Your Product</h4>
+                                   </div>
+                                   <div class="modal-body">
+
+                                         <!-- <p>Pengiriman Pesanan dengan No. Order <b id="transs_code"></b>  produk <b id="transs_product"></b> sejumlah <b id="transs_amount"> 3 </b> Pieces akan segera dikirim</p> -->
+                                         <p>Terimakasih telah mempercayakan JualBeli MTT untuk menjual produk anda. <b> Segera kirimkan produk anda 
+                                            ke Sekretariat MTT untuk memperoleh approval. </b></p>
+                                         <sub><b>Note : </b>Produk yang tidak dikirimkan ke Sekretariat MTT tidak akan diproses lebih lanjut dan 
+                                            tidak dapat diperjualbelikan di JualBeli MTT</sub>
+                                   </div>
+                                   <div class="modal-footer">
+                                         <input type="hidden" class="form-control" name="search" id="transs_amountt" value="" placeholder="">
+                                         <button type="button" class="btn btn-success" id="Sent" href="">Yes</button>
+                                         <input type="hidden" class="form-control" name="search" id="transs_id" value="" placeholder="">
+                                         <button id="ADecline" type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                         <input type="hidden" class="form-control" name="search" id="product_id" value="" placeholder="">
+                                   </div>
+                        </div>
+
+            </div>
 </div>
 <Script>
+    function computeLoan()
+    {
+    var amount = document.getElementById('harga').value;
+    var interest_rate = document.getElementById('interest_rate').value;
+    var interest = (amount * (interest_rate * .01));
+    /*var payment = ((amount / months) + interest).toFixed(2);*/
+    interest = document.getElementById('interest').value = interest;/*
+    interest = interest.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    document.getElementById('interest').value = interest;*/
+    }
     function preview(input) {
         if (input.files && input.files[0]) {
             var freader = new FileReader();

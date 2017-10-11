@@ -57,6 +57,78 @@ class Admin_model extends CI_Model {
                     ->get()
                     ->result();
     }
+    public function GetDataLaporan($where,$limit,$offset){
+    return $this->db->select('*, product_order_detail.id as id_detail')   
+                    ->from('product_order')
+                    ->join('product_order_detail', 'product_order.id = product_order_detail.order_id')
+                    ->join('user_merchant','product_order_detail.merchant_id = user_merchant.id')
+                    ->join('product','product_order_detail.product_id = product.id')
+                    ->where($where)
+                    ->order_by('product_order.id','ASC')
+                    ->limit($limit,$offset)
+                    ->get()
+                    ->result();
+    }
+    public function GetLaporan($where)
+    {
+        return $this->db->select('*, product_order_detail.id as id_detail')   
+                    ->from('product_order')
+                    ->join('product_order_detail', 'product_order.id = product_order_detail.order_id')
+                    ->join('user_merchant','product_order_detail.merchant_id = user_merchant.id')
+                    ->join('product','product_order_detail.product_id = product.id')
+                    ->where($where)
+                    ->group_by('product_order.id','ASC')
+                    ->get()
+                    ->row();
+    }
+    public function GetDataLaporanByOrder($where,$limit,$offset){
+    return $this->db->select('*, product_order_detail.id as id_detail')   
+                    ->from('product_order')
+                    ->join('product_order_detail', 'product_order.id = product_order_detail.order_id')
+                    ->join('user_merchant','product_order_detail.merchant_id = user_merchant.id')
+                    ->join('product','product_order_detail.product_id = product.id')
+                    ->where($where)
+                    ->group_by('product_order.id','ASC')
+                    ->limit($limit,$offset)
+                    ->get()
+                    ->result();
+    }
+    public function DataLaporan($where){
+    return $this->db->select('*, product_order_detail.id as id_detail, product_order.id as id_order')   
+                    ->from('product_order')
+                    ->join('product_order_detail', 'product_order.id = product_order_detail.order_id')
+                    ->join('user_merchant','product_order_detail.merchant_id = user_merchant.id')
+                    ->join('product','product_order_detail.product_id = product.id')
+                    ->where($where)
+                    /*->order_by('product_order.id','ASC')*/
+                    ->get()
+                    ->result();
+    }
+    public function GetPending($where)
+    {
+        return $this->db->select('*, product.id as id_product, product.name as product_name')
+                    ->where($where)
+                    ->join('user_merchant', 'product.merchant_id = user_merchant.id')
+                    ->get('product')
+                    ->row();
+    }
+    public function GetProductPending($where,$limit,$offset)
+    {
+        return $this->db->select('*, product.name as product_name, product.id as id_product')
+                    ->where($where)
+                    ->join('user_merchant', 'product.merchant_id = user_merchant.id')
+                    ->limit($limit,$offset)
+                    ->get('product')
+                    ->result();
+    }
+    public function Count_Pending($where){
+        $this->db->select('*')
+                    ->from('product')
+                    ->join('user_merchant', 'user_merchant.id = product.merchant_id')
+                    ->where($where)
+                    ->order_by('product.id','ASC');
+        return $this->db->count_all_results();
+    }
     public function DataPrintBill($where)
     {
     return $this->db->select('*, bill.status as status_print, bill.id as id_print, product_order_detail.id as id_detail')
@@ -70,10 +142,11 @@ class Admin_model extends CI_Model {
     }
     public function DataPrintTransaction($where)
     {
-    return $this->db->select('*, product_order_detail.status as status_print, product_order_detail.id as id_print')
+    return $this->db->select('*, product_order_detail.status as status_print, product_order_detail.id as id_print, product.fee as admin_fee')
                     ->where($where)
                     ->join('product_order', 'product_order.id = product_order_detail.order_id')
                     ->join('user_merchant','product_order_detail.merchant_id = user_merchant.id')
+                    ->join('product', 'product_order_detail.product_id = product.id')
                     ->get('product_order_detail')
                     ->row();
     }
@@ -219,6 +292,16 @@ class Admin_model extends CI_Model {
         } else {
             return "false";
         }
+    }
+    public function ChangePending($id,$approve){
+        $this->db->where(['product.id'=>$id])->update('product', array(
+            'approve'    =>$approve
+          ));
+        if ($this->db->affected_rows() > 0) {
+            return "true";
+        } else {
+            return "false";
+        }       
     }
 
 }

@@ -105,15 +105,17 @@ class Page extends CI_Controller
 			}
 			if ($this->input->post('submit')) {
 				$this->form_validation->set_rules('merchant_id', 'Merchant ID', 'trim|required');
-				$this->form_validation->set_rules('id_produk', 'ID Product', 'trim|required');
+				/*$this->form_validation->set_rules('id_produk', 'ID Product', 'trim|required');*/
 				$this->form_validation->set_rules('product', 'Nama Product', 'trim|required');
 				$this->form_validation->set_rules('harga', 'Harga', 'trim|required');
 				$this->form_validation->set_rules('stock', 'Stock', 'trim|required');
 				$this->form_validation->set_rules('description', 'Description', 'trim|required');
 				$this->form_validation->set_rules('category', 'Category', 'trim|required');
-				$this->form_validation->set_rules('type', 'Type', 'trim|required');
+				//$this->form_validation->set_rules('type', 'Type', 'trim|required');
 				$this->form_validation->set_rules('status', 'Status', 'trim|required');
 				$this->form_validation->set_rules('created_at', 'Created', 'trim|required');
+				$this->form_validation->set_rules('interest', 'AdminFee', 'trim|required');
+				$id = $this->session->userdata('logged_id');
 				$A_AmountTransaction 	= count($this->Admin_model->Transaction());
 				$A_AmountMerchant 		= $this->Admin_model->Count_Merchant() - 1;
 				$A_AmountProduct		= $this->Admin_model->Count_Product();
@@ -125,6 +127,7 @@ class Page extends CI_Controller
 					$this->load->library('upload', $config);
 					if ($this->upload->do_upload('foto')) {
 						if ($this->Product_model->add_product($this->upload->data()) == TRUE) {
+							/*redirect('Page/Product_List',$data);*/
 							$id = $this->session->userdata('logged_id');
 							$record 	= $this->Product_model->GetData(array("id" => $id) , 'user_merchant');
 							$record2 	= $this->Product_model->GetAllData('Category');
@@ -132,25 +135,31 @@ class Page extends CI_Controller
 							$masuk		= "Pesanan ditujukan ke Merchant";
 							$trans	 	= count($this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $masuk), 'product_order_detail'));
             				$newid = $int + 1;
+            				$products = $this->Product_model->product(array("product.merchant_id" => $id) , 'product');
+ 
 
 							$data = [
+								'ProsesPenagihan'=> $this->Product_model->Count_ProsesPenagihan(),
+								'PenagihanSelesai'=> $this->Product_model->Count_PenagihanSelesai(),
 								'Confirm'		=> $this->Product_model->Count_OrderMerchant(),
 								'Sent'			=> $this->Product_model->Count_OrderSent(),
 								'Finish'		=> $this->Product_model->Count_OrderFinish(),
 								'Cancel'		=> $this->Product_model->Count_OrderCancel(),
 								'Penagihan'  	=> $this->Product_model->Count_Penagihan(),
-								'main_view'		=> 'add_product',
+								'main_view'		=> 'Product_List',
 								'merchant_id'	=> $record->id,
 								'username'		=> $record->username,
+								'product' 		=> $products,
 								'id_product'	=> $newid,
 								'category'		=> $record2,
-								'notif'			=> 'Tambah Produk Berhasil',
+								'notif'			=> 1,
 								'C_Product' => $Count_Product,
 								'trans'			=> $trans,
 								'nameAccess'	=> $leveluser,
 								'A_AmountTransaction' => $A_AmountTransaction,
 								'A_AmountMerchant'	  => $A_AmountMerchant,
 								'A_AmountProduct'	  =>  $this->Admin_model->Count_Product(),
+
 								
 							];
 							$this->load->view('template', $data);
@@ -248,8 +257,7 @@ class Page extends CI_Controller
 				}
 			}
 			else {
-				$data['main_view'] = 'dashboard';
-				$this->load->view('template', $data);
+				redirect('Page');
 			}
 		}
 		else {
@@ -347,7 +355,7 @@ class Page extends CI_Controller
 			$masuk		= "Menunggu Pembayaran";
 			$trans	 	= count($this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $masuk), 'product_order_detail'));
 			$record = $this->Product_model->GetData(array("id" => $id) , 'user_merchant');
-			$products = $this->Product_model->product(array("product.merchant_id" => $id) , 'product');
+			$products = $this->Product_model->GetDataProduct(array("product.merchant_id" => $id,"approve" => 1) , 'product');
 			$Count_Product = $this->Product_model->CountProductMerchant(array("product.merchant_id" => $id));
 
 			$data = [

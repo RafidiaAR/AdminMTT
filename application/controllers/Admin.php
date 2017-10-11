@@ -13,28 +13,30 @@ class Admin extends CI_Controller {
 	public function index()
 	{
 		if ($this->session->userdata('logged_in') == TRUE) {
-			if($this->session->userdata('leveluser') == 1){
+			if($this->session->userdata('leveluser') == 1)
+			{
 				$leveluser = 'Administrator';
-			}else{
+			}else
+			{
 				$leveluser = 'Merchant';
 			}
-			$id = $this->session->userdata('logged_id');
-			$record = $this->Product_model->GetData(array("id" => $id) , 'user_merchant');
-			$produk = count($this->Product_model->GetListData(['merchant_id'=>$id], 'Product'));
-			$masuk		= "Pesanan ditujukan ke Merchant";
-			$trans	 	= count($this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $masuk), 'product_order_detail'));
-			$totaltrans	= count($this->Product_model->Order(array("merchant_id" => $id), 'product_order_detail'));
-			$totalmerchant = count($this->Product_model->GetAllData('User_merchant'));
-			$products = $this->Product_model->product(array("product.merchant_id" => $id, "product_order_detail.status" => 'Selesai') , 'product_order_detail');
-			$A_Product = $this->Product_model->AdminProduct(array("product_order_detail.status" => 'Selesai'),'product_order_detail');
+			$id 			= $this->session->userdata('logged_id');
+			$record 		= $this->Product_model->GetData(array("id" => $id) , 'user_merchant');
+			$products 		= $this->Product_model->product(array("product.merchant_id" => $id, "product_order_detail.status" => 'Selesai') , 'product_order_detail');
+			$A_Product 		= $this->Product_model->AdminProduct(array("product_order_detail.status" => 'Selesai'),'product_order_detail');
+			$masuk			= "Pesanan ditujukan ke Merchant";
+			$produk 		= count($this->Product_model->GetListData(['merchant_id'=>$id], 'Product'));
+			$totaltrans		= count($this->Product_model->Order(array("merchant_id" => $id), 'product_order_detail'));
+			$totalmerchant	= count($this->Product_model->GetAllData('User_merchant'));
+			$trans	 		= count($this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $masuk), 'product_order_detail'));
 			/*Admin Controller Start*/
 			$A_AmountTransaction 	= count($this->Admin_model->Transaction());
 			$A_AmountMerchant 		= $this->Admin_model->Count_Merchant() - 1;
 			$A_AmountProduct		= $this->Admin_model->Count_Product();
 			/*Admin Controller End*/
-			$result = $this->Product_model->GetLaporanProduct(array("product_order_detail.merchant_id"=> $id, "product_order_detail.status" => 'Selesai'));
-			$results = $this->Product_model->GetLaporanProduct(array("product_order_detail.status" => 'Selesai'));
-			$A_allamount = array();
+			$result 		= $this->Product_model->GetLaporanProduct(array("product_order_detail.merchant_id"=> $id, "product_order_detail.status" => 'Selesai'));
+			$results 		= $this->Product_model->GetLaporanProduct(array("product_order_detail.status" => 'Selesai'));
+			$A_allamount 	= array();
 			foreach ($results as $data) {
 				$A_allamount[$data->product_id] = $data->totaljual;
 			}
@@ -42,16 +44,16 @@ class Admin extends CI_Controller {
 			foreach ($result as $data) {
 				$allamount[$data->product_id]= $data->totaljual;
 			}
-			$bill = array('bill.status' => 'Tagihkan Ke Admin');
-			$end = array('bill.status' => 'Penagihan Selesai');
+			$bill 	= array('bill.status' => 'Tagihkan Ke Admin');
+			$end 	= array('bill.status' => 'Penagihan Selesai');
 
 			$data = [
-				'Confirm'	=> $this->Admin_model->Trans_Masuk(),
-				'Sent'		=> $this->Admin_model->Trans_Kirim(),
-				'Finish'	=> $this->Admin_model->Trans_Selesai(),
-				'Cancel'	=> $this->Admin_model->Trans_Batal(),
-				'CMerchant'	=> $this->Admin_model->Count_Merchant(),
-				'CBuyer'	=> $this->Admin_model->Count_Buyer(),
+				'Confirm'		=> $this->Admin_model->Trans_Masuk(),
+				'Sent'			=> $this->Admin_model->Trans_Kirim(),
+				'Finish'		=> $this->Admin_model->Trans_Selesai(),
+				'Cancel'		=> $this->Admin_model->Trans_Batal(),
+				'CMerchant'		=> $this->Admin_model->Count_Merchant(),
+				'CBuyer'		=> $this->Admin_model->Count_Buyer(),
 				'Penagihan'  	=> $this->Product_model->Count_Penagihan(),
 				'totalmerchant' => $totalmerchant,
 				'jmlh_produk' 	=> $produk,
@@ -73,7 +75,7 @@ class Admin extends CI_Controller {
 				'A_AmountProduct'	  =>  $this->Admin_model->Count_Product(),
 				/*Admin Data End*/
 				'PenagihanMasuk'=> $this->Product_model->CountBillSent($bill),
-				'PenagihanEnd' => $this->Product_model->CountBillSent($end),
+				'PenagihanEnd' 	=> $this->Product_model->CountBillSent($end),
 				];
 			$this->load->view('template', $data);
 		}
@@ -81,21 +83,26 @@ class Admin extends CI_Controller {
 			redirect('Auth');
 		}
 	}
+
 	public function Delete_User(){
 		$id 	= $this->input->post('id');
         $result = $this->Admin_model->Del_User($id);
         echo $result;
 	}
+
 	public function List_Merchant($offset = NULL)
 	{
 		if ($this->session->userdata('logged_in') == TRUE) {
-			if($this->session->userdata('leveluser') == 1){ 
+			if($this->session->userdata('leveluser') == 1)
+			{ 
                 $leveluser = 'Administrator'; 
-            }else{ 
+            }else
+            { 
                 $leveluser = 'Merchant'; 
             } 
+            
             $id         = $this->session->userdata('logged_id'); 
-            $limit         = 10; 
+            $limit      = 10; 
             if(!is_null($offset)){ 
                 $offset = $this->uri->segment(3); 
             }
@@ -120,30 +127,31 @@ class Admin extends CI_Controller {
 			$config['last_tag_open'] = "<li>";
 			$config['last_tagl_close'] = "</li>";
 			$this->pagination->initialize($config);
+
 			$masuk		= "Pesanan ditujukan ke Merchant";
 			$record 	= $this->Product_model->GetData(array("id" => $id) , 'user_merchant');
 			$trans	 	= count($this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $masuk), 'product_order_detail'));
 			$merchant 	= $this->Admin_model->Merchant();
-			$bill = array('bill.status' => 'Tagihkan Ke Admin');
-			$end = array('bill.status' => 'Penagihan Selesai');
+			$bill 		= array('bill.status' => 'Tagihkan Ke Admin');
+			$end 		= array('bill.status' => 'Penagihan Selesai');
 
 			$data = [
-				'Confirm'	=> $this->Admin_model->Trans_Masuk(),
-				'Sent'		=> $this->Admin_model->Trans_Kirim(),
-				'Finish'	=> $this->Admin_model->Trans_Selesai(),
-				'Cancel'	=> $this->Admin_model->Trans_Batal(),
-				'CMerchant'	=> $this->Admin_model->Count_Merchant(),
-				'CBuyer'	=> $this->Admin_model->Count_Buyer(),
+				'Confirm'		=> $this->Admin_model->Trans_Masuk(),
+				'Sent'			=> $this->Admin_model->Trans_Kirim(),
+				'Finish'		=> $this->Admin_model->Trans_Selesai(),
+				'Cancel'		=> $this->Admin_model->Trans_Batal(),
+				'CMerchant'		=> $this->Admin_model->Count_Merchant(),
+				'CBuyer'		=> $this->Admin_model->Count_Buyer(),
 				'Penagihan'  	=> $this->Product_model->Count_Penagihan(),
 				'ListMerchant'	=> $this->Admin_model->GetDataMerchant($limit,$offset),
-				'username'	=> $record->username,
-				'trans'		=> $trans,
-				'main_view'	=> 'List_Merchant',
-				'nameAccess'=> $leveluser,
-				'Merchant'	=> $merchant,
-				'A_AmountProduct'	  =>  $this->Admin_model->Count_Product(),
-				'PenagihanMasuk'=> $this->Product_model->CountBillSent($bill),
-				'PenagihanEnd' => $this->Product_model->CountBillSent($end),
+				'username'		=> $record->username,
+				'trans'			=> $trans,
+				'main_view'		=> 'List_Merchant',
+				'nameAccess'	=> $leveluser,
+				'Merchant'		=> $merchant,
+				'A_AmountProduct'	=>  $this->Admin_model->Count_Product(),
+				'PenagihanMasuk'	=> $this->Product_model->CountBillSent($bill),
+				'PenagihanEnd' 		=> $this->Product_model->CountBillSent($end),
 
 			];
 			$this->load->view('template', $data);
@@ -155,21 +163,23 @@ class Admin extends CI_Controller {
 	public function add_product()
 	{
 		if ($this->session->userdata('logged_in') == true) {
-			if($this->session->userdata('leveluser') == 1){
+			if($this->session->userdata('leveluser') == 1)
+			{
 				$leveluser = 'Administrator';
-			}else{
+			}else
+			{
 				$leveluser = 'Merchant';
 			}
-			$id = $this->session->userdata('logged_id');
+			$id 		= $this->session->userdata('logged_id');
 			$record 	= $this->Product_model->GetData(array("id" => $id) , 'user_merchant');
 			$record2 	= $this->Product_model->GetAllData('Category');
 			$merchant 	= $this->Admin_model->GetDataMerchants();
-			$int = (int) $this->Product_model->GetLastId('Product', 'id');
-            $newid = $int + 1;
+			$int 		= (int) $this->Product_model->GetLastId('Product', 'id');
+            $newid 		= $int + 1;
             $masuk		= "Pesanan ditujukan ke Merchant";
 			$trans	 	= count($this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $masuk), 'product_order_detail'));
-			$bill = array('bill.status' => 'Tagihkan Ke Admin');
-			$end = array('bill.status' => 'Penagihan Selesai');
+			$bill 		= array('bill.status' => 'Tagihkan Ke Admin');
+			$end 		= array('bill.status' => 'Penagihan Selesai');
 
 			$data = [
 				'Confirm'		=> $this->Product_model->Count_OrderMerchant(),
@@ -185,11 +195,11 @@ class Admin extends CI_Controller {
 				'category'		=> $record2,
 				'Merchant'		=> $merchant,
 				'nameAccess'	=> $leveluser,
-				'CMerchant'	=> $this->Admin_model->Count_Merchant(),
-				'CBuyer'	=> $this->Admin_model->Count_Buyer(),
-				'A_AmountProduct'	  =>  $this->Admin_model->Count_Product(),
-				'PenagihanMasuk'=> $this->Product_model->CountBillSent($bill),
-				'PenagihanEnd' => $this->Product_model->CountBillSent($end),
+				'CMerchant'		=> $this->Admin_model->Count_Merchant(),
+				'CBuyer'		=> $this->Admin_model->Count_Buyer(),
+				'A_AmountProduct'	=>  $this->Admin_model->Count_Product(),
+				'PenagihanMasuk'	=> $this->Product_model->CountBillSent($bill),
+				'PenagihanEnd' 		=> $this->Product_model->CountBillSent($end),
 
 			];
 			$this->load->view('template', $data);
@@ -201,21 +211,29 @@ class Admin extends CI_Controller {
 	public function Tambah_product()
 	{
 		if ($this->session->userdata('logged_in') == TRUE) {
-			if($this->session->userdata('leveluser') == 1){
+			if($this->session->userdata('leveluser') == 1)
+			{
 				$leveluser = 'Administrator';
-			}else{
+			}else
+			{
 				$leveluser = 'Merchant';
 			}
 			if ($this->input->post('submit')) {
 				$this->form_validation->set_rules('merchant_id', 'Merchant ID', 'trim|required');
-				$this->form_validation->set_rules('id_produk', 'ID Product', 'trim|required');
+				/*$this->form_validation->set_rules('id_produk', 'ID Product', 'trim|required');*/
 				$this->form_validation->set_rules('product', 'Nama Product', 'trim|required');
 				$this->form_validation->set_rules('harga', 'Harga', 'trim|required');
 				$this->form_validation->set_rules('stock', 'Stock', 'trim|required');
 				$this->form_validation->set_rules('description', 'Description', 'trim|required');
 				$this->form_validation->set_rules('category', 'Category', 'trim|required');
+				$this->form_validation->set_rules('status', 'Status', 'trim|required');
+				$this->form_validation->set_rules('created_at', 'Created', 'trim|required');
+				/*$this->form_validation->set_rules('adminfee', 'AdminFee', 'trim|required');*/
 				$bill = array('bill.status' => 'Tagihkan Ke Admin');
 				$end = array('bill.status' => 'Penagihan Selesai');
+				$A_AmountMerchant 		= $this->Admin_model->Count_Merchant() - 1;
+				$A_AmountProduct		= $this->Admin_model->Count_Product();
+				$A_AmountTransaction 	= count($this->Admin_model->Transaction());
 
 				if ($this->form_validation->run() == TRUE) {
 					$config['upload_path'] = './assets/images/';
@@ -224,22 +242,22 @@ class Admin extends CI_Controller {
 					$this->load->library('upload', $config);
 					if ($this->upload->do_upload('foto')) {
 						if ($this->Product_model->add_product($this->upload->data()) == TRUE) {
-							$id = $this->session->userdata('logged_id');
+							$id 		= $this->session->userdata('logged_id');
 							$record 	= $this->Product_model->GetData(array("id" => $id) , 'user_merchant');
 							$record2 	= $this->Product_model->GetAllData('Category');
-							$int = (int) $this->Product_model->GetLastId('Product', 'id');
+							$int 		= (int) $this->Product_model->GetLastId('Product', 'id');
 							$masuk		= "Pesanan ditujukan ke Merchant";
 							$trans	 	= count($this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $masuk), 'product_order_detail'));
-            				$newid = $int + 1;
+            				$newid 		= $int + 1;
 							$data = [
 								'PenagihanMasuk'=> $this->Product_model->CountBillSent($bill),
-								'PenagihanEnd' => $this->Product_model->CountBillSent($end),
+								'PenagihanEnd' 	=> $this->Product_model->CountBillSent($end),
 								'Confirm'		=> $this->Product_model->Count_OrderMerchant(),
 								'Sent'			=> $this->Product_model->Count_OrderSent(),
 								'Finish'		=> $this->Product_model->Count_OrderFinish(),
 								'Cancel'		=> $this->Product_model->Count_OrderCancel(),
 								'Penagihan'  	=> $this->Product_model->Count_Penagihan(),
-								'main_view'		=> 'add_product',
+								'main_view'		=> 'A_AddProduct',
 								'merchant_id'	=> $record->id,
 								'username'		=> $record->username,
 								'id_product'	=> $newid,
@@ -249,6 +267,9 @@ class Admin extends CI_Controller {
 								'nameAccess'	=> $leveluser,
 								'A_AmountTransaction' => $A_AmountTransaction,
 								'A_AmountMerchant'	  => $A_AmountMerchant,
+								'A_AmountProduct'	=>  $this->Admin_model->Count_Product(),
+								'CMerchant'			=> $this->Admin_model->Count_Merchant() - 1, 
+								'CBuyer'			=> $this->Admin_model->Count_Buyer(),
 								
 							];
 							$this->load->view('template', $data);
@@ -257,10 +278,10 @@ class Admin extends CI_Controller {
 							$id = $this->session->userdata('logged_id');
 							$record 	= $this->Product_model->GetData(array("id" => $id) , 'user_merchant');
 							$record2 	= $this->Product_model->GetAllData('Category');
-							$int = (int) $this->Product_model->GetLastId('Product', 'id');
+							$int 		= (int) $this->Product_model->GetLastId('Product', 'id');
 							$masuk		= "Pesanan ditujukan ke Merchant";
 							$trans	 	= count($this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $masuk), 'product_order_detail'));
-            				$newid = $int + 1;
+            				$newid 		= $int + 1;
 							$data = [
 								'Confirm'		=> $this->Product_model->Count_OrderMerchant(),
 								'Sent'			=> $this->Product_model->Count_OrderSent(),
@@ -268,8 +289,8 @@ class Admin extends CI_Controller {
 								'Cancel'		=> $this->Product_model->Count_OrderCancel(),
 								'Penagihan'  	=> $this->Product_model->Count_Penagihan(),
 								'PenagihanMasuk'=> $this->Product_model->CountBillSent($bill),
-								'PenagihanEnd' => $this->Product_model->CountBillSent($end),
-								'main_view'		=> 'add_product',
+								'PenagihanEnd' 	=> $this->Product_model->CountBillSent($end),
+								'main_view'		=> 'A_AddProduct',
 								'merchant_id'	=> $record->id,
 								'username'		=> $record->username,
 								'id_product'	=> $newid,
@@ -291,10 +312,10 @@ class Admin extends CI_Controller {
 							$id = $this->session->userdata('logged_id');
 							$record 	= $this->Product_model->GetData(array("id" => $id) , 'user_merchant');
 							$record2 	= $this->Product_model->GetAllData('Category');
-							$int = (int) $this->Product_model->GetLastId('Product', 'id');
+							$int 		= (int) $this->Product_model->GetLastId('Product', 'id');
 							$masuk		= "Pesanan ditujukan ke Merchant";
 							$trans	 	= count($this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $masuk), 'product_order_detail'));
-            				$newid = $int + 1;
+            				$newid 		= $int + 1;
 							$data = [
 								'Confirm'		=> $this->Product_model->Count_OrderMerchant(),
 								'Sent'			=> $this->Product_model->Count_OrderSent(),
@@ -302,8 +323,8 @@ class Admin extends CI_Controller {
 								'Cancel'		=> $this->Product_model->Count_OrderCancel(),
 								'Penagihan'  	=> $this->Product_model->Count_Penagihan(),
 								'PenagihanMasuk'=> $this->Product_model->CountBillSent($bill),
-								'PenagihanEnd' => $this->Product_model->CountBillSent($end),
-								'main_view'		=> 'add_product',
+								'PenagihanEnd' 	=> $this->Product_model->CountBillSent($end),
+								'main_view'		=> 'A_AddProduct',
 								'merchant_id'	=> $record->id,
 								'username'		=> $record->username,
 								'id_product'	=> $newid,
@@ -321,22 +342,22 @@ class Admin extends CI_Controller {
 					}
 				}
 				else {
-							$id = $this->session->userdata('logged_id');
+							$id 		= $this->session->userdata('logged_id');
 							$record 	= $this->Product_model->GetData(array("id" => $id) , 'user_merchant');
 							$record2 	= $this->Product_model->GetAllData('Category');
-							$int = (int) $this->Product_model->GetLastId('Product', 'id');
+							$int 		= (int) $this->Product_model->GetLastId('Product', 'id');
 							$masuk		= "Pesanan ditujukan ke Merchant";
 							$trans	 	= count($this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $masuk), 'product_order_detail'));
-            				$newid = $int + 1;
+            				$newid 		= $int + 1;
 							$data = [
 								'Confirm'		=> $this->Product_model->Count_OrderMerchant(),
 								'Sent'			=> $this->Product_model->Count_OrderSent(),
 								'Finish'		=> $this->Product_model->Count_OrderFinish(),
 								'Cancel'		=> $this->Product_model->Count_OrderCancel(),
 								'Penagihan'  	=> $this->Product_model->Count_Penagihan(),
-								'main_view'		=> 'add_product',
+								'main_view'		=> 'A_addproduct',
 								'PenagihanMasuk'=> $this->Product_model->CountBillSent($bill),
-								'PenagihanEnd' => $this->Product_model->CountBillSent($end),
+								'PenagihanEnd' 	=> $this->Product_model->CountBillSent($end),
 								'merchant_id'	=> $record->id,
 								'username'		=> $record->username,
 								'id_product'	=> $newid,
@@ -365,13 +386,15 @@ class Admin extends CI_Controller {
 	public function List_Buyer($offset = NULL)
 	{
 		if ($this->session->userdata('logged_in') == TRUE) {
-			if($this->session->userdata('leveluser') == 1){ 
+			if($this->session->userdata('leveluser') == 1)
+			{ 
                 $leveluser = 'Administrator'; 
-            }else{ 
+            }else
+            { 
                 $leveluser = 'Merchant'; 
             } 
             $id         = $this->session->userdata('logged_id'); 
-            $limit         = 10; 
+            $limit      = 10; 
             if(!is_null($offset)){ 
                 $offset = $this->uri->segment(3); 
             }
@@ -400,15 +423,15 @@ class Admin extends CI_Controller {
 			$record 	= $this->Product_model->GetData(array("id" => $id) , 'user_merchant');
 			$trans	 	= count($this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $masuk), 'product_order_detail'));
 			$merchant 	= $this->Admin_model->Merchant();
-			$bill = array('bill.status' => 'Tagihkan Ke Admin');
-			$end = array('bill.status' => 'Penagihan Selesai');
+			$bill 		= array('bill.status' => 'Tagihkan Ke Admin');
+			$end 		= array('bill.status' => 'Penagihan Selesai');
 
 			$data = [
 				'Confirm'	=> $this->Admin_model->Trans_Masuk(),
 				'Sent'		=> $this->Admin_model->Trans_Kirim(),
 				'Finish'	=> $this->Admin_model->Trans_Selesai(),
 				'Cancel'	=> $this->Admin_model->Trans_Batal(),
-				'Penagihan'  	=> $this->Product_model->Count_Penagihan(),
+				'Penagihan' => $this->Product_model->Count_Penagihan(),
 				'Cancel'	=> $this->Product_model->Count_OrderCancel(),
 				'ListMerchant'	=> $this->Admin_model->GetDataBuyer($limit,$offset),
 				'PenagihanMasuk'=> $this->Product_model->CountBillSent($bill),
@@ -418,7 +441,7 @@ class Admin extends CI_Controller {
 				'main_view'	=> 'List_Buyer',
 				'nameAccess'=> $leveluser,
 				'Merchant'	=> $merchant,
-				'CMerchant'			=> $this->Admin_model->Count_Merchant() - 1, 
+				'CMerchant'	=> $this->Admin_model->Count_Merchant() - 1, 
 				'CBuyer'			=> $this->Admin_model->Count_Buyer(),
 				'A_AmountProduct'	=>  $this->Admin_model->Count_Product(),
 			];
@@ -431,18 +454,21 @@ class Admin extends CI_Controller {
 	public function Product_List()
 	{
 		if ($this->session->userdata('logged_in') == TRUE) {
-			if($this->session->userdata('leveluser') == 1){
+			if($this->session->userdata('leveluser') == 1)
+			{
 				$leveluser = 'Administrator';
-			}else{
+			}else
+			{
 				$leveluser = 'Merchant';
 			}
-			$id = $this->session->userdata('logged_id');
+			
+			$id 		= $this->session->userdata('logged_id');
 			$masuk		= "Menunggu Pembayaran";
 			$trans	 	= count($this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $masuk), 'product_order_detail'));
-			$record = $this->Product_model->GetData(array("id" => $id) , 'user_merchant');
-			$products = $this->Admin_model->Product();
-			$bill = array('bill.status' => 'Tagihkan Ke Admin');
-			$end = array('bill.status' => 'Penagihan Selesai');
+			$record 	= $this->Product_model->GetData(array("id" => $id) , 'user_merchant');
+			$products 	= $this->Admin_model->Product();
+			$bill 		= array('bill.status' => 'Tagihkan Ke Admin');
+			$end 		= array('bill.status' => 'Penagihan Selesai');
 
 			$data = [
 				'Confirm'	=> $this->Admin_model->Trans_Masuk(),
@@ -458,7 +484,7 @@ class Admin extends CI_Controller {
 				'id' 		=> $record->id, 
 				'username' 	=> $record->username, 
 				'main_view' => 'Product_list',
-				'nameAccess'	=> $leveluser,
+				'nameAccess'=> $leveluser,
 				'CMerchant'			=> $this->Admin_model->Count_Merchant() - 1, 
 				'CBuyer'			=> $this->Admin_model->Count_Buyer(),
 				'A_AmountProduct'	=>  $this->Admin_model->Count_Product(),
@@ -470,21 +496,24 @@ class Admin extends CI_Controller {
 		}
 	}
 	public function CariMerchant(){
-		$id = $this->input->post('id');
-        $data = $this->Admin_model->GetData(array('id' => $id), 'user_merchant');
+		$id 	= $this->input->post('id');
+        $data 	= $this->Admin_model->GetData(array('id' => $id), 'user_merchant');
         echo $data->id."|".$data->username."|".$data->phone."|".$data->email."|".$data->address."|".$data->last_update;
 	}
 	public function Transaction_Success($offset = NULL)
 	{
 		if ($this->session->userdata('logged_in') == TRUE) {
-			if($this->session->userdata('leveluser') == 1){
+			if($this->session->userdata('leveluser') == 1)
+			{
 				$leveluser = 'Administrator';
-			}else{
+			}else
+			{
 				$leveluser = 'Merchant';
 			}
+			
 			$id 		= $this->session->userdata('logged_id');
-			$limit = 10;
-			$where = array('product_order_detail.status' => 'Selesai');
+			$limit 		= 10;
+			$where 		= array('product_order_detail.status' => 'Selesai');
 			if(!is_null($offset))
 			{
 				$offset = $this->uri->segment(3);
@@ -527,9 +556,9 @@ class Admin extends CI_Controller {
 			$sent 		= $this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $pengiriman), 'product_order_detail');
 			$trans	 	= count($this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $masuk), 'product_order_detail'));
 			$count 		= count($wait);
-			$A_Transaction = $this->Admin_model->Order(array("product_order_detail.status" => $berhasil));
-			$bill = array('bill.status' => 'Tagihkan Ke Admin');
-			$end = array('bill.status' => 'Penagihan Selesai');
+			$A_Transaction= $this->Admin_model->Order(array("product_order_detail.status" => $berhasil));
+			$bill 		= array('bill.status' => 'Tagihkan Ke Admin');
+			$end 		= array('bill.status' => 'Penagihan Selesai');
 
 			$data=
 			[
@@ -567,11 +596,14 @@ class Admin extends CI_Controller {
 	public function Transaction_Masuk($offset = NULL)
 	{
 		if ($this->session->userdata('logged_in') == TRUE) {
-			if($this->session->userdata('leveluser') == 1){
+			if($this->session->userdata('leveluser') == 1)
+			{
 				$leveluser = 'Administrator';
-			}else{
+			}else
+			{
 				$leveluser = 'Merchant';
 			}
+			
 			$id 		= $this->session->userdata('logged_id');
 			$limit = 10;
 			$where = array('product_order_detail.status' => 'Proses Ditujukan Ke Merchant');
@@ -618,8 +650,8 @@ class Admin extends CI_Controller {
 			$trans	 	= count($this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $masuk), 'product_order_detail'));
 			$count 		= count($wait);
 			$A_Transaction = $this->Admin_model->Order(array("product_order_detail.status" => $masuk));
-			$bill = array('bill.status' => 'Tagihkan Ke Admin');
-			$end = array('bill.status' => 'Penagihan Selesai');
+			$bill 		= array('bill.status' => 'Tagihkan Ke Admin');
+			$end 		= array('bill.status' => 'Penagihan Selesai');
 
 			$data=
 			[
@@ -719,10 +751,10 @@ class Admin extends CI_Controller {
 				'CMerchant'			=> $this->Admin_model->Count_Merchant() - 1, 
 				'CBuyer'			=> $this->Admin_model->Count_Buyer(),
 				'A_AmountProduct'	=>  $this->Admin_model->Count_Product(),
-				'Penagihan'  	=> $this->Product_model->Count_Penagihan(),
-				'transaksi'	=> $this->Product_model->orderin($where,$limit,$offset),
-				'PenagihanMasuk'=> $this->Product_model->CountBillSent($bill),
-				'PenagihanEnd' => $this->Product_model->CountBillSent($end),
+				'Penagihan'  		=> $this->Product_model->Count_Penagihan(),
+				'transaksi'			=> $this->Product_model->orderin($where,$limit,$offset),
+				'PenagihanMasuk'	=> $this->Product_model->CountBillSent($bill),
+				'PenagihanEnd' 		=> $this->Product_model->CountBillSent($end),
 			//	'feedback'	=> $b,
 				'stock'		=> $stock,
 				'wait'		=> $wait,
@@ -796,8 +828,8 @@ class Admin extends CI_Controller {
 			$trans	 	= count($this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $masuk), 'product_order_detail'));
 			$count 		= count($wait);
 			$A_Transaction = $this->Admin_model->Order(array("product_order_detail.status" => $pengiriman));
-			$bill = array('bill.status' => 'Tagihkan Ke Admin');
-			$end = array('bill.status' => 'Penagihan Selesai');
+			$bill 		= array('bill.status' => 'Tagihkan Ke Admin');
+			$end 		= array('bill.status' => 'Penagihan Selesai');
 
 			$data=
 			[
@@ -808,9 +840,9 @@ class Admin extends CI_Controller {
 				'CMerchant'			=> $this->Admin_model->Count_Merchant() - 1, 
 				'CBuyer'			=> $this->Admin_model->Count_Buyer(),
 				'A_AmountProduct'	=>  $this->Admin_model->Count_Product(),
-				'transaksi'	=> $this->Product_model->orderin($where,$limit,$offset),
-				'PenagihanMasuk'=> $this->Product_model->CountBillSent($bill),
-				'PenagihanEnd' => $this->Product_model->CountBillSent($end),
+				'transaksi'			=> $this->Product_model->orderin($where,$limit,$offset),
+				'PenagihanMasuk'	=> $this->Product_model->CountBillSent($bill),
+				'PenagihanEnd' 		=> $this->Product_model->CountBillSent($end),
 			//	'feedback'	=> $b,
 				'stock'		=> $stock,
 				'wait'		=> $wait,
@@ -831,13 +863,13 @@ class Admin extends CI_Controller {
 		}
 	}
 	public function CariProduk(){
-		$id = $this->input->post('id');
-        $data = $this->Admin_model->GetDataProduct(array('product.id' => $id));
+		$id 	= $this->input->post('id');
+        $data 	= $this->Admin_model->GetDataProduct(array('product.id' => $id));
         echo $data->proid."|".$data->product_name."|".$data->username."|".$data->cat_name."|".$data->status."|".$data->description."|".$data->price."|".$data->stock;
 	}
 	public function CariTransaction(){
-		$id = $this->input->post('id');
-        $data = $this->Admin_model->GetDataTransaction(array('product_order_detail.id' => $id));
+		$id 	= $this->input->post('id');
+        $data 	= $this->Admin_model->GetDataTransaction(array('product_order_detail.id' => $id));
         echo $data->id_detail."|".$data->product_name."|".$data->amount."|".$data->code."|".$data->product_id;
 	}
 	public function Update_Product()
@@ -916,13 +948,13 @@ class Admin extends CI_Controller {
 			}else{
 				$leveluser = 'Merchant';
 			}
-			$masuk ="Pesanan ditujukan ke Merchant";
-			$id = $this->session->userdata('logged_id');
-			$list_discuss = $this->Product_model->GetDiscussList(array("product.merchant_id" => $id));
-			$record = $this->Product_model->GetData(array("id" => $id) , 'user_merchant');
-			$trans = count($this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $masuk), 'product_order_detail'));
-			$bill = array('bill.status' => 'Tagihkan Ke Admin');
-			$end = array('bill.status' => 'Penagihan Selesai');
+			$masuk 			="Pesanan ditujukan ke Merchant";
+			$id 			= $this->session->userdata('logged_id');
+			$list_discuss 	= $this->Product_model->GetDiscussList(array("product.merchant_id" => $id));
+			$record 		= $this->Product_model->GetData(array("id" => $id) , 'user_merchant');
+			$trans 			= count($this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $masuk), 'product_order_detail'));
+			$bill 			= array('bill.status' => 'Tagihkan Ke Admin');
+			$end 			= array('bill.status' => 'Penagihan Selesai');
 
 				$data=
 			[	
@@ -933,13 +965,13 @@ class Admin extends CI_Controller {
 				'CMerchant'			=> $this->Admin_model->Count_Merchant() - 1, 
 				'CBuyer'			=> $this->Admin_model->Count_Buyer(),
 				'A_AmountProduct'	=>  $this->Admin_model->Count_Product(),
-				'PenagihanMasuk'=> $this->Product_model->CountBillSent($bill),
-				'PenagihanEnd' => $this->Product_model->CountBillSent($end),
-				'list_discuss'	=> $list_discuss,
-				'username'		=> $record->username,
-				'trans'			=> $trans,
-				'main_view'	=>	'Discussion',
-				'nameAccess'	=> $leveluser,
+				'PenagihanMasuk'	=> $this->Product_model->CountBillSent($bill),
+				'PenagihanEnd' 		=> $this->Product_model->CountBillSent($end),
+				'list_discuss'		=> $list_discuss,
+				'username'			=> $record->username,
+				'trans'				=> $trans,
+				'main_view'			=>	'Discussion',
+				'nameAccess'		=> $leveluser,
 				
 			];
 			$this->load->view('template', $data);
@@ -952,15 +984,15 @@ class Admin extends CI_Controller {
 			}else{
 				$leveluser = 'Merchant';
 			}
-			$id = $this->session->userdata('logged_id');
-			$aw = $this->Product_model->GetData(array("id" => $id) , 'user_merchant');
-			$id = $this->uri->segment(3);
-			$masuk		= 'Pesanan ditujukan ke Merchant';
+			$id 	= $this->session->userdata('logged_id');
+			$aw 	= $this->Product_model->GetData(array("id" => $id) , 'user_merchant');
+			$id 	= $this->uri->segment(3);
+			$masuk	= 'Pesanan ditujukan ke Merchant';
 			$record = $this->Product_model->GetData(array("id" => $id) , 'Product');
 			//$record = $this->Product_model->GetData(array("id" => $id) , 'Product');
-			$trans	 	= count($this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $masuk), 'product_order_detail'));
-			$bill = array('bill.status' => 'Tagihkan Ke Admin');
-			$end = array('bill.status' => 'Penagihan Selesai');
+			$trans	= count($this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $masuk), 'product_order_detail'));
+			$bill 	= array('bill.status' => 'Tagihkan Ke Admin');
+			$end 	= array('bill.status' => 'Penagihan Selesai');
 
 			$data = [
 				'Confirm'		=> $this->Product_model->Count_OrderMerchant(),
@@ -998,16 +1030,16 @@ class Admin extends CI_Controller {
 			}else{
 				$leveluser = 'Merchant';
 			}
-			$id 				= $this->session->userdata('logged_id');
-			$masuk				= "Pesanan ditujukan ke Merchant";
-			$Selesai 			= "Selesai";
-			$feedback	 		= $this->Product_model->Get_Feedback(array("merchant_id" => $id, "product_order_detail.status" => $Selesai), 'product_order_detail');
-			$trans	 			= count($this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $masuk), 'product_order_detail'));
-			$record 			= $this->Product_model->GetData(array("id" => $id) , 'user_merchant');
-			$id_detail= $this->uri->segment(3);
-			$cek = $this->Product_model->CheckoutTransfer(array("bill.id" => $id_detail));
-			$bill = array('bill.status' => 'Tagihkan Ke Admin');
-			$end = array('bill.status' => 'Penagihan Selesai');
+			$id 		= $this->session->userdata('logged_id');
+			$masuk		= "Pesanan ditujukan ke Merchant";
+			$Selesai 	= "Selesai";
+			$feedback	= $this->Product_model->Get_Feedback(array("merchant_id" => $id, "product_order_detail.status" => $Selesai), 'product_order_detail');
+			$trans	 	= count($this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $masuk), 'product_order_detail'));
+			$record 	= $this->Product_model->GetData(array("id" => $id) , 'user_merchant');
+			$id_detail	= $this->uri->segment(3);
+			$cek 		= $this->Product_model->CheckoutTransfer(array("bill.id" => $id_detail));
+			$bill 		= array('bill.status' => 'Tagihkan Ke Admin');
+			$end 		= array('bill.status' => 'Penagihan Selesai');
 
 			$data 				= 
 			[
@@ -1016,16 +1048,16 @@ class Admin extends CI_Controller {
 				'Sent'			=> $this->Product_model->Count_OrderSent(),
 				'Finish'		=> $this->Product_model->Count_OrderFinish(),
 				'Cancel'		=> $this->Product_model->Count_OrderCancel(),
-				'CMerchant'	=> $this->Admin_model->Count_Merchant() - 1, 
-				'CBuyer'	=> $this->Admin_model->Count_Buyer(),
+				'CMerchant'		=> $this->Admin_model->Count_Merchant() - 1, 
+				'CBuyer'		=> $this->Admin_model->Count_Buyer(),
 				'A_AmountProduct'	  =>  $this->Admin_model->Count_Product(),
 				'PenagihanMasuk'=> $this->Product_model->CountBillSent($bill),
-				'PenagihanEnd' => $this->Product_model->CountBillSent($end),
-				'username'	=> $record->username,
-				'C_Detail'	=> $cek,
-				'trans'		=> $trans,
-				'feedback'	=> $feedback,
-				'main_view'	=> 'checkout',
+				'PenagihanEnd' 	=> $this->Product_model->CountBillSent($end),
+				'username'		=> $record->username,
+				'C_Detail'		=> $cek,
+				'trans'			=> $trans,
+				'feedback'		=> $feedback,
+				'main_view'		=> 'checkout',
 				'nameAccess'	=> $leveluser
 			];
 			$this->load->view('template', $data);
@@ -1047,15 +1079,15 @@ class Admin extends CI_Controller {
 
 			$berhasil	= "Selesai";
 			$selesai 	= "Selesai";
-			$id = $this->session->userdata('logged_id');
-			$record = $this->Product_model->GetData(array("id" => $id) , 'user_merchant');
+			$id 		= $this->session->userdata('logged_id');
+			$record 	= $this->Product_model->GetData(array("id" => $id) , 'user_merchant');
 			$success 	= $this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $berhasil), 'product_order_detail');
 			$trans	 	= count($this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $masuk), 'product_order_detail'));
 			$sent 		= $this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $pengiriman), 'product_order_detail');
-			$limit = 10;
-			$where = array('bill.status' => 'Tagihkan Ke Admin');
-			$bill = array('bill.status' => 'Tagihkan Ke Admin');
-			$end = array('bill.status' => 'Penagihan Selesai');
+			$limit 		= 10;
+			$where 		= array('bill.status' => 'Tagihkan Ke Admin');
+			$bill 		= array('bill.status' => 'Tagihkan Ke Admin');
+			$end 		= array('bill.status' => 'Penagihan Selesai');
 
 
 			if(!is_null($offset))
@@ -1120,16 +1152,16 @@ class Admin extends CI_Controller {
 
 			$berhasil	= "Selesai";
 			$selesai 	= "Selesai";
-			$id = $this->session->userdata('logged_id');
-			$record = $this->Product_model->GetData(array("id" => $id) , 'user_merchant');
+			$id 		= $this->session->userdata('logged_id');
+			$record 	= $this->Product_model->GetData(array("id" => $id) , 'user_merchant');
 			$success 	= $this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $berhasil), 'product_order_detail');
 			$trans	 	= count($this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $masuk), 'product_order_detail'));
 			$sent 		= $this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $pengiriman), 'product_order_detail');
 			$Count_Product = $this->Product_model->CountProductMerchant(array("product.merchant_id" => $id));
-			$limit = 10;
-			$where = array('bill.status' => 'Penagihan Selesai');
-			$bill = array('bill.status' => 'Tagihkan Ke Admin');
-			$end = array('bill.status' => 'Penagihan Selesai');
+			$limit 		= 10;
+			$where 		= array('bill.status' => 'Penagihan Selesai');
+			$bill 		= array('bill.status' => 'Tagihkan Ke Admin');
+			$end 		= array('bill.status' => 'Penagihan Selesai');
 
 			if(!is_null($offset))
 			{
@@ -1299,11 +1331,330 @@ class Admin extends CI_Controller {
 		];
 		$this->load->view('Print',$data);
 	}
+	public function DetailLaporan()
+	{
+		$id= $this->uri->segment(3);
+		$where = array('product_order_detail.order_id' => $id);
+		$laporan = $this->Admin_model->GetLaporan($where);
+		$data= 
+		[
+			'list_laporan' =>$laporan,
+		];
+		$this->load->view('DetailLaporan', $data);
+	}
+	public function DetilLaporan()
+	{
+		$id= $this->uri->segment(3);
+		$where = array('product_order_detail.order_id' => $id);
+		$laporan = $this->Admin_model->GetLaporan($where);
+		$data= 
+		[
+			'list_laporan' =>$laporan,
+		];
+		$this->load->view('DetilLaporan', $data);
+	}
 	public function BroadcastBill()
 	{
 		$this->load->view('Broadcast', $data);
 	}
+	
+	public function ProductPending($offset = NULL)
+	{
+		if ($this->session->userdata('logged_in') == TRUE) {
+			if($this->session->userdata('leveluser') == 1)
+			{
+				$leveluser = 'Administrator';
+			}else
+			{
+				$leveluser = 'Merchant';
+			}
+			
+			$id 		= $this->session->userdata('logged_id');
+			$limit = 10;
+			$where = array('approve' => 0);
+			if(!is_null($offset))
+			{
+				$offset = $this->uri->segment(3);
+			}
+			$this->load->library('Pagination');
+			$config['uri_segment'] = 3;
+			$config['base_url'] = base_url().'index.php/Admin/Transaction_Masuk';
+			$config['total_rows'] = $this->Admin_model->Count_Pending($where);
+			$config['per_page'] = $limit;
+			$config['num_links'] = 3;
+			$config['full_tag_open'] = "<ul class='pagination'>";
+			$config['full_tag_close'] = "</ul>";
+			$config['num_tag_open'] = '<li>';
+			$config['num_tag_close'] = '</li>';
+			$config['cur_tag_open'] = "<li class='active'><a href='#'>";
+			$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+			$config['next_tag_open'] = "<li>";
+			$config['next_tagl_close'] = "</li>";
+			$config['prev_tag_open'] = "<li>";
+			$config['prev_tagl_close'] = "</li>";
+			$config['first_tag_open'] = "<li>";
+			$config['first_tagl_close'] = "</li>";
+			$config['last_tag_open'] = "<li>";
+			$config['last_tagl_close'] = "</li>";
+			$this->pagination->initialize($config);
+			//$b = $this->Product_model->feedback(array("merchant_id" => $id),'product_order_detail');
 
+			
+			$batal		= "Order Dibatalkan";
+			$berhasil	= "Selesai";
+			$pengiriman	= "Proses Kirim";
+			$masuk		= "Pesanan ditujukan ke Merchant";
+			$wher		= "merchant_id = "+$id+",product_order_detail.status = "+$masuk+",product_order_detail";
+			$record 	= $this->Product_model->GetData(array("id" => $id) , 'user_merchant');
+			$stock 		= $this->Product_model->Stock(array("product_order_detail.merchant_id" => $id), 'product_order_detail');
+			$product 	= $this->Product_model->Order(array("merchant_id" => $id), 'product_order');
+			$failed 	= $this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $batal), 'product_order_detail');
+			$success 	= $this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $berhasil), 'product_order_detail');
+			$wait	 	= $this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $masuk), 'product_order_detail');
+			$sent 		= $this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $pengiriman), 'product_order_detail');
+			$trans	 	= count($this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $masuk), 'product_order_detail'));
+			$count 		= count($wait);
+			$A_Transaction = $this->Admin_model->Order(array("product_order_detail.status" => $masuk));
+			$bill 		= array('bill.status' => 'Tagihkan Ke Admin');
+			$end 		= array('bill.status' => 'Penagihan Selesai');
+
+			$data=
+			[
+				'Confirm'	=> $this->Admin_model->Trans_Masuk(),
+				'Sent'		=> $this->Admin_model->Trans_Kirim(),
+				'Finish'	=> $this->Admin_model->Trans_Selesai(),
+				'Cancel'	=> $this->Admin_model->Trans_Batal(),
+				'CMerchant'			=> $this->Admin_model->Count_Merchant() - 1, 
+				'CBuyer'			=> $this->Admin_model->Count_Buyer(),
+				'A_AmountProduct'	=>  $this->Admin_model->Count_Product(),
+				'Penagihan'  	=> $this->Product_model->Count_Penagihan(),
+				//'transaksi'	=> $this->Product_model->orderin($where,$limit,$offset),
+				'PenagihanMasuk'=> $this->Product_model->CountBillSent($bill),
+				'PenagihanEnd' => $this->Product_model->CountBillSent($end),
+			//	'feedback'	=> $b,
+				'stock'		=> $stock,
+				'wait'		=> $wait,
+				'sent'		=> $sent,
+				'success'	=> $success,
+				'fail'		=> $failed,
+				'order'		=> $product,
+				'username'	=> $record->username,
+				'trans'		=> $trans,
+				'main_view'	=>	'Product_Pending',
+				'nameAccess'=> $leveluser,
+				'A_Transaction' => $this->Admin_model->GetProductPending($where,$limit,$offset),
+			];
+			$this->load->view('template', $data);
+		}
+		else {
+			redirect('Auth');
+		}
+	}
+	public function CariPending()
+	{
+		$id 	= $this->input->post('id');
+        $data 	= $this->Admin_model->GetPending(array('Product.id' => $id));
+        echo $data->id_product."|".$data->product_name."|".$data->stock."|".$data->username."|".$data->username;
+	}
+	public function ChangePending()
+	{
+		$id 			= $this->input->post('id');
+		$approve			= $this->input->post('approve');
+		$result 		= $this->Admin_model->ChangePending($id,$approve);
+		echo $result;
+	}
+	public function Laporan($offset = NULL)
+	{
+		if ($this->session->userdata('logged_in') == TRUE) {
+			if($this->session->userdata('leveluser') == 1)
+			{
+				$leveluser = 'Administrator';
+			}else
+			{
+				$leveluser = 'Merchant';
+			}
+			
+			$id 		= $this->session->userdata('logged_id');
+			$limit 		= 10;
+			$where 		= array('product_order_detail.status' => 'Selesai');
+			if(!is_null($offset))
+			{
+				$offset = $this->uri->segment(3);
+			}
+			$this->load->library('Pagination');
+			$config['uri_segment'] = 3;
+			$config['base_url'] = base_url().'index.php/Admin/Transaction_Success';
+			$config['total_rows'] = $this->Admin_model->Total_Records_Transaction($where);
+			$config['per_page'] = $limit;
+			$config['num_links'] = 3;
+			$config['full_tag_open'] = "<ul class='pagination'>";
+			$config['full_tag_close'] = "</ul>";
+			$config['num_tag_open'] = '<li>';
+			$config['num_tag_close'] = '</li>';
+			$config['cur_tag_open'] = "<li class='active'><a href='#'>";
+			$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+			$config['next_tag_open'] = "<li>";
+			$config['next_tagl_close'] = "</li>";
+			$config['prev_tag_open'] = "<li>";
+			$config['prev_tagl_close'] = "</li>";
+			$config['first_tag_open'] = "<li>";
+			$config['first_tagl_close'] = "</li>";
+			$config['last_tag_open'] = "<li>";
+			$config['last_tagl_close'] = "</li>";
+			$this->pagination->initialize($config);
+			//$b = $this->Product_model->feedback(array("merchant_id" => $id),'product_order_detail');
+
+			
+			$batal		= "Order Dibatalkan";
+			$berhasil	= "Selesai";
+			$pengiriman	= "Proses Kirim";
+			$masuk		= "Pesanan ditujukan ke Merchant";
+			$wher		= "merchant_id = "+$id+",product_order_detail.status = "+$masuk+",product_order_detail";
+			$record 	= $this->Product_model->GetData(array("id" => $id) , 'user_merchant');
+			$stock 		= $this->Product_model->Stock(array("product_order_detail.merchant_id" => $id), 'product_order_detail');
+			$product 	= $this->Product_model->Order(array("merchant_id" => $id), 'product_order');
+			$failed 	= $this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $batal), 'product_order_detail');
+			$success 	= $this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $berhasil), 'product_order_detail');
+			$wait	 	= $this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $masuk), 'product_order_detail');
+			$sent 		= $this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $pengiriman), 'product_order_detail');
+			$trans	 	= count($this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $masuk), 'product_order_detail'));
+			$count 		= count($wait);
+			$A_Transaction= $this->Admin_model->Order(array("product_order_detail.status" => $berhasil));
+			$bill 		= array('bill.status' => 'Tagihkan Ke Admin');
+			$end 		= array('bill.status' => 'Penagihan Selesai');
+
+			$result 		= $this->Admin_model->DataLaporan(array("product_order_detail.status" => 'Selesai'));
+			$deliv 	= array();
+			foreach ($result as $data) {
+				$deliv[$data->id_order] = $data->fee_delivery;
+			}
+
+			$data=
+			[
+				'Confirm'	=> $this->Admin_model->Trans_Masuk(),
+				'Sent'		=> $this->Admin_model->Trans_Kirim(),
+				'Finish'	=> $this->Admin_model->Trans_Selesai(),
+				'Cancel'	=> $this->Admin_model->Trans_Batal(),
+				'CMerchant'			=> $this->Admin_model->Count_Merchant() - 1, 
+				'CBuyer'			=> $this->Admin_model->Count_Buyer(),
+				'A_AmountProduct'	=>  $this->Admin_model->Count_Product(),
+				'Penagihan'  	=> $this->Product_model->Count_Penagihan(),
+				'PenagihanMasuk'=> $this->Product_model->CountBillSent($bill),
+				'PenagihanEnd' => $this->Product_model->CountBillSent($end),
+				//'transaksi'	=> $this->Product_model->orderin($where,$limit,$offset),
+			//	'feedback'	=> $b,
+				'stock'		=> $stock,
+				'wait'		=> $wait,
+				'sent'		=> $sent,
+				'success'	=> $success,
+				'fail'		=> $failed,
+				'order'		=> $product,
+				'username'	=> $record->username,
+				'trans'		=> $trans,
+				'main_view'	=>	'Laporan',
+				'deliv'		=> $deliv,
+				'nameAccess'=> $leveluser,
+				'A_Transaction' => $this->Admin_model->GetDataLaporan($where,$limit,$offset),
+			];
+			$this->load->view('template', $data);
+		}
+		else {
+			redirect('Auth');
+		}
+	}
+	public function LaporanbyTrans($offset = NULL)
+	{
+		if ($this->session->userdata('logged_in') == TRUE) {
+			if($this->session->userdata('leveluser') == 1)
+			{
+				$leveluser = 'Administrator';
+			}else
+			{
+				$leveluser = 'Merchant';
+			}
+			
+			$id 		= $this->session->userdata('logged_id');
+			$limit 		= 10;
+			$where 		= array('product_order_detail.status' => 'Selesai');
+			if(!is_null($offset))
+			{
+				$offset = $this->uri->segment(3);
+			}
+			$this->load->library('Pagination');
+			$config['uri_segment'] = 3;
+			$config['base_url'] = base_url().'index.php/Admin/Transaction_Success';
+			$config['total_rows'] = $this->Admin_model->Total_Records_Transaction($where);
+			$config['per_page'] = $limit;
+			$config['num_links'] = 3;
+			$config['full_tag_open'] = "<ul class='pagination'>";
+			$config['full_tag_close'] = "</ul>";
+			$config['num_tag_open'] = '<li>';
+			$config['num_tag_close'] = '</li>';
+			$config['cur_tag_open'] = "<li class='active'><a href='#'>";
+			$config['cur_tag_close'] = "<span class='sr-only'></span></a></li>";
+			$config['next_tag_open'] = "<li>";
+			$config['next_tagl_close'] = "</li>";
+			$config['prev_tag_open'] = "<li>";
+			$config['prev_tagl_close'] = "</li>";
+			$config['first_tag_open'] = "<li>";
+			$config['first_tagl_close'] = "</li>";
+			$config['last_tag_open'] = "<li>";
+			$config['last_tagl_close'] = "</li>";
+			$this->pagination->initialize($config);
+			//$b = $this->Product_model->feedback(array("merchant_id" => $id),'product_order_detail');
+
+			
+			$batal		= "Order Dibatalkan";
+			$berhasil	= "Selesai";
+			$pengiriman	= "Proses Kirim";
+			$masuk		= "Pesanan ditujukan ke Merchant";
+			$wher		= "merchant_id = "+$id+",product_order_detail.status = "+$masuk+",product_order_detail";
+			$record 	= $this->Product_model->GetData(array("id" => $id) , 'user_merchant');
+			$stock 		= $this->Product_model->Stock(array("product_order_detail.merchant_id" => $id), 'product_order_detail');
+			$product 	= $this->Product_model->Order(array("merchant_id" => $id), 'product_order');
+			$failed 	= $this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $batal), 'product_order_detail');
+			$success 	= $this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $berhasil), 'product_order_detail');
+			$wait	 	= $this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $masuk), 'product_order_detail');
+			$sent 		= $this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $pengiriman), 'product_order_detail');
+			$trans	 	= count($this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $masuk), 'product_order_detail'));
+			$count 		= count($wait);
+			$A_Transaction= $this->Admin_model->Order(array("product_order_detail.status" => $berhasil));
+			$bill 		= array('bill.status' => 'Tagihkan Ke Admin');
+			$end 		= array('bill.status' => 'Penagihan Selesai');
+			
+			$data=
+			[
+				'Confirm'	=> $this->Admin_model->Trans_Masuk(),
+				'Sent'		=> $this->Admin_model->Trans_Kirim(),
+				'Finish'	=> $this->Admin_model->Trans_Selesai(),
+				'Cancel'	=> $this->Admin_model->Trans_Batal(),
+				'CMerchant'			=> $this->Admin_model->Count_Merchant() - 1, 
+				'CBuyer'			=> $this->Admin_model->Count_Buyer(),
+				'A_AmountProduct'	=>  $this->Admin_model->Count_Product(),
+				'Penagihan'  	=> $this->Product_model->Count_Penagihan(),
+				'PenagihanMasuk'=> $this->Product_model->CountBillSent($bill),
+				'PenagihanEnd' => $this->Product_model->CountBillSent($end),
+				//'transaksi'	=> $this->Product_model->orderin($where,$limit,$offset),
+			//	'feedback'	=> $b,
+				'stock'		=> $stock,
+				'wait'		=> $wait,
+				'sent'		=> $sent,
+				'success'	=> $success,
+				'fail'		=> $failed,
+				'order'		=> $product,
+				'username'	=> $record->username,
+				'trans'		=> $trans,
+				'main_view'	=>	'LaporanbyTrans',
+				'nameAccess'=> $leveluser,
+				
+				'A_Transaction' => $this->Admin_model->GetDataLaporanByOrder($where,$limit,$offset),
+			];
+			$this->load->view('template', $data);
+		}
+		else {
+			redirect('Auth');
+		}
+	}
 }
 
 /* End of file Admin.php */

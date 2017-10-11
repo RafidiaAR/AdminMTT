@@ -706,6 +706,48 @@ class Progress extends CI_Controller
         $data = $this->Product_model->GetData(array('id' => $id), 'product');
         echo $data->id."|".$data->name."|".$data->stock."|".$data->price."|".$data->description."|".$data->status."|".$data->last_update."|".$data->image;
 	}
+	public function ProductPending()
+	{
+		if ($this->session->userdata('logged_in') == TRUE) {
+			if($this->session->userdata('leveluser') == 1){
+				$leveluser = 'Administrator';
+			}else{
+				$leveluser = 'Merchant';
+			}
+			$id = $this->session->userdata('logged_id');
+			$masuk		= "Menunggu Pembayaran";
+			$trans	 	= count($this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $masuk), 'product_order_detail'));
+			$record = $this->Product_model->GetData(array("id" => $id) , 'user_merchant');
+			$pending = $this->Product_model->GetDataPending(array("product.merchant_id" => $id,"approve" => 0));
+			$Count_Product = $this->Product_model->CountProductMerchant(array("product.merchant_id" => $id));
+
+			$data = [
+				'Confirm'	=> $this->Product_model->Count_OrderMerchant(),
+				'Sent'		=> $this->Product_model->Count_OrderSent(),
+				'Finish'	=> $this->Product_model->Count_OrderFinish(),
+				'Cancel'	=> $this->Product_model->Count_OrderCancel(),
+				'Penagihan'  	=> $this->Product_model->Count_Penagihan(),
+				'ProsesPenagihan'=> $this->Product_model->Count_ProsesPenagihan(),
+				'PenagihanSelesai'=> $this->Product_model->Count_PenagihanSelesai(),
+				'trans'		=> $trans,
+				'C_Product' => $Count_Product,
+				'pending' 	=> $pending, 
+				'id' 		=> $record->id, 
+				'username' 	=> $record->username, 
+				'main_view' => 'Product_Pending',
+				'nameAccess'=> $leveluser
+				];
+			$this->load->view('template', $data);
+		}
+		else {
+			redirect('Auth');
+		}
+	}
+	public function GetProduk(){
+		$id = $this->input->post('id');
+        $data = $this->Product_model->GetProduct(array('product.id' => $id));
+        echo $data->id_product."|".$data->product_name."|".$data->username;
+	}
 }
 
 /* End of file auth.php */

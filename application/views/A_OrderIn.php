@@ -27,20 +27,20 @@
     <div class="col-md-12 chart-layer2-left">
                <div class="work-progres">
                             <div class="chit-chat-heading">
-                                  Transaction JualBeli MTT
+                                 Transaksi Masuk 
                             </div>
                             <div class="table-responsive">
                                 <table class="table table-hover">
                                   <thead>
                                     <tr>
                                       <th style="width: 2%;">No. Order</th>
-                                      <th style="width: 3%;">Buyer</th>
+                                      <th style="width: 3%;">Pembeli</th>
                                       <th style="width: 3%;">Merchant</th>
-                                      <th style="width: 10%;">Product</th>
-                                      <th style="width: 1%;">Amount</th>
-                                      <th style="width: 7%;">Shipping</th>
-                                      <th style="width: 3%;">Total Fees</th>
-                                      <th style="width: 8%;">Status Order</th>
+                                      <th style="width: 10%;">Produk</th>
+                                      <th style="width: 3%;">Jumlah</th>
+                                      <!-- <th style="width: 7%;">Shipping</th> -->
+                                      <th style="width: 5%;">Total Harga</th>
+                                      <th style="width: 10%;">Status Order</th>
                                       <th style="width: 15%; text-align: center;">Action</th>
 
                                   </tr>
@@ -56,11 +56,11 @@
                                   <td><?php echo $data->username;?></td>
                                   <td><?php echo $data->product_name;?></td>
                                   <td><?php echo $data->amount;?></td>
-                                  <td><?php echo $data->shipping;?></td>
+                                  <!-- <td><?php echo $data->shipping;?></td> -->
                                   <td><?php 
                                   $amount = $data->amount;
                                   $price  = $data->price_item;
-                                  echo $amount*$price;?></td>
+                                  echo 'Rp. '.number_format($amount*$price);?></td>
                                   <td><?php echo $data->status;?></td>
                                   <td>
                                   
@@ -202,7 +202,7 @@
                         </div>
 
             </div>
-     </div>
+</div>
 <!-- Modal Delete End -->
 <Script type="text/javascript">
 $('button#Decline').click(function(event) {

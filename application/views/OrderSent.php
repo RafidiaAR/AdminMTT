@@ -14,15 +14,16 @@
                                 <table class="table table-hover">
                                   <thead>
                                     <tr>
-                                      <th style="width: 10%;">#ID Transaksi</th>
+                                      <th style="width: 5%;">#ID Transaksi</th>
                                       <th style="width: 10%">Nama Pemesan</th>
-                                      <th style="width: 15%">Alamat</th>
-                                      <th style="width: 20%">Nama Produk</th>
-                                      <th>Amount</th>
-                                      <th style="width: 10%">Shipping Method</th>
+                                      <th style="width: 10%">Alamat</th>
+                                      <th style="width: 15%">Nama Produk</th>
+                                      <th style="width: 5%">Amount</th>
+                                      <th style="width: 10%">Price Item</th>
+                                      <!-- <th style="width: 10%">Shipping Method</th> -->
                                       <th style="width: 10%">Total</th>
                                       <th style="width: 10%">Status</th>
-                                      <th style="width: 10%">Aksi</th>
+                                      <!-- <th style="width: 10%">Aksi</th> -->
                                   </tr>
                               </thead>
                               <tbody>
@@ -35,11 +36,17 @@
                                   <td><?php echo $data->address; ?></td>
                                   <td><?php echo $data->product_name; ?></td>
                                   <td><?php echo $data->amount; ?></td>
-                                  <td><?php echo $data->shipping; ?></td>
-                                  <td><?php echo $data->total_fees; ?></td>
+                                  <td><?php echo 'Rp. '.number_format($data->price_item); ?></td>
+                                  <!-- <td><?php echo $data->shipping; ?></td> -->
+                                  <td><?php 
+                                  $jumlah = $data->amount;
+                                  $harga  = $data->price_item;
+                                  $hasil  =$jumlah*$harga;  
+                                  echo 'Rp. '.number_format($hasil);
+                                   ?></td>
                                   <td><?php echo $data->status; ?></td>
                                   
-                                  <td>
+                                  <!-- <td>
                                   <button id="Sent" class="btn btn-success">
                                   <i class="fa fa-check"></i>&nbsp Accept</button>
                                   <input id="order_id" type="hidden" class="form-control" value="<?php echo $data->id_detail;?>">
@@ -55,10 +62,10 @@
                                   
 
 
-                                    <!-- <button id="decline" class="btn btn-danger">
-                                  <i class="fa fa-close"></i>&nbsp Decline</button> -->
+                                    <button id="decline" class="btn btn-danger">
+                                  <i class="fa fa-close"></i>&nbsp Decline</button>
                                   
-                                  </td>
+                                  </td> -->
                               </tr>
                               <?php endforeach; ?>
                                <input id="date" type="hidden" name="last_update" placeholder="" class="form-control" value="<?php echo strtotime(date('Y-m-d H:i:s'))?>">
