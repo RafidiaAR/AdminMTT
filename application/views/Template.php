@@ -111,10 +111,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
           <div class="header-left">
               <div class="logo-name">
               <?php if($this->session->userdata('leveluser') == 1) : ?>
-                <a href="<?php echo base_url()?>/index.php/Admin/"> <h1>JualBeli MTT</h1>
+                <a href="<?php echo base_url()?>/Admin/"> <h1>JualBeli MTT</h1>
               <?php endif; ?>
               <?php if($this->session->userdata('leveluser') == 0 || $this->session->userdata('leveluser') == NULL ): ?>
-                <a href="<?php echo base_url()?>/index.php/Page/"> <h1>JualBeli MTT</h1>
+                <a href="<?php echo base_url()?>/Page/"> <h1>JualBeli MTT</h1>
               <?php endif; ?>
                     
                   <!--<img id="logo" src="" alt="Logo"/>--> 
@@ -189,7 +189,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                        </a></li>    
                        <li>
                         <div class="notification_bottom">
-                          <a href="<?php echo base_url();?>index.php/Progress/transaction">See all notifications</a>
+                          <a href="<?php echo base_url();?>Progress/transaction">See all notifications</a>
                         </div> 
                       </li>
                     </ul>
@@ -266,8 +266,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </a>
                     <ul class="dropdown-menu drp-mnu">
                      
-                      <li> <a href="<?php echo base_url();?>index.php/progress/profile"><i class="fa fa-user"></i> Profile</a> </li> 
-                      <li> <a href="<?php echo base_url(); ?>index.php/Auth/Logout"><i class="fa fa-sign-out"></i> Logout</a> </li>
+                      <li> <a href="<?php echo base_url();?>progress/profile"><i class="fa fa-user"></i> Profile</a> </li> 
+                      <li> <a href="<?php echo base_url(); ?>Auth/Logout"><i class="fa fa-sign-out"></i> Logout</a> </li>
                     </ul>
                   </li>
                 </ul>
@@ -314,30 +314,30 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         </a> </div>     
         <div class="menu ">
           <ul id="menu" >
-            <li id="menu-home" ><a href="<?php echo base_url(); ?>index.php/Admin" title="Dashboard"><i class="fa fa-tachometer"></i><span>Halaman Awal</span></a></li>
-            <li><a href="<?php echo base_url(); ?>index.php/Admin/Product_List"><i class="fa fa-list" title="Products"></i><span>Produk</span><span class="fa fa-angle-right" style="float: right"></span></a>
+            <li id="menu-home" ><a href="<?php echo base_url(); ?>Admin" title="Dashboard"><i class="fa fa-tachometer"></i><span>Halaman Awal</span></a></li>
+            <li><a href="<?php echo base_url(); ?>Admin/Product_List"><i class="fa fa-list" title="Products"></i><span>Produk</span><span class="fa fa-angle-right" style="float: right"></span></a>
             <ul>
-                <li><a href="<?php echo base_url(); ?>index.php/Admin/Product_List">Semua Produk  <span class="badge"><?php echo $A_AmountProduct; ?></span></a></li>
-                <li><a href="<?php echo base_url(); ?>index.php/Admin/add_product">Tambah Produk </a></li> 
-                <li><a href="<?php echo base_url(); ?>index.php/Admin/ProductPending">Produk Pending </a></li>                
+                <li><a href="<?php echo base_url(); ?>Admin/Product_List">Semua Produk  <span class="badge"><?php echo $A_AmountProduct; ?></span></a></li>
+                <li><a href="<?php echo base_url(); ?>Admin/add_product">Tambah Produk </a></li> 
+                <li><a href="<?php echo base_url(); ?>Admin/ProductPending">Produk Pending </a></li>                
               </ul>
             </li>
-            <li id="menu-comunicacao" ><a href="<?php echo base_url(); ?>index.php/Admin/List_Merchant" title="Feedback"><i class="fa fa-user"></i><span>User </span><span class="fa fa-angle-right" style="float: right"></span></a>
+            <li id="menu-comunicacao" ><a href="<?php echo base_url(); ?>Admin/List_Merchant" title="Feedback"><i class="fa fa-user"></i><span>User </span><span class="fa fa-angle-right" style="float: right"></span></a>
             <ul>
-                <li><a href="<?php echo base_url(); ?>index.php/Admin/List_Merchant">Merchant <span class="badge"><?php echo $CMerchant; ?></span></a></li>
-                <li><a href="<?php echo base_url(); ?>index.php/Admin/List_Buyer">Pembeli <span class="badge"><?php echo $CBuyer; ?></span></a></li>                
+                <li><a href="<?php echo base_url(); ?>Admin/List_Merchant">Merchant <span class="badge"><?php echo $CMerchant; ?></span></a></li>
+                <li><a href="<?php echo base_url(); ?>Admin/List_Buyer">Pembeli <span class="badge"><?php echo $CBuyer; ?></span></a></li>                
               </ul>
             </li>
-            <li><a href="<?php echo base_url(); ?>index.php/Admin/Transaction_Masuk"><i class="fa fa-cart-arrow-down" title="Transaction"></i><span>Transaksi
+            <li><a href="<?php echo base_url(); ?>Admin/Transaction_Masuk"><i class="fa fa-cart-arrow-down" title="Transaction"></i><span>Transaksi
             </span><span class="fa fa-angle-right" style="float: right"></span></a>
               <ul>
-                <li><a href="<?php echo base_url(); ?>index.php/Admin/Transaction_Masuk">Transaksi Masuk <span class="badge"><?php echo $Confirm;?></span></a></li>
-                <li><a href="<?php echo base_url(); ?>index.php/Admin/Transaction_Kirim">Transaksi Sedang Dikirim <span class="badge"><?php echo $Sent; ?></span></a></li>
-                <li><a href="<?php echo base_url(); ?>index.php/Admin/Transaction_Success">Transaksi Selesai <span class="badge"><?php echo $Finish ?></span></a></li>
-                <li><a href="<?php echo base_url(); ?>index.php/Admin/Transaction_Batal">Transaksi Dibatalkan <span class="badge"><?php echo $Cancel ?></span></a></li>                
+                <li><a href="<?php echo base_url(); ?>Admin/Transaction_Masuk">Transaksi Masuk <span class="badge"><?php echo $Confirm;?></span></a></li>
+                <li><a href="<?php echo base_url(); ?>Admin/Transaction_Kirim">Transaksi Sedang Dikirim <span class="badge"><?php echo $Sent; ?></span></a></li>
+                <li><a href="<?php echo base_url(); ?>Admin/Transaction_Success">Transaksi Selesai <span class="badge"><?php echo $Finish ?></span></a></li>
+                <li><a href="<?php echo base_url(); ?>Admin/Transaction_Batal">Transaksi Dibatalkan <span class="badge"><?php echo $Cancel ?></span></a></li>                
               </ul>
             </li>
-            <li><a href="<?php echo base_url(); ?>index.php/Admin/Laporan"><i class="fa fa-money"></i><span>Laporan</span></a>
+            <li><a href="<?php echo base_url(); ?>Admin/Laporan"><i class="fa fa-money"></i><span>Laporan</span></a>
               
             </li>
 
@@ -349,8 +349,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
             <!-- <li><a href="#"><i class="fa fa-money"></i><span>Tagihan</span><span class="fa fa-angle-right" style="float: right"></span></a>
                <ul id="menu-academico-sub" >
-                  <li id="menu-academico-avaliacoes" ><a href="<?php echo base_url();?>index.php/Admin/Penagihan">Tagihan Masuk  <span class="badge"><?php echo $PenagihanMasuk ?></span></a></li>
-                  <li id="menu-academico-boletim" ><a href="<?php echo base_url();?>index.php/Admin/Penagihan_Selesai">Selesai  <span class="badge"><?php echo $PenagihanEnd?></span></a></li>
+                  <li id="menu-academico-avaliacoes" ><a href="<?php echo base_url();?>Admin/Penagihan">Tagihan Masuk  <span class="badge"><?php echo $PenagihanMasuk ?></span></a></li>
+                  <li id="menu-academico-boletim" ><a href="<?php echo base_url();?>Admin/Penagihan_Selesai">Selesai  <span class="badge"><?php echo $PenagihanEnd?></span></a></li>
                  </ul>
             </li> -->
             <!--  <li><a href="#"><i class="fa fa-envelope"></i><span>Message</span><span class="fa fa-angle-right" style="float: right"></span></a>
@@ -359,9 +359,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                   <li id="menu-academico-boletim" ><a href="inbox-details.html">Send email</a></li>
                  </ul>
             </li> -->
-            <li id="menu-comunicacao" ><a href="<?php echo base_url(); ?>index.php/Admin/Discussion" title="Discussion"><i class="fa fa-comments"></i><span>Diskusi  </span><span class="badge">1</span></a></li>
-            <li id="menu-comunicacao" ><a href="<?php echo base_url(); ?>index.php/Admin/Feedback" title="Feedback"><i class="fa fa-arrow-circle-down"></i><span>Feedback</span></a></li>
-            <li id="menu-comunicacao" ><a href="<?php echo base_url(); ?>index.php/Admin/Broadcast" title="Broadcast"><i class="fa fa-bullhorn"></i><span>Broadcast</span></a></li>
+            <li id="menu-comunicacao" ><a href="<?php echo base_url(); ?>Admin/Discussion" title="Discussion"><i class="fa fa-comments"></i><span>Diskusi  </span><span class="badge">1</span></a></li>
+            <li id="menu-comunicacao" ><a href="<?php echo base_url(); ?>Admin/Feedback" title="Feedback"><i class="fa fa-arrow-circle-down"></i><span>Feedback</span></a></li>
+            <li id="menu-comunicacao" ><a href="<?php echo base_url(); ?>Admin/Broadcast" title="Broadcast"><i class="fa fa-bullhorn"></i><span>Broadcast</span></a></li>
 
           </ul>
         </div>
@@ -378,34 +378,34 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         </a> </div>     
         <div class="menu ">
           <ul id="menu" >
-            <li id="menu-home" ><a href="<?php echo base_url(); ?>index.php/page" title="Dashboard"><i class="fa fa-tachometer"></i><span>Halaman Awal</span></a></li>
+            <li id="menu-home" ><a href="<?php echo base_url(); ?>page" title="Dashboard"><i class="fa fa-tachometer"></i><span>Halaman Awal</span></a></li>
             <li><a href="#"><i class="fa fa-list" title="Products"></i><span>Produk</span><span class="fa fa-angle-right" style="float: right"></span></a>
               <ul>
-                <li><a href="<?php echo base_url(); ?>index.php/page/product_list">Daftar Produk <span class="badge"><?php echo $C_Product;?></a></li>
-                <li><a href="<?php echo base_url(); ?>index.php/progress/add_product">Tambah Produk</a></li>
-                <li><a href="<?php echo base_url(); ?>index.php/progress/ProductPending">Produk Pending</a></li>                
+                <li><a href="<?php echo base_url(); ?>page/product_list">Daftar Produk <span class="badge"><?php echo $C_Product;?></a></li>
+                <li><a href="<?php echo base_url(); ?>progress/add_product">Tambah Produk</a></li>
+                <li><a href="<?php echo base_url(); ?>progress/ProductPending">Produk Pending</a></li>                
               </ul>
             </li>
             <li><a href="#"><i class="fa fa-cart-arrow-down" title="Transaction"></i><span>Transaksi
             <span class="badge"><?php echo $Confirm; ?> </span> 
             </span><span class="fa fa-angle-right" style="float: right"></span></a>
               <ul>
-                <li><a href="<?php echo base_url(); ?>index.php/progress/transaction">Order Masuk <span class="badge"><?php echo $Confirm;?></span></a></li>
-                <li><a href="<?php echo base_url(); ?>index.php/progress/OrderSent">Proses Kirim <span class="badge"><?php echo $Sent; ?></span></a></li>
-                <li><a href="<?php echo base_url(); ?>index.php/progress/OrderFinish">Selesai <span class="badge"><?php echo $Finish ?></span></a></li>
-                <li><a href="<?php echo base_url(); ?>index.php/progress/OrderCancel">Order Dibatalkan <span class="badge"><?php echo $Cancel ?></span></a></li>                
+                <li><a href="<?php echo base_url(); ?>progress/transaction">Order Masuk <span class="badge"><?php echo $Confirm;?></span></a></li>
+                <li><a href="<?php echo base_url(); ?>progress/OrderSent">Proses Kirim <span class="badge"><?php echo $Sent; ?></span></a></li>
+                <li><a href="<?php echo base_url(); ?>progress/OrderFinish">Selesai <span class="badge"><?php echo $Finish ?></span></a></li>
+                <li><a href="<?php echo base_url(); ?>progress/OrderCancel">Order Dibatalkan <span class="badge"><?php echo $Cancel ?></span></a></li>                
               </ul>
             </li>
 
            <!--  <li><a href="#"><i class="fa fa-money"></i><span>Tagihan</span><span class="fa fa-angle-right" style="float: right"></span></a>
                <ul id="menu-academico-sub" >
-                  <li id="menu-academico-avaliacoes" ><a href="<?php echo base_url();?>index.php/progress/Penagihan">Penagihan  <span class="badge"><?php echo $Penagihan ?></span></a></li>
-                  <li id="menu-academico-avaliacoes" ><a href="<?php echo base_url();?>index.php/progress/Proses_Penagihan">Proses Penagihan  <span class="badge"><?php echo $ProsesPenagihan ?></span></a></li>
-                  <li id="menu-academico-boletim" ><a href="<?php echo base_url();?>index.php/progress/Penagihan_Selesai">Selesai  <span class="badge"><?php echo $PenagihanSelesai ?></a></li>
+                  <li id="menu-academico-avaliacoes" ><a href="<?php echo base_url();?>progress/Penagihan">Penagihan  <span class="badge"><?php echo $Penagihan ?></span></a></li>
+                  <li id="menu-academico-avaliacoes" ><a href="<?php echo base_url();?>progress/Proses_Penagihan">Proses Penagihan  <span class="badge"><?php echo $ProsesPenagihan ?></span></a></li>
+                  <li id="menu-academico-boletim" ><a href="<?php echo base_url();?>progress/Penagihan_Selesai">Selesai  <span class="badge"><?php echo $PenagihanSelesai ?></a></li>
                  </ul>
             </li>  -->
-            <li id="menu-comunicacao" ><a href="<?php echo base_url(); ?>index.php/progress/discussion" title="Discussion"><i class="fa fa-comments"></i><span>Diskusi</span><span class="badge">1</span></a></li>
-            <li id="menu-comunicacao" ><a href="<?php echo base_url(); ?>index.php/progress/feedback" title="Feedback"><i class="fa fa-arrow-circle-down"></i><span>Feedback</span></a></li>
+            <li id="menu-comunicacao" ><a href="<?php echo base_url(); ?>progress/discussion" title="Discussion"><i class="fa fa-comments"></i><span>Diskusi</span><span class="badge">1</span></a></li>
+            <li id="menu-comunicacao" ><a href="<?php echo base_url(); ?>progress/feedback" title="Feedback"><i class="fa fa-arrow-circle-down"></i><span>Feedback</span></a></li>
 
           </ul>
         </div>

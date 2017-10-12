@@ -9,7 +9,7 @@
                 '.$notif.'
             </div>';
              } ?>
-                <form action="<?php echo base_url(); ?>index.php/Page/add_product" method="post" enctype="multipart/form-data">
+                <form action="<?php echo base_url(); ?>Page/add_product" method="post" enctype="multipart/form-data">
                        
                         <label>ID Produk</label>
                         
@@ -165,7 +165,7 @@
                 '.$notif.'
             </div>';
              } ?>
-    <form action="<?php echo base_url(); ?>index.php/Admin/Tambah_product" method="post" enctype="multipart/form-data">
+    <form action="<?php echo base_url(); ?>Admin/Tambah_product" method="post" enctype="multipart/form-data">
         <fieldset>
             <legend><span class="number">1</span> Informasi Produk</legend>
             <!-- <label>ID Produk</label> -->

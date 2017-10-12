@@ -2,7 +2,7 @@
 <!-- Dashboard Admin Start -->
 <?php if($this->session->userdata('leveluser') == 1) : ?>
     <div class="market-updates">
-    <a href="<?php echo base_url();?>index.php/Admin/Transaction_Success">
+    <a href="<?php echo base_url();?>Admin/Transaction_Success">
       <div class="col-md-4 market-update-gd">
         <div class="market-update-block clr-block-1">
           <div class="col-md-8 market-update-left">
@@ -17,7 +17,7 @@
         </div>
       </div>
       </a>
-      <a href="<?php echo base_url();?>index.php/Admin/List_Merchant">
+      <a href="<?php echo base_url();?>Admin/List_Merchant">
       <div class="col-md-4 market-update-gd">
         <div class="market-update-block clr-block-2">
          <div class="col-md-8 market-update-left">
@@ -32,7 +32,7 @@
         </div>
       </div>
       </a>
-      <a href="<?php echo base_url();?>index.php/Admin/Product_List">
+      <a href="<?php echo base_url();?>Admin/Product_List">
       <div class="col-md-4 market-update-gd">
         <div class="market-update-block clr-block-3">
           <div class="col-md-8 market-update-left">
@@ -85,7 +85,7 @@
   <!-- Dashboard Merchant Start -->
   <?php if($this->session->userdata('leveluser') == 0 || $this->session->userdata('leveluser') == NULL ): ?>
     <div class="market-updates">
-    <a href="<?php echo base_url();?>index.php/progress/transaction ">
+    <a href="<?php echo base_url();?>progress/transaction ">
       <div class="col-md-6 market-update-gd">
         <div class="market-update-block clr-block-1">
           <div class="col-md-8 market-update-left">
@@ -113,7 +113,7 @@
           <div class="clearfix"> </div>
         </div>
       </div> -->
-      <a href="<?php echo base_url();?>index.php/page/product_list">
+      <a href="<?php echo base_url();?>page/product_list">
       <div class="col-md-6 market-update-gd">
         <div class="market-update-block clr-block-3">
           <div class="col-md-8 market-update-left">

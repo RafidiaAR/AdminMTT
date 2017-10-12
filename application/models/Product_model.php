@@ -240,7 +240,23 @@ class Product_model extends CI_Model {
         
         
         if ($this->db->affected_rows() > 0) {
+            $prorder_id = $this->GetDataa(['id'=>$order_id],'product_order_detail')->row('order_id');
+            $ctm_id = $this->GetDataa(['id'=>$prorder_id],'product_order')->row('user_id');
+
+            $this->db->insert('notification', array(
+                'from_id'               => $this->session->userdata('logged_id'),
+                'for_id'                => $ctm_id,
+                'subject'               => '@'.$this->GetDataa(['id'=>$this->session->userdata('logged_id')],'user_merchant')->row('username'),
+                'text'                  => ' telah menerima order produk '.$this->GetDataa(['id'=>$product_id],'product')->row('name'),
+                'product_id'            => $product_id,
+                'type_notification'     => 'order_process',
+            ));
+           
+           if ($this->db->affected_rows() > 0) {
             return "true";
+        } else {
+            return "false";
+        } 
         } else {
             return "false";
         }       
@@ -257,7 +273,50 @@ class Product_model extends CI_Model {
 
         
         if ($this->db->affected_rows() > 0) {
+             $check_inarray = array();
+        $id_getnotif = array();
+        $id_validnotif = array();
+        $id_getnotif = $this->GetDataa(['product_id'=>$product_id],'discussion')->result();
+
+
+        if (!empty($id_getnotif)) {
+                
+            foreach ($id_getnotif as $getnotif) {
+                if (!in_array($getnotif->id_user, $id_validnotif)){
+                    if ($this->session->userdata('logged_id') != $getnotif->id_user) {
+                        $id_validnotif[] = $getnotif->id_user;
+                    }
+            
+        }
+        }
+            
+        }
+
+        $insert_notif = array();
+        $username = $this->GetDataa(['id'=>$this->session->userdata('logged_id')],'user_merchant')->row('username');
+        $product_name = $this->GetDataa(['id'=>$product_id],'product')->row('name');
+        for($i = 0; $i < count($id_validnotif); $i++)
+        {
+            $insert_notif[] = array(
+                
+                'from_id'               => $this->session->userdata('logged_id'),
+                'for_id'                => $id_validnotif[$i],
+                'subject'               => '@'.$username,
+                'text'                  => ' menambahkan komentar di produk '.$product_name,
+                'product_id'            => $product_id,
+                'comment'               => $comment,
+                'type_notification'     => 'diskusi',
+                
+            );
+        }
+         $this->db->insert_batch('notification', $insert_notif);
+
+           
+           if ($this->db->affected_rows() > 0) {
             return TRUE;
+        } else {
+            return FALSE;
+        } 
         } else {
             return FALSE;
         }       
@@ -441,6 +500,10 @@ class Product_model extends CI_Model {
     public function GetData($where, $table)
     {
       return $this->db->where($where)->get($table)->row();
+    }
+    public function GetDataa($where, $table)
+    {
+      return $this->db->where($where)->get($table);
     }
     public function GetLastId($table, $field) {
         return $this->db->order_by($field, 'desc')->get($table)->row($field);

@@ -42,7 +42,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 '.$notif.'
             </div>';
        		 } ?>
-				<form action="<?php echo base_url(); ?>index.php/Auth/Login" method="post" enctype="multipart/form-data">
+				<form action="<?php echo base_url(); ?>Auth/Login" method="post" enctype="multipart/form-data">
 					<input type="text" name="email" placeholder="Enter your email or your username here" required="">
 
 
