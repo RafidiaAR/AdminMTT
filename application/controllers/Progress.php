@@ -21,6 +21,216 @@ class Progress extends CI_Controller
 			redirect('Auth/login');
 		}
 	}
+	public function unseen_notification(){
+		if($this->session->userdata('logged_in') == TRUE)
+		{
+			$view = $this->input->post('view');
+		if ($view == 'view') {
+			$output = '';
+			$result=$this->Product_model->notification();
+			$count = count($this->Product_model->unseen_notification());
+		
+			if(!empty($result)){
+				
+				$output .= '<li>
+                        <div class="notification_header">
+                          <h3>You have '.$count.' new notification</h3>
+                        </div>
+                      </li>';
+				foreach ($result as $notification) {
+
+					if ($notification->type_notification == 'diskusi') {
+						$link = base_url().'progress/discussion_detail/'.$notification->product_id;
+					}
+					else if ($notification->type_notification == 'order_waiting') {
+						$link = base_url().'Admin/Transaction_Masuk';
+					}
+					else if ($notification->type_notification == 'order_process') {
+						$link = base_url().'Admin/Transaction_Kirim';
+					}
+					else if ($notification->type_notification == 'order_finish') {
+						$link = base_url().'Admin/Transaction_Success';
+					}
+					else if ($notification->type_notification == 'order_cancel') {
+						$link = base_url().'Admin/Transaction_Batal';
+					}
+					else if ($notification->type_notification == 'Broadcast') {
+						$link = '';
+					}
+					 if ($notification->type_notification == 'Broadcast') {
+						$sign = '(Broadcast)';
+					}
+					else{
+						$sign = '';	
+					}
+
+				$output .= '
+				<a href="'.$link.'" target="_blank">
+				 
+				<li>
+				 
+                         <div class="notification_desc">
+                        <p><span>'.$notification->subject.'</span>'.$notification->text.'</p>
+                        <p><span>'.$notification->created_at.'</span>'.$sign.'</p>
+                        </div>
+                        <div class="clearfix"></div>  
+                      
+                     </li> 
+                      </a>
+			
+               
+				';	
+
+				}
+				$output .= '<li>
+                        <div class="notification_bottom">
+                          <a href="'.base_url().'Progress/notification">Lihat Semua Notifikasi</a>
+                        </div> 
+                      </li>';
+			}
+			else{
+				$output .= '<li><a href="#">
+                         <div class="notification_desc">
+                        <p>Tidak ada notifikasi terbaru</p>
+                        </div>
+                        <div class="clearfix"></div>  
+                       </a>
+                     </li> 
+                     <li>
+                        <div class="notification_bottom">
+                          <a href="'.base_url().'Progress/notification">Lihat Semua Notifikasi</a>
+                        </div> 
+                      </li>';
+				}
+			// $data = array(
+			// 	'notification' => $output,
+			// 	'amountNotifikasi' => $count
+			// );
+			echo $output.'|'.$count;
+
+		}
+		else if($view == 'notification_null'){
+				$result	= $this->Product_model->nullNotification();
+					if ($result == TRUE) {
+						$count = '';
+					}
+					else{
+						$count = count($this->Product_model->unseen_notification());
+					}
+			echo $count;
+		}
+		}
+		else{
+			redirect('Auth');
+		}
+
+		
+	}
+	public function mini_status(){
+		if($this->session->userdata('logged_in') == TRUE)
+		{
+			$view = $this->input->post('view');
+		if ($view == 'view') {
+			$output = '';
+			$count = 0;	
+			$result=$this->Product_model->GetMiniStatus();
+			if(!empty($result)){
+
+					
+				$count = 0;	
+				foreach ($result as $notification) {
+
+				
+					if ($notification->status_order_detail == 'Proses Kirim') {
+						$link = base_url().'Admin/Transaction_Kirim';
+					}
+					else if ($notification->status_order_detail == 'Pesanan ditujukan ke Merchant') {
+						$link = base_url().'Admin/Transaction_Masuk';
+					}
+
+					if ($notification->status_order_detail == 'Proses Kirim') {
+						$text = '  menunggu pengiriman order '.$notification->product_name.' oleh anda';
+					}
+					else if ($notification->status_order_detail == 'Pesanan ditujukan ke Merchant') {
+					$text = '  telah memesan '.$notification->product_name.'. Cepat terima order !';
+					}
+					
+				if ($notification->status_order_detail == 'Pesanan ditujukan ke Merchant') {
+					$count++;
+				}
+				else if ($notification->status_order_detail == 'Proses Kirim') {
+					$count++;
+				}
+				
+				$output .= '
+				<a href="'.$link.'" target="_blank">
+				 
+				<li>
+				 
+                         <div class="notification_desc">
+                        <p><span>'.$notification->buyer.'</span>'.$text.'</p>
+                        <p><span>'.gmdate('Y-m-d H:i:s', $notification->created_at/1000).'</span></p>
+                        </div>
+                        <div class="clearfix"></div>  
+                      
+                     </li> 
+                      </a>
+			
+               
+				';		
+				
+				
+				}
+				if ($output != '') {
+					$output .= ' <li>
+                        <div class="notification_bottom">
+                          <a href="'.base_url().'Admin/Transaction_Masuk">Lihat Semua Order</a>
+                        </div> 
+                      </li>';
+				}
+				else{
+					$output .= '<li><a href="#">
+                         <div class="notification_desc">
+                        <p>Tidak ada order terbaru</p>
+                        </div>
+                        <div class="clearfix"></div>  
+                       </a>
+                     </li> 
+                     <li>
+                        <div class="notification_bottom">
+                          <a href="'.base_url().'Admin/Transaction_Success">Lihat Semua Order</a>
+                        </div> 
+                      </li>';
+				}
+				
+			}
+			else{
+				$output .= '<li><a href="#">
+                         <div class="notification_desc">
+                        <p>Tidak ada order terbaru</p>
+                        </div>
+                        <div class="clearfix"></div>  
+                       </a>
+                     </li> 
+                     <li>
+                        <div class="notification_bottom">
+                          <a href="'.base_url().'Admin/Transaction_Success">Lihat Semua Order</a>
+                        </div> 
+                      </li>';
+				
+				}
+			// $data = array(
+			// 	'notification' => $output,
+			// 	'amountNotifikasi' => $count
+			// );
+			echo $output.'|'.$count;
+
+		}
+		}
+		else{
+			redirect('Auth');
+		}
+	}
 	public function add_product()
 	{
 		if ($this->session->userdata('logged_in') == true) {
@@ -120,6 +330,7 @@ class Progress extends CI_Controller
 			redirect('Auth/login');
 		}
 	}
+
 	public	function transaction($offset = NULL)
 	{
 		if ($this->session->userdata('logged_in') == TRUE) {
@@ -206,7 +417,9 @@ class Progress extends CI_Controller
 	}
 
 	public function discussion(){
-		if($this->session->userdata('leveluser') == 1){
+		if($this->session->userdata('logged_in') == TRUE)
+		{
+			if($this->session->userdata('leveluser') == 1){
 				$leveluser = 'Administrator';
 			}else{
 				$leveluser = 'Merchant';
@@ -235,9 +448,16 @@ class Progress extends CI_Controller
 
 			];
 			$this->load->view('template', $data);
+		}
+		else{
+			redirect('Auth');
+		}
+		
 	}
 	public function discussion_detail(){
-		if($this->session->userdata('leveluser') == 1){
+		if($this->session->userdata('logged_in') == TRUE)
+		{
+			if($this->session->userdata('leveluser') == 1){
 				$leveluser = 'Administrator';
 			}else{
 				$leveluser = 'Merchant';
@@ -268,47 +488,18 @@ class Progress extends CI_Controller
 				'nameAccess'	=> $leveluser
 			];
 			$this->load->view('template', $data);
-	}
-
-	public	function feedback()
-	{
-		if ($this->session->userdata('logged_in') == TRUE) {
-			if($this->session->userdata('leveluser') == 1){
-				$leveluser = 'Administrator';
-			}else{
-				$leveluser = 'Merchant';
-			}
-			$id 				= $this->session->userdata('logged_id');
-			$masuk				= "Pesanan ditujukan ke Merchant";
-			$Selesai 			= "Selesai";
-			$feedback	 		= $this->Product_model->Get_Feedback(array("merchant_id" => $id, "product_order_detail.status" => $Selesai), 'product_order_detail');
-			$trans	 			= count($this->Product_model->Order(array("merchant_id" => $id, "product_order_detail.status" => $masuk), 'product_order_detail'));
-			$record 			= $this->Product_model->GetData(array("id" => $id) , 'user_merchant');
-			$Count_Product = $this->Product_model->CountProductMerchant(array("product.merchant_id" => $id));
-			$data 				= 
-			[
-				'Confirm'		=> $this->Product_model->Count_OrderMerchant(),
-				'Sent'			=> $this->Product_model->Count_OrderSent(),
-				'Finish'		=> $this->Product_model->Count_OrderFinish(),
-				'Cancel'		=> $this->Product_model->Count_OrderCancel(),
-				'Penagihan'  	=> $this->Product_model->Count_Penagihan(),
-				'ProsesPenagihan'=> $this->Product_model->Count_ProsesPenagihan(),
-				'PenagihanSelesai'=> $this->Product_model->Count_PenagihanSelesai(),
-				'C_Product' => $Count_Product,
-				'username'	=> $record->username,
-				'trans'		=> $trans,
-				'feedback'	=> $feedback,
-				'main_view'	=> 'feedback',
-				'nameAccess'	=> $leveluser
-			];
-			$this->load->view('template', $data);
 		}
-		else {
+		else{
 			redirect('Auth');
 		}
+		
 	}
+
+	
 	public function OrderSent($offset = NULL)
 	{
+		if($this->session->userdata('logged_in') == TRUE)
+		{
 			if($this->session->userdata('leveluser') == 1){
 				$leveluser = 'Administrator';
 			}else{
@@ -369,9 +560,16 @@ class Progress extends CI_Controller
 		'nameAccess'	=> $leveluser
 		];
 		$this->load->view('template',$data);
+		}
+		else{
+			redirect('Auth');
+		}
+			
 	}
 	public function OrderFinish($offset = NULL)
 	{
+		if($this->session->userdata('logged_in') == TRUE)
+		{
 			if($this->session->userdata('leveluser') == 1){
 				$leveluser = 'Administrator';
 			}else{
@@ -435,9 +633,16 @@ class Progress extends CI_Controller
 		'head'		=> 'Order Selesai'
 		];
 		$this->load->view('template',$data);
+		}
+		else{
+			redirect('Auth');
+		}
+			
 	}
 	public function OrderCancel($offset = NULL)
 	{
+		if($this->session->userdata('logged_in') == TRUE)
+		{
 			if($this->session->userdata('leveluser') == 1){
 				$leveluser = 'Administrator';
 			}else{
@@ -502,9 +707,16 @@ class Progress extends CI_Controller
 		'head'		=> 'Order Dibatalkan'
 		];
 		$this->load->view('template',$data);
+		}
+		else{
+			redirect('Auth');
+		}
+			
 	}
 	public function Penagihan($offset = NULL)
 	{
+		if($this->session->userdata('logged_in') == TRUE)
+		{
 			if($this->session->userdata('leveluser') == 1){
 				$leveluser = 'Administrator';
 			}else{
@@ -568,9 +780,16 @@ class Progress extends CI_Controller
 		'head'		=> 'Order Selesai'
 		];
 		$this->load->view('template',$data);
+		}
+		else{
+			redirect('Auth');
+		}
+
 	}
 	public function Proses_Penagihan($offset = NULL)
 	{
+		if($this->session->userdata('logged_in') == TRUE)
+		{
 			if($this->session->userdata('leveluser') == 1){
 				$leveluser = 'Administrator';
 			}else{
@@ -634,9 +853,17 @@ class Progress extends CI_Controller
 		'head'		=> 'Order Selesai'
 		];
 		$this->load->view('template',$data);
+		}
+		else{
+			redirect('Auth');
+		}
+
+			
 	}
 	public function Penagihan_Selesai($offset = NULL)
 	{
+		if($this->session->userdata('logged_in') == TRUE)
+		{
 			if($this->session->userdata('leveluser') == 1){
 				$leveluser = 'Administrator';
 			}else{
@@ -696,15 +923,27 @@ class Progress extends CI_Controller
 		'trans'		=> $trans,
 		'username'	=> $record->username,
 		'success'	=> $success,
-		'nameAccess'	=> $leveluser,
+		'nameAccess'=> $leveluser,
 		'head'		=> 'Order Selesai'
 		];
 		$this->load->view('template',$data);
+		}
+		else{
+			redirect('Auth');
+		}
+			
 	}
 	public function CariProduk(){
-		$id = $this->input->post('id');
+		if($this->session->userdata('logged_in') == TRUE)
+		{
+			$id = $this->input->post('id');
         $data = $this->Product_model->GetData(array('id' => $id), 'product');
         echo $data->id."|".$data->name."|".$data->stock."|".$data->price."|".$data->description."|".$data->status."|".$data->last_update."|".$data->image;
+		}
+		else{
+			redirect('Auth');
+		}
+		
 	}
 	public function ProductPending()
 	{
@@ -726,16 +965,17 @@ class Progress extends CI_Controller
 				'Sent'		=> $this->Product_model->Count_OrderSent(),
 				'Finish'	=> $this->Product_model->Count_OrderFinish(),
 				'Cancel'	=> $this->Product_model->Count_OrderCancel(),
-				'Penagihan'  	=> $this->Product_model->Count_Penagihan(),
-				'ProsesPenagihan'=> $this->Product_model->Count_ProsesPenagihan(),
-				'PenagihanSelesai'=> $this->Product_model->Count_PenagihanSelesai(),
+				'Penagihan' => $this->Product_model->Count_Penagihan(),
 				'trans'		=> $trans,
 				'C_Product' => $Count_Product,
 				'pending' 	=> $pending, 
 				'id' 		=> $record->id, 
 				'username' 	=> $record->username, 
 				'main_view' => 'Product_Pending',
-				'nameAccess'=> $leveluser
+				'nameAccess'=> $leveluser,
+				'ProsesPenagihan'	=> $this->Product_model->Count_ProsesPenagihan(),
+				'PenagihanSelesai'	=> $this->Product_model->Count_PenagihanSelesai(),
+				
 				];
 			$this->load->view('template', $data);
 		}
@@ -744,9 +984,16 @@ class Progress extends CI_Controller
 		}
 	}
 	public function GetProduk(){
-		$id = $this->input->post('id');
-        $data = $this->Product_model->GetProduct(array('product.id' => $id));
-        echo $data->id_product."|".$data->product_name."|".$data->username;
+		if($this->session->userdata('logged_in') == TRUE)
+			{
+				$id 	= $this->input->post('id');
+        		$data 	= $this->Product_model->GetProduct(array('product.id' => $id));
+        			echo $data->id_product."|".$data->product_name."|".$data->username;
+			}
+		else{
+			redirect('Auth');
+		}
+		
 	}
 }
 

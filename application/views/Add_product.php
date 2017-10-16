@@ -9,7 +9,7 @@
                 '.$notif.'
             </div>';
              } ?>
-                <form action="<?php echo base_url(); ?>index.php/Page/add_product" method="post" enctype="multipart/form-data">
+                <form action="<?php echo base_url(); ?>Page/add_product" method="post" enctype="multipart/form-data">
                        
                         <label>ID Produk</label>
                         
@@ -193,7 +193,7 @@
             } ?>
             
 
-    <form action="<?php echo base_url(); ?>index.php/Page/add_product" method="post" enctype="multipart/form-data">
+    <form action="<?php echo base_url(); ?>Page/add_product" method="post" enctype="multipart/form-data">
         <fieldset>
             <legend><span class="number">1</span> Product Info</legend>
             <input type="hidden" name="merchant_id" placeholder="ID Produk" class="form-control" value="<?php echo $merchant_id; ?>" readonly>

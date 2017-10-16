@@ -22,7 +22,7 @@ class User_model extends CI_Model {
         $query3 = $this->db->where('email_tsel', $email)->where('password', md5($password)) ->where('is_merchant', 1)->get('user_merchant');*/
         if ($query->num_rows() > 0) {
             $data = [
-                'logged_id'     => 5,
+                'logged_id'     => $id,
                 'logged_name'   => $nama,
                 'level'     	=> $level,
                 'logged_in'     => TRUE,

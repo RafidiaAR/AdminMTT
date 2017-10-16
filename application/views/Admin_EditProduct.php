@@ -9,7 +9,7 @@
                 '.$notif.'
             </div>';
              } ?>
-                <form action="<?php echo base_url(); ?>index.php/Page/update_product" method="post" enctype="multipart/form-data">
+                <form action="<?php echo base_url(); ?>Page/update_product" method="post" enctype="multipart/form-data">
                         <label>ID Produk</label>
                         <input id="last_update" type="hidden" name="last_update" placeholder="" class="form-control" value="<?php echo strtotime(date('Y-m-d H:i:s'))?>">
                         <input type="text" name="id_produk" placeholder="ID Produk" class="form-control" value="<?php echo $id; ?>" readonly>

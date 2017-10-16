@@ -196,7 +196,7 @@ $("button#view").click(function(event) {
               document.getElementById("Status").style.display="none";
               document.getElementById("Editing").style.display="none";
                 $.ajax({
-                    url: "<?php echo base_url()?>index.php/Admin/CariMerchant",
+                    url: "<?php echo base_url()?>Admin/CariMerchant",
                     type: 'post',
                     data: {id: merchant_id},
                     success: function(e){
@@ -223,7 +223,7 @@ $("button#delete").click(function(event) {
             // alert(product_id);
             if (merchant_id != "") {
                 $.ajax({
-                    url: "<?php echo base_url()?>index.php/Admin/CariMerchant",
+                    url: "<?php echo base_url()?>Admin/CariMerchant",
                     type: 'post',
                     data: {id: merchant_id},
                     success: function(e){
@@ -240,7 +240,7 @@ $('button#deleteuser').click(function(event) {
     var user_id = $(this).prev().val();
     /*alert(product_id);*/
     $.ajax({
-        url: '<?php echo base_url(); ?>index.php/Admin/Delete_User',
+        url: '<?php echo base_url(); ?>Admin/Delete_User',
         type: 'post',
         data: {
             id: user_id
@@ -252,7 +252,7 @@ $('button#deleteuser').click(function(event) {
                 }, 001);
 
                 
-                // $('body').load('<?php echo base_url(); ?>index.php/Page');
+                // $('body').load('<?php echo base_url(); ?>Page');
                 // $("#opencart").attr('class', "dropdown open");
                 // $("#openexpanded").attr('aria-expanded', "true");
             } else {

@@ -6,7 +6,7 @@
                     <hr/>
                    
                     <div class="shopping_cart">
-                        <form class="form-horizontal" role="form" action="<?php echo base_url(); ?>index.php/Admin/Transfer" method="post" id="payment-form" enctype="multipart/form-data">
+                        <form class="form-horizontal" role="form" action="<?php echo base_url(); ?>Admin/Transfer" method="post" id="payment-form" enctype="multipart/form-data">
                             <div class="panel-group" id="accordion">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">

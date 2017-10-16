@@ -86,7 +86,7 @@ hr { margin-top: 5px;margin-bottom: 10px; }
 <div style="margin-left: 20px">
  <div class="row" style="margin-top:20px">
         <div class="col-sm-3 col-md-2">
-             <a href="<?php echo base_url(); ?>index.php/progress/discussion"><button type="button" class="btn btn-default" title="Back to List Discussion">
+             <a href="<?php echo base_url(); ?>progress/discussion"><button type="button" class="btn btn-default" title="Back to List Discussion">
                    <span class="glyphicon glyphicon-arrow-left"></span> Back to List Discussion</button>
         </div>
         
@@ -167,7 +167,7 @@ hr { margin-top: 5px;margin-bottom: 10px; }
             </div>
 
             <div class="send-wrap ">
-                <form action="<?php echo base_url(); ?>index.php/page/SendComment" method="POST" enctype="multipart/form-data">
+                <form action="<?php echo base_url(); ?>page/SendComment" method="POST" enctype="multipart/form-data">
                     <div class="form-group">
                         <textarea id="text_discuss" name="comment" class="form-control counted" rows="3" placeholder="Ketik untuk membalas..."></textarea>
                         <input type="hidden" name="product_id" value="<?php echo $product->id ?>" id="product_id"/>

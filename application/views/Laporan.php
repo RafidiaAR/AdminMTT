@@ -71,13 +71,15 @@
                                   ?></td>
 
                                   <td ><?php 
-                                  $z = $data->price_item;
-                                  $x = $data->fee;
-                                  $hasil = $a+$b+$z+$x;
+                                  $x = $data->price_item;
+                                  $y = $data->fee;
+                                  $z = $data->amount;
+
+                                  $hasil = $a+$b+$y+ ($z*$x);
                                   echo 'Rp. '.(number_format($hasil));?></td>
                                   <!-- <td style="text-align: center;">
                                   
-                                <a href="<?php echo base_url();?>index.php/Admin/DetailTransaction/<?php echo $data->id_detail;?>"><button id="detail" class="btn btn-info" data-toggle="modal" data-target="modal-body">
+                                <a href="<?php echo base_url();?>Admin/DetailTransaction/<?php echo $data->id_detail;?>"><button id="detail" class="btn btn-info" data-toggle="modal" data-target="modal-body">
                                   <i class="fa fa-search"></i>&nbsp Detail</button></a>
                                   <button id="Accept" class="btn btn-primary">
                                   <i class="fa fa-print"></i>&nbsp Print</button> 

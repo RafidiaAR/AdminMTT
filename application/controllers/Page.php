@@ -13,13 +13,20 @@ class Page extends CI_Controller
 
 	public function test()
 	{
-		$id = $this->session->userdata('logged_id');
+		if($this->session->userdata('logged_in') == TRUE)
+		{
+			$id = $this->session->userdata('logged_id');
 		$result = $this->Product_model->GetLaporanProduct($id);
 			$allamount = array();
 			foreach ($result as $data) {
 				$allamount[$data->product_id]= $data->amount;
 		}
 		echo implode($allamount, ',');
+		}
+		else{
+			redirect('Auth');
+		}
+		
 	}
 
 	public function index()
@@ -423,12 +430,21 @@ class Page extends CI_Controller
 		}
 	}
 	public function Delete_Product(){
+		if($this->session->userdata('logged_in') == TRUE)
+		{
 		$id 	= $this->input->post('id');
         $result = $this->Product_model->del_product($id);
         echo $result;
+		}
+		else{
+			redirect('Auth');
+		}
+		
 	}
 	public function Update_Order()
 	{
+		if($this->session->userdata('logged_in') == TRUE)
+		{
 		$order_id 		= $this->input->post('order_id');
 		$stats 			= $this->input->post('status');
 		$product_id 	= $this->input->post('product_id');
@@ -436,6 +452,11 @@ class Page extends CI_Controller
 		$last_update 	= $this->input->post('last_update');
 		$result 		= $this->Product_model->acc_order($product_id,$amount,$last_update,$order_id,$stats);
         echo $result;
+		}
+		else{
+			redirect('Auth');
+		}
+		
 	}
 	
 	public function SendComment()
@@ -473,20 +494,36 @@ class Page extends CI_Controller
 
 	public function Change_Status()
 	{
-		$id 			= $this->input->post('id');
+		if($this->session->userdata('logged_in') == TRUE)
+		{
+			$id 			= $this->input->post('id');
 		$status			= $this->input->post('status');
 		$result 		= $this->Product_model->Change_Status($id,$status);
 		echo $result;
+		}
+		else{
+			redirect('Auth');
+		}
+		
 	}
 	public function Change_StatusBill()
 	{
-		$id 			= $this->input->post('id');
+		if($this->session->userdata('logged_in') == TRUE)
+		{
+			$id 			= $this->input->post('id');
 		$status			= $this->input->post('status');
 		$result 		= $this->Product_model->Change_StatusBill($id,$status);
 		echo $result;
+		}
+		else{
+			redirect('Auth');
+		}
+		
 	}
 	public function Change_Bill()
 	{
+		if($this->session->userdata('logged_in') == TRUE)
+		{
 		$id 			= $this->input->post('id');
 		$status			= $this->input->post('status');
 		$order_id 		= $this->input->post('order_id');
@@ -502,6 +539,11 @@ class Page extends CI_Controller
 		$date 			= $this->input->post('date');
 		$result 		= $this->Product_model->Change_Bill($id,$status,$order_id,$pro_id,$pro_name,$mer_id,$mer_name,$mer_phone,$mer_email,$statusnew,$amount,$price,$date);
 		echo $result;
+		}
+		else{
+			redirect('Auth');
+		}
+		
 	}
 	
 }

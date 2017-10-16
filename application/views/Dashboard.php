@@ -2,7 +2,7 @@
 <!-- Dashboard Admin Start -->
 <?php if($this->session->userdata('leveluser') == 1) : ?>
     <div class="market-updates">
-    <a href="<?php echo base_url();?>index.php/Admin/Transaction_Success">
+    <a href="<?php echo base_url();?>Admin/Transaction_Success">
       <div class="col-md-4 market-update-gd">
         <div class="market-update-block clr-block-1">
           <div class="col-md-8 market-update-left">
@@ -17,7 +17,7 @@
         </div>
       </div>
       </a>
-      <a href="<?php echo base_url();?>index.php/Admin/List_Merchant">
+      <a href="<?php echo base_url();?>Admin/List_Merchant">
       <div class="col-md-4 market-update-gd">
         <div class="market-update-block clr-block-2">
          <div class="col-md-8 market-update-left">
@@ -32,7 +32,7 @@
         </div>
       </div>
       </a>
-      <a href="<?php echo base_url();?>index.php/Admin/Product_List">
+      <a href="<?php echo base_url();?>Admin/Product_List">
       <div class="col-md-4 market-update-gd">
         <div class="market-update-block clr-block-3">
           <div class="col-md-8 market-update-left">
@@ -85,7 +85,7 @@
   <!-- Dashboard Merchant Start -->
   <?php if($this->session->userdata('leveluser') == 0 || $this->session->userdata('leveluser') == NULL ): ?>
     <div class="market-updates">
-    <a href="<?php echo base_url();?>index.php/progress/transaction ">
+    <a href="<?php echo base_url();?>progress/transaction ">
       <div class="col-md-6 market-update-gd">
         <div class="market-update-block clr-block-1">
           <div class="col-md-8 market-update-left">
@@ -113,7 +113,7 @@
           <div class="clearfix"> </div>
         </div>
       </div> -->
-      <a href="<?php echo base_url();?>index.php/page/product_list">
+      <a href="<?php echo base_url();?>page/product_list">
       <div class="col-md-6 market-update-gd">
         <div class="market-update-block clr-block-3">
           <div class="col-md-8 market-update-left">
@@ -167,148 +167,8 @@
 
 <!--main page chart start here-->
 
-  <div class="col-md-6 chart-layer2-right">
-               <div class="work-progres">
-                            <div class="chit-chat-heading">
-                                  6 Top Produk
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table table-hover">
-                                  <thead>
-                                    <tr>
-                                      <th>#</th>
-                                      <th>Nama Produk</th>
-                                      <th>Kategori</th>                                   
-                                                                        
-                                      <th>Jumlah Transaksi</th>
-                                      <th>Jumlah Peminat</th>
-                                  </tr>
-                              </thead>
-                              <tbody>
-                                <tr>
-                                  <td>1</td>
-                                  <td>Madu</td>
-                                  <td>Kesehatan</td>                                 
-                                                             
-                                  <td>120</td>
-                                  <td>304</td>
-                              </tr>
-                              <tr>
-                                  <td>2</td>
-                                  <td>Kurma</td>
-                                  <td>Kesehatan</td>                                 
-                                                             
-                                  <td>110</td>
-                                  <td>404</td>
-                              </tr>
-                              <tr>
-                                  <td>3</td>
-                                  <td>Madu Hitam</td>
-                                  <td>Kesehatan</td>                                 
-                                                             
-                                  <td>110</td>
-                                  <td>404</td>
-                              </tr>
-                              <tr>
-                                  <td>4</td>
-                                  <td>Susu Murni</td>
-                                 <td>Minuman</td>                                 
-                                                             
-                                  <td>110</td>
-                                  <td>404</td>
-                              </tr>
-                              <tr>
-                                  <td>5</td>
-                                  <td>Chitatos</td>
-                                 <td>Snack</td>                                 
-                                                             
-                                  <td>110</td>
-                                  <td>404</td>
-                              </tr>
-                              <tr>
-                                  <td>6</td>
-                                  <td>Ayam Goreng</td>
-                                 <td>TSO Cafe</td>                                 
-                                                             
-                                  <td>110</td>
-                                  <td>404</td>
-                              </tr>
-                          </tbody>
-                      </table>
-                  </div>
-             </div>
-      </div>
 
-      <div class="col-md-6 chart-layer2-right">
-               <div class="work-progres">
-                            <div class="chit-chat-heading">
-                                  6 Threat Produk
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table table-hover">
-                                  <thead>
-                                    <tr>
-                                      <th>#</th>
-                                      <th>Nama Produk</th>
-                                      <th>Kategori</th>                                   
-                                                                        
-                                      <th>Jumlah Transaksi</th>
-                                      <th>Jumlah Peminat</th>
-                                  </tr>
-                              </thead>
-                              <tbody>
-                                <tr>
-                                  <td>1</td>
-                                  <td>Ale-Ale</td>
-                                  <td>Minuman</td>                                 
-                                                             
-                                  <td>2</td>
-                                  <td>10</td>
-                              </tr>
-                              <tr>
-                                  <td>2</td>
-                                  <td>Mouse</td>
-                                  <td>Peralatan</td>                                 
-                                                             
-                                  <td>1</td>
-                                  <td>2</td>
-                              </tr>
-                              <tr>
-                                  <td>3</td>
-                                  <td>Madu Rasa</td>
-                                  <td>Kesehatan</td>                                 
-                                                             
-                                  <td>1</td>
-                                  <td>1</td>
-                              </tr>
-                              <tr>
-                                  <td>4</td>
-                                  <td>Buku Tulis</td>
-                                 <td>Buku</td>                                 
-                                                             
-                                  <td>0</td>
-                                  <td>5</td>
-                              </tr>
-                              <tr>
-                                  <td>6</td>
-                                  <td>Potato</td>
-                                 <td>Snack</td>                                 
-                                                             
-                                  <td>0</td>
-                                  <td>2</td>
-                              </tr>
-                              <tr>
-                                  <td>6</td>
-                                  <td>Donut</td>
-                                 <td>TSO Cafe</td>                                 
-                                                             
-                                  <td>0</td>
-                                  <td>4</td>
-                              </tr>
-                          </tbody>
-                      </table>
-                  </div>
-             </div>
-      </div>
+
+    
   </div>
   <!-- total sales done -->

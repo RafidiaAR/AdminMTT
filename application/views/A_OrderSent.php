@@ -64,7 +64,7 @@
                                   <td><?php echo $data->status;?></td>
                                   <td>
                                   
-                                  <a href="<?php echo base_url();?>index.php/Admin/DetailTransaction/<?php echo $data->id_detail;?>"><button id="detail" class="btn btn-info" data-toggle="modal" data-target="modal-body">
+                                  <a href="<?php echo base_url();?>Admin/DetailTransaction/<?php echo $data->id_detail;?>"><button id="detail" class="btn btn-info" data-toggle="modal" data-target="modal-body">
                                   <i class="fa fa-search"></i>&nbsp Detail</button></a>
                                   <input type="hidden" name="amount" placeholder="Nama Produk" class="form-control" value="<?php echo $data->amount;?>">
                                   <button id="showaccept" class="btn btn-success" data-toggle="modal" data-target="#myModalll">
@@ -219,7 +219,7 @@ $('button#Decline').click(function(event) {
     var stats = "Order Dibatalkan";
  /*   alert(product_order);*/
     $.ajax({
-        url: '<?php echo base_url(); ?>index.php/Page/Change_Status',
+        url: '<?php echo base_url(); ?>Page/Change_Status',
         type: 'post',
         data: {
             id : product_order,
@@ -230,7 +230,7 @@ $('button#Decline').click(function(event) {
                 setTimeout(function() { // wait for 5 secs(2)
                     location.reload(); // then reload the page.(3)
                 }, 001);
-                // $('body').load('<?php echo base_url(); ?>index.php/Page');
+                // $('body').load('<?php echo base_url(); ?>Page');
                 // $("#opencart").attr('class', "dropdown open");
                 // $("#openexpanded").attr('aria-expanded', "true");
             } else {
@@ -247,7 +247,7 @@ $('button#Accept').click(function(event) {
     var last_update = document.getElementById("last_update").value;
    // alert(product_id);
     $.ajax({
-        url: '<?php echo base_url(); ?>index.php/Page/Update_Order',
+        url: '<?php echo base_url(); ?>Page/Update_Order',
         type: 'post',
         data: {
             order_id    : order_id,
@@ -261,7 +261,7 @@ $('button#Accept').click(function(event) {
                 setTimeout(function() { // wait for 5 secs(2)
                     location.reload(); // then reload the page.(3)
                 }, 001);
-                // $('body').load('<?php echo base_url(); ?>index.php/Page');
+                // $('body').load('<?php echo base_url(); ?>Page');
                 // $("#opencart").attr('class', "dropdown open");
                 // $("#openexpanded").attr('aria-expanded', "true");
             } else {
@@ -276,7 +276,7 @@ $('button#Cancel').click(function(event) {
     var stats = "Order Dibatalkan";
  /*   alert(product_order);*/
     $.ajax({
-        url: '<?php echo base_url(); ?>index.php/Page/Change_Status',
+        url: '<?php echo base_url(); ?>Page/Change_Status',
         type: 'post',
         data: {
             id : product_order,
@@ -287,7 +287,7 @@ $('button#Cancel').click(function(event) {
                 setTimeout(function() { // wait for 5 secs(2)
                     location.reload(); // then reload the page.(3)
                 }, 001);
-                // $('body').load('<?php echo base_url(); ?>index.php/Page');
+                // $('body').load('<?php echo base_url(); ?>Page');
                 // $("#opencart").attr('class', "dropdown open");
                 // $("#openexpanded").attr('aria-expanded', "true");
             } else {
@@ -312,7 +312,7 @@ $('button#Sent').click(function(event) {
     var date = document.getElementById("date").value;
  /*   alert(product_order);*/
     $.ajax({
-        url: '<?php echo base_url(); ?>index.php/Page/Change_Bill',
+        url: '<?php echo base_url(); ?>Page/Change_Bill',
         type: 'post',
         data: {
             id : id_detail,
@@ -334,7 +334,7 @@ $('button#Sent').click(function(event) {
                 setTimeout(function() { // wait for 5 secs(2)
                     location.reload(); // then reload the page.(3)
                 }, 001);
-                // $('body').load('<?php echo base_url(); ?>index.php/Page');
+                // $('body').load('<?php echo base_url(); ?>Page');
                 // $("#opencart").attr('class', "dropdown open");
                 // $("#openexpanded").attr('aria-expanded', "true");
             } else {
@@ -348,7 +348,7 @@ $("button#deletetrans").click(function(event) {
     //alert(product_id);
     if (product_id != "") {
         $.ajax({
-            url: "<?php echo base_url()?>index.php/Admin/CariTransaction",
+            url: "<?php echo base_url()?>Admin/CariTransaction",
             type: 'post',
             data: {
                 id: product_id,
@@ -370,7 +370,7 @@ $("button#showaccept").click(function(event) {
     //alert(product_id);
     if (product_id != "") {
         $.ajax({
-            url: "<?php echo base_url()?>index.php/Admin/CariProsesKirim",
+            url: "<?php echo base_url()?>Admin/CariProsesKirim",
             type: 'post',
             data: {
                 id: product_id,
@@ -405,7 +405,7 @@ $('button#AdminAccept').click(function(event) {
     var last_update = document.getElementById("last_update").value;
    // alert(product_id);
     $.ajax({
-        url: '<?php echo base_url(); ?>index.php/Page/Update_Order',
+        url: '<?php echo base_url(); ?>Page/Update_Order',
         type: 'post',
         data: {
             order_id    : order_id,
@@ -419,7 +419,7 @@ $('button#AdminAccept').click(function(event) {
                 setTimeout(function() { // wait for 5 secs(2)
                     location.reload(); // then reload the page.(3)
                 }, 001);
-                // $('body').load('<?php echo base_url(); ?>index.php/Page');
+                // $('body').load('<?php echo base_url(); ?>Page');
                 // $("#opencart").attr('class', "dropdown open");
                 // $("#openexpanded").attr('aria-expanded', "true");
             } else {
@@ -433,7 +433,7 @@ $('button#AdminAccept').click(function(event) {
     var stats = "Selesai";
 //    alert(product_order);
     $.ajax({
-        url: '<?php echo base_url(); ?>index.php/Page/Change_Status',
+        url: '<?php echo base_url(); ?>Page/Change_Status',
         type: 'post',
         data: {
             id : order_id,
@@ -444,7 +444,7 @@ $('button#AdminAccept').click(function(event) {
                 setTimeout(function() { // wait for 5 secs(2)
                     location.reload(); // then reload the page.(3)
                 }, 001);
-                // $('body').load('<?php echo base_url(); ?>index.php/Page');
+                // $('body').load('<?php echo base_url(); ?>Page');
                 // $("#opencart").attr('class', "dropdown open");
                 // $("#openexpanded").attr('aria-expanded', "true");
             } else {
@@ -465,7 +465,7 @@ $('button#AdminAccept').click(function(event) {
  //   var stats = "Selesai";
     //alert(last_update);
     $.ajax({
-        url: '<?php echo base_url(); ?>index.php/Page/Kurang_Stock',
+        url: '<?php echo base_url(); ?>Page/Kurang_Stock',
         type: 'post',
         data: {
             id : product_id,
@@ -479,7 +479,7 @@ $('button#AdminAccept').click(function(event) {
                 setTimeout(function() { // wait for 5 secs(2)
                     location.reload(); // then reload the page.(3)
                 }, 001);
-                // $('body').load('<?php echo base_url(); ?>index.php/Page');
+                // $('body').load('<?php echo base_url(); ?>Page');
                 // $("#opencart").attr('class', "dropdown open");
                 // $("#openexpanded").attr('aria-expanded', "true");
             } else {

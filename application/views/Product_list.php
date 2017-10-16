@@ -372,7 +372,7 @@
    <div class="product-block">
       <div class="pro-head">
 
-         <h2>Daftar Produk di JualBeli MTT<a href="<?php echo base_url(); ?>index.php/progress/add_product"></a>
+         <h2>Daftar Produk di JualBeli MTT<a href="<?php echo base_url(); ?>progress/add_product"></a>
          </h2>
         <div>
         <div class="col-sm-5 col-md-5 " style="display: none;" id="alertdiv">
@@ -494,7 +494,7 @@
 
     <div class="product-block">
         <div class="pro-head">
-            <h2>Your Products  <a href="<?php echo base_url(); ?>index.php/progress/add_product"><i class="fa fa-plus"></i> </a>
+            <h2>Your Products  <a href="<?php echo base_url(); ?>progress/add_product"><i class="fa fa-plus"></i> </a>
             </h2> 
            
         </div>
@@ -583,7 +583,7 @@
                         <div class="clearfix"></div>
                         <div class="space-ten"></div>
                         <div class="btn-ground">
-                        <a href="<?php echo base_url();?>/index.php/page/edit_product/" id="pro_id"> <button type="button" class="btn btn-primary"> <span class="glyphicon glyphicon-pencil"></span> Edit Produk </button></a>
+                        <a href="<?php echo base_url();?>/page/edit_product/" id="pro_id"> <button type="button" class="btn btn-primary"> <span class="glyphicon glyphicon-pencil"></span> Edit Produk </button></a>
                         </a>
                         </div>
                     </div>
@@ -651,7 +651,7 @@
                         <span class="h3 text-muted"><strong id="a_pro_price">Rp.15000</strong></span>
                     </div>
                     <div class="text-left pull-left col-md-3">
-                       <a href="<?php echo base_url()?>index.php/Admin/Edit_Product/" id="product_id"> <button type="button" class="btn btn-primary"><i class="fa fa-pencil-square-o"></i> Edit Produk</button>
+                       <a href="<?php echo base_url()?>Admin/Edit_Product/" id="product_id"> <button type="button" class="btn btn-primary"><i class="fa fa-pencil-square-o"></i> Edit Produk</button>
                     </div>
                      
                 </div>
@@ -711,14 +711,14 @@ $("button#quickview").click(function(event) {
     // alert(product_id);
     if (product_id != "") {
         $.ajax({
-            url: "<?php echo base_url()?>index.php/Progress/CariProduk",
+            url: "<?php echo base_url()?>Progress/CariProduk",
             type: 'post',
             data: {
                 id: product_id
             },
             success: function(e) {
                 var data = e.split("|");
-                $('#pro_id').attr('href', '<?php echo base_url()?>index.php/Page/edit_product/' + data[0]);
+                $('#pro_id').attr('href', '<?php echo base_url()?>Page/edit_product/' + data[0]);
                 $('#pro_name').html(data[1]);
                 $('#pro_stock').html(data[2]);
                 $('#pro_price').html('Rp. ' + data[3]);
@@ -741,14 +741,14 @@ $("button#detailpro").click(function(event) {
     // alert(product_id);
     if (product_id != "") {
         $.ajax({
-            url: "<?php echo base_url()?>index.php/Admin/CariProduk",
+            url: "<?php echo base_url()?>Admin/CariProduk",
             type: 'post',
             data: {
                 id: product_id
             },
             success: function(e) {
                 var data = e.split("|");
-                $('#product_id').attr('href', '<?php echo base_url()?>index.php/Admin/edit_product/' + data[0]);
+                $('#product_id').attr('href', '<?php echo base_url()?>Admin/edit_product/' + data[0]);
                 $('#a_pro_id').html(data[0] + ' - ');
                 $('#a_pro_name').html(data[1]);
                 $('#a_mer_name').html(data[2]);
@@ -773,7 +773,7 @@ $("button#trash").click(function(event) {
     // alert(product_id);
     if (product_id != "") {
         $.ajax({
-            url: "<?php echo base_url()?>index.php/Progress/CariProduk",
+            url: "<?php echo base_url()?>Progress/CariProduk",
             type: 'post',
             data: {
                 id: product_id
@@ -798,7 +798,7 @@ $('button#delete').click(function(event) {
     var product_id = $(this).prev().val();
     /*alert(product_id);*/
     $.ajax({
-        url: '<?php echo base_url(); ?>index.php/Page/Delete_Product',
+        url: '<?php echo base_url(); ?>Page/Delete_Product',
         type: 'post',
         data: {
             id: product_id
@@ -810,7 +810,7 @@ $('button#delete').click(function(event) {
                 }, 001);
 
                 
-                // $('body').load('<?php echo base_url(); ?>index.php/Page');
+                // $('body').load('<?php echo base_url(); ?>Page');
                 // $("#opencart").attr('class', "dropdown open");
                 // $("#openexpanded").attr('aria-expanded', "true");
             } else {

@@ -591,7 +591,7 @@ opacity:0.9;
                 '.$notif.'
             </div>';
              } ?>
-                        <form action ="<?php echo base_url();?>index.php/page/update_profile" method="post" enctype="multipart/form-data">
+                        <form action ="<?php echo base_url();?>page/update_profile" method="post" enctype="multipart/form-data">
                         <div class="col-xs-12 col-sm-8">
                            <ul class="list-group">
                               
@@ -608,7 +608,7 @@ opacity:0.9;
                               <input type="text" name="phone" placeholder="NIK Telkomsel" class="form-control" required="" value="<?php echo $nik;?>"><br>
                            </ul>
                            <input type="submit" name="submit" class="btn btn-success" value="update">
-                        <a href="<?php echo base_url();?>index.php/page">
+                        <a href="<?php echo base_url();?>page">
                           <button type="button" class="btn btn-danger">Cancel</button>
                         </a>
                         </div>

@@ -66,7 +66,7 @@
                                   
                                   <!-- <button id="detail" class="btn btn-info" data-toggle="modal" data-target="modal-body">
                                   <i class="fa fa-search"></i>&nbsp Detail</button> -->
-                                  <!-- <a href="<?php echo base_url();?>index.php/Admin/DetailTransaction/<?php echo $data->id_product;?>"><button id="detail" class="btn btn-info" data-toggle="modal" data-target="modal-body">
+                                  <!-- <a href="<?php echo base_url();?>Admin/DetailTransaction/<?php echo $data->id_product;?>"><button id="detail" class="btn btn-info" data-toggle="modal" data-target="modal-body">
                                   <i class="fa fa-search"></i>&nbsp Detail</button></a> -->
                                   <!-- <input type="hidden" name="amount" placeholder="Nama Produk" class="form-control" value="<?php echo $data->amount;?>"> -->
                                   <button id="showaccept" class="btn btn-success" data-toggle="modal" data-target="#myModalll">
@@ -210,7 +210,7 @@
                         <div class="clearfix"></div>
                         <div class="space-ten"></div>
                         <div class="btn-ground">
-                        <!-- <a href="<?php echo base_url();?>/index.php/page/edit_product/" id="pro_id"> <button type="button" class="btn btn-primary"> <span class="glyphicon glyphicon-pencil"></span> Edit Produk </button></a> -->
+                        <!-- <a href="<?php echo base_url();?>/page/edit_product/" id="pro_id"> <button type="button" class="btn btn-primary"> <span class="glyphicon glyphicon-pencil"></span> Edit Produk </button></a> -->
                         </a>
                         </div>
                     </div>
@@ -266,7 +266,7 @@ $('button#delete').click(function(event) {
     var product_id = $(this).prev().val();
     /*alert(product_id);*/
     $.ajax({
-        url: '<?php echo base_url(); ?>index.php/Page/Delete_Product',
+        url: '<?php echo base_url(); ?>Page/Delete_Product',
         type: 'post',
         data: {
             id: product_id
@@ -278,7 +278,7 @@ $('button#delete').click(function(event) {
                 }, 001);
 
                 
-                // $('body').load('<?php echo base_url(); ?>index.php/Page');
+                // $('body').load('<?php echo base_url(); ?>Page');
                 // $("#opencart").attr('class', "dropdown open");
                 // $("#openexpanded").attr('aria-expanded', "true");
             } else {
@@ -292,7 +292,7 @@ $("button#deleteapp").click(function(event) {
     //alert(product_id);
     if (product_id != "") {
         $.ajax({
-            url: "<?php echo base_url()?>index.php/Admin/CariPending",
+            url: "<?php echo base_url()?>Admin/CariPending",
             type: 'post',
             data: {
                 id: product_id,
@@ -314,7 +314,7 @@ $("button#showaccept").click(function(event) {
     //alert(product_id);
     if (product_id != "") {
         $.ajax({
-            url: "<?php echo base_url()?>index.php/Admin/CariPending",
+            url: "<?php echo base_url()?>Admin/CariPending",
             type: 'post',
             data: {
                 id: product_id,
@@ -336,7 +336,7 @@ $('button#AcceptApp').click(function(event) {
     var stats = 2;
  /*   alert(product_order);*/
     $.ajax({
-        url: '<?php echo base_url(); ?>index.php/Admin/ChangePending',
+        url: '<?php echo base_url(); ?>Admin/ChangePending',
         type: 'post',
         data: {
             id : product_id,
@@ -347,7 +347,7 @@ $('button#AcceptApp').click(function(event) {
                 setTimeout(function() { // wait for 5 secs(2)
                     location.reload(); // then reload the page.(3)
                 }, 001);
-                // $('body').load('<?php echo base_url(); ?>index.php/Page');
+                // $('body').load('<?php echo base_url(); ?>Page');
                 // $("#opencart").attr('class', "dropdown open");
                 // $("#openexpanded").attr('aria-expanded', "true");
             } else {
@@ -361,7 +361,7 @@ $('button#Accept').click(function(event) {
     var stats = 1;
  /*   alert(product_order);*/
     $.ajax({
-        url: '<?php echo base_url(); ?>index.php/Admin/ChangePending',
+        url: '<?php echo base_url(); ?>Admin/ChangePending',
         type: 'post',
         data: {
             id : product_id,
@@ -372,7 +372,7 @@ $('button#Accept').click(function(event) {
                 setTimeout(function() { // wait for 5 secs(2)
                     location.reload(); // then reload the page.(3)
                 }, 001);
-                // $('body').load('<?php echo base_url(); ?>index.php/Page');
+                // $('body').load('<?php echo base_url(); ?>Page');
                 // $("#opencart").attr('class', "dropdown open");
                 // $("#openexpanded").attr('aria-expanded', "true");
             } else {
@@ -386,14 +386,14 @@ $("button#quickview").click(function(event) {
     // alert(product_id);
     if (product_id != "") {
         $.ajax({
-            url: "<?php echo base_url()?>index.php/Progress/CariProduk",
+            url: "<?php echo base_url()?>Progress/CariProduk",
             type: 'post',
             data: {
                 id: product_id
             },
             success: function(e) {
                 var data = e.split("|");
-                $('#pro_id').attr('href', '<?php echo base_url()?>index.php/Page/edit_product/' + data[0]);
+                $('#pro_id').attr('href', '<?php echo base_url()?>Page/edit_product/' + data[0]);
                 $('#pro_name').html(data[1]);
                 $('#pro_stock').html(data[2]);
                 $('#pro_price').html('Rp. ' + data[3]);
@@ -416,7 +416,7 @@ $("button#trash").click(function(event) {
     // alert(product_id);
     if (product_id != "") {
         $.ajax({
-            url: "<?php echo base_url()?>index.php/Progress/GetProduk",
+            url: "<?php echo base_url()?>Progress/GetProduk",
             type: 'post',
             data: {
                 id: product_id

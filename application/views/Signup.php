@@ -40,7 +40,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 '.$notif.'
             </div>';
        		 } ?>
-				<form action="<?php echo base_url(); ?>index.php/Auth/Register" method="post" enctype="multipart/form-data">
+				<form action="<?php echo base_url(); ?>Auth/Register" method="post" enctype="multipart/form-data">
 					<input type="text" name="username" placeholder="Enter your Username" required="">
 					<input type="text" name="email" placeholder="Enter your Email" required="">
 					<input type="text" name="telp" placeholder="Enter your Phone Number" required="">
@@ -61,7 +61,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<input type="submit" name="submit" value="Sign up">														
 				</form>
 				<div class="sign-down">
-				<h4>Already have an account? <a href="<?php echo base_url(); ?>index.php/Auth/Login"> Login here.</a></h4>
+				<h4>Already have an account? <a href="<?php echo base_url(); ?>Auth/Login"> Login here.</a></h4>
 
 				<h4>Or sign up with </h4>
 				<div class="login-icons">
