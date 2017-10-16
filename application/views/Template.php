@@ -97,7 +97,55 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         });
     </script>
 <!--geo chart-->
-
+<script type="text/javascript">
+  function unseen_notification() {
+          var view = 'view';
+    
+            $.ajax({
+        url:"<?php echo base_url(); ?>progress/unseen_notification",
+        method:"POST",
+        data:{view:view},
+        // dataType:"json",
+        success:function(e){
+          var data = e.split("|");
+          // alert(data);
+          $('ul#mininotif').html(data[0]);
+          if (data[1] == '0') {
+                        $('#amountNotifikasi').addClass('hidden');
+                       }
+                  else{
+                          $('#amountNotifikasi').removeClass('hidden'); 
+                       }
+          $('#amountNotifikasi').html(data[1]);
+        }
+      });
+        }
+    
+        function mini_status() {
+          var view = 'view';
+    
+            $.ajax({
+        url:"<?php echo base_url(); ?>progress/mini_status",
+        method:"POST",
+        data:{view:view},
+        // dataType:"json",
+        success:function(e){
+          var data = e.split("|");
+          // alert(data);
+          $('ul#ministatus').html(data[0]);
+          if (data[1] == '0') {
+                        $('#amountOrder').addClass('hidden');
+                       }
+                  else{
+                          $('#amountOrder').removeClass('hidden');  
+                       }
+          $('#amountOrder').html(data[1]);
+        }
+      });
+        }
+            window.onload = unseen_notification;
+    window.onload = mini_status;
+</script>
 <!--skycons-icons-->
 <script src="<?php echo base_url() ?>assets/js/skycons.js"></script>
 <!--//skycons-icons-->
@@ -172,26 +220,19 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </ul>
                   </li> -->
                   <li class="dropdown head-dpdn">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-bell"></i><span class="badge"><?php echo $trans;?></span></a>
-                    <ul class="dropdown-menu">
-                      <li>
-                        <div class="notification_header">
-                          <h3>You have <?php echo $trans;?> new notification</h3>
-                        </div>
-                      </li>
-                      <li><a href="#">
-                        <div class="user_img"><img src="images/p5.png" alt=""></div>
-                         <div class="notification_desc">
-                        <p>Ada pemesanan dari <span>ADMIN</span></p>
-                        <p><span>1 hour ago</span></p>
-                        </div>
-                        <div class="clearfix"></div>  
-                       </a></li>    
-                       <li>
-                        <div class="notification_bottom">
-                          <a href="<?php echo base_url();?>Progress/transaction">See all notifications</a>
-                        </div> 
-                      </li>
+                    <a href="#" class="dropdown-toggle notification_null" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-bell"></i><span class="badge" id="amountNotifikasi"> </span></a>
+                    <ul class="dropdown-menu" id="mininotif">
+                      
+                         
+                       
+                    </ul>
+                  </li> 
+                  <li class="dropdown head-dpdn">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-cart-arrow-down" style="color:#6F6F6F"></i><span class="badge" id="amountOrder"> </span></a>
+                    <ul class="dropdown-menu" id="ministatus">
+                      
+                         
+                       
                     </ul>
                   </li> 
                   <!-- <li class="dropdown head-dpdn">
@@ -322,12 +363,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <li><a href="<?php echo base_url(); ?>Admin/ProductPending">Produk Pending </a></li>                
               </ul>
             </li>
-            <li id="menu-comunicacao" ><a href="<?php echo base_url(); ?>Admin/List_Merchant" title="Feedback"><i class="fa fa-user"></i><span>User </span><span class="fa fa-angle-right" style="float: right"></span></a>
-            <ul>
-                <li><a href="<?php echo base_url(); ?>Admin/List_Merchant">Merchant <span class="badge"><?php echo $CMerchant; ?></span></a></li>
-                <li><a href="<?php echo base_url(); ?>Admin/List_Buyer">Pembeli <span class="badge"><?php echo $CBuyer; ?></span></a></li>                
-              </ul>
-            </li>
+          
             <li><a href="<?php echo base_url(); ?>Admin/Transaction_Masuk"><i class="fa fa-cart-arrow-down" title="Transaction"></i><span>Transaksi
             </span><span class="fa fa-angle-right" style="float: right"></span></a>
               <ul>
@@ -359,9 +395,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                   <li id="menu-academico-boletim" ><a href="inbox-details.html">Send email</a></li>
                  </ul>
             </li> -->
-            <li id="menu-comunicacao" ><a href="<?php echo base_url(); ?>Admin/Discussion" title="Discussion"><i class="fa fa-comments"></i><span>Diskusi  </span><span class="badge">1</span></a></li>
-            <li id="menu-comunicacao" ><a href="<?php echo base_url(); ?>Admin/Feedback" title="Feedback"><i class="fa fa-arrow-circle-down"></i><span>Feedback</span></a></li>
+            <li id="menu-comunicacao" ><a href="<?php echo base_url(); ?>Admin/Discussion" title="Discussion"><i class="fa fa-comments"></i><span>Diskusi  </span></a></li>
             <li id="menu-comunicacao" ><a href="<?php echo base_url(); ?>Admin/Broadcast" title="Broadcast"><i class="fa fa-bullhorn"></i><span>Broadcast</span></a></li>
+            <li id="menu-comunicacao" ><a href="<?php echo base_url(); ?>Admin/Config" title="Config"><i class="fa fa-cog"></i><span>Config</span></a></li>
 
           </ul>
         </div>
@@ -405,8 +441,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                  </ul>
             </li>  -->
             <li id="menu-comunicacao" ><a href="<?php echo base_url(); ?>progress/discussion" title="Discussion"><i class="fa fa-comments"></i><span>Diskusi</span><span class="badge">1</span></a></li>
-            <li id="menu-comunicacao" ><a href="<?php echo base_url(); ?>progress/feedback" title="Feedback"><i class="fa fa-arrow-circle-down"></i><span>Feedback</span></a></li>
-
+          
           </ul>
         </div>
    </div>
@@ -440,6 +475,9 @@ $(".sidebar-icon").click(function() {
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();   
 });
+
+setInterval(function(){ unseen_notification() }, 3000);
+setInterval(function(){ mini_status() }, 3000);
 </script>
 <!--scrolling js-->
     <script src="<?php echo base_url(); ?>assets/js/jquery.nicescroll.js"></script>
@@ -447,5 +485,31 @@ $(document).ready(function(){
     <!--//scrolling js-->
 <script src="<?php echo base_url(); ?>assets/js/bootstrap.js"> </script>
 <!-- mother grid end here-->
+<script type="text/javascript">
+  $('.notification_null').click(function(event) {
+        var view = 'notification_null';
+                       // $('#amountNotifikasi').html('');
+
+            $.ajax({
+                    url: '<?php echo base_url(); ?>Progress/unseen_notification',
+                    type: 'post',
+                    data: {view : view},
+                    success: function(e){
+                       if (e == '0') {
+                        $('#amountNotifikasi').addClass('hidden');
+                       }
+                       else{
+                          $('#amountNotifikasi').removeClass('hidden'); 
+                       }
+                       $('#amountNotifikasi').html(e);
+
+                       // unseen_notification();
+                    }
+                });
+             
+          });
+
+
+</script>
 </body>
 </html>      

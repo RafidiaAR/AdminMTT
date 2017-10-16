@@ -3,6 +3,52 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Product_model extends CI_Model {
 
+    public function notification(){
+      $user_id = $this->session->userdata('logged_id');
+      return $this->db->where('for_id',$user_id)
+              ->order_by('id_notification')
+               ->or_where('for_id','0920')
+              ->or_where('for_id','0922')
+              // ->limit(5,0)
+              ->get('notification')
+              ->result();
+    }
+    public function unseen_notification(){
+      $user_id = $this->session->userdata('logged_id');
+      return $this->db->where('for_id',$user_id)
+     
+
+              ->where('status','0')
+              ->order_by('id_notification')
+              ->get('notification')
+              ->result();
+    }
+    public function edit_slide($foto){
+        $code = $this->input->post('type');
+        $this->db->where(['code'=>$code])->update('config', array(
+           
+            'value'     => $foto['file_name'],
+        ));
+        if ($this->db->affected_rows() > 0) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+        }
+    public function nullNotification(){
+        $userid = $this->session->userdata('logged_id');
+        $this->db->where('for_id',$userid)
+
+                 ->where('status','0')
+                 ->update('notification', array('status' => '1'));
+
+
+        if ($this->db->affected_rows() > 0) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
 	public function add_product($foto){
         if($this->session->userdata('level') == 1 )
         {
@@ -52,6 +98,22 @@ class Product_model extends CI_Model {
 
         }
     }
+    public function add_broadcast(){
+
+            $this->db->insert('notification', array(
+            'from_id'   => $this->session->userdata('logged_id'),
+            'for_id'   => $this->input->post('for_id'),
+            'subject'   => $this->input->post('subject'),
+            'text'   => $this->input->post('text'),
+            'type_notification'   => 'Broadcast',
+        ));
+        if ($this->db->affected_rows() > 0) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+        }
+    
     public function GetDataPending($where)
     {
         return $this->db->select('*, product.id as id_product, product.name as product_name')
@@ -87,6 +149,7 @@ class Product_model extends CI_Model {
             return FALSE;
         }
     }
+
     public function product($where){
     return $this->db->select('*, product.name as product_name, user_merchant.name as merchant_name, product.id as pro_id, product_order_detail.merchant_id as merchant_detail')
                     ->where($where)
@@ -487,6 +550,21 @@ class Product_model extends CI_Model {
                     ->join('user_merchant', 'product.merchant_id = user_merchant.id')
                     ->get('product')
                     ->row();
+    }
+     public function GetMiniStatus()
+    {
+      $user_id = $this->session->userdata('logged_id');
+      return $this->db->select('*, product_order.id as product_order_id, product_order_detail.id as product_order_detail_id, product_order.status as status_order, product_order_detail.status as status_order_detail')
+            ->from('product_order')
+            ->where('product_order_detail.merchant_id',$user_id)
+            ->where('product_order_detail.status','Proses Kirim')
+            ->or_where('product_order_detail.merchant_id',$user_id)
+            ->where('product_order_detail.status','Pesanan ditujukan ke Merchant')
+            ->join('product_order_detail', 'product_order.id = product_order_detail.order_id')
+            ->order_by('product_order_detail.last_update', 'DESC')
+            ->get()
+            ->result();
+            
     }
 
     public function GetAllData($table)

@@ -1265,14 +1265,15 @@ class Admin extends CI_Controller {
 			redirect('Auth');
 		}
 	}
-	public function feedback()
-	{
-		if ($this->session->userdata('logged_in') == TRUE) {
-			if($this->session->userdata('leveluser') == 1){
+
+	public function config(){
+		if($this->session->userdata('leveluser') == 1){
 				$leveluser = 'Administrator';
 			}else{
 				$leveluser = 'Merchant';
 			}
+			$id 				= $this->session->userdata('logged_id');
+			
 			$id 				= $this->session->userdata('logged_id');
 			$masuk				= "Pesanan ditujukan ke Merchant";
 			$Selesai 			= "Selesai";
@@ -1282,9 +1283,9 @@ class Admin extends CI_Controller {
 			$Count_Product = $this->Product_model->CountProductMerchant(array("product.merchant_id" => $id));
 			$bill = array('bill.status' => 'Tagihkan Ke Admin');
 			$end = array('bill.status' => 'Penagihan Selesai');
-			$data 				= 
+		$data = 
 			[
-				'Confirm'		=> $this->Product_model->Count_OrderMerchant(),
+			'Confirm'		=> $this->Product_model->Count_OrderMerchant(),
 				'Sent'			=> $this->Product_model->Count_OrderSent(),
 				'Finish'		=> $this->Product_model->Count_OrderFinish(),
 				'Cancel'		=> $this->Product_model->Count_OrderCancel(),
@@ -1300,15 +1301,49 @@ class Admin extends CI_Controller {
 				'username'	=> $record->username,
 				'trans'		=> $trans,
 				'feedback'	=> $feedback,
-				'main_view'	=> 'feedback',
-				'nameAccess'	=> $leveluser
-			];
+				
+				'nameAccess'	=> $leveluser,
+			'slide1' => $this->Product_model->GetDataa(array("code" => "SLIDE1") , 'config')->row('value'),
+			'slide2' => $this->Product_model->GetDataa(array("code" => "SLIDE2") , 'config')->row('value'),
+			'slide3' => $this->Product_model->GetDataa(array("code" => "SLIDE3") , 'config')->row('value'),
+			'main_view' => 'config',
+		];
 			$this->load->view('template', $data);
-		}
-		else {
-			redirect('Auth');
-		}
 	}
+	public function changeslide(){
+			if ($this->session->userdata('logged_in') == true) {
+      
+            // $this->form_validation->set_rules('last_update', 'Data Tanggal', 'trim|required');
+
+                $config['upload_path'] = './assets/images';
+                $config['allowed_types'] = 'jpg|png';
+                $config['max_size']  = '2000';
+                
+                $this->load->library('upload', $config);
+                $this->upload->initialize($config);
+                if ($this->upload->do_upload('fotoslide')){
+            
+                  if ($this->Product_model->edit_slide($this->upload->data()) == TRUE) {
+                        // jika sukses
+                        $this->session->set_flashdata('notif', 'Selamat, Edit slide anda berhasil');
+                        redirect('Admin/Config');
+                    } else {
+                        $this->session->set_flashdata('notif', 'Maaf, Edit Slide anda gagal');
+                        redirect('Admin/Config');
+                    }
+            
+        }
+            else {
+            	$notif = $this->upload->display_errors();
+                $this->session->set_flashdata('notif',  $notif);
+                        redirect('Admin/Config');
+             } 
+            
+    }else {
+        redirect('Admin');
+    }
+	}
+	
 	public function DetailTagihan()
 	{
 		$id= $this->uri->segment(3);
@@ -1320,6 +1355,42 @@ class Admin extends CI_Controller {
 		];
 		$this->load->view('Print',$data);
 	}
+	public function Broadcast_in(){
+		if ($this->input->post('submit')) {
+
+			# code...
+		}
+		$this->form_validation->set_rules('for_id', 'Penerima', 'trim|required');
+		$this->form_validation->set_rules('subject', 'Subject', 'trim|required');
+		$this->form_validation->set_rules('text', 'Message', 'trim|required');
+				
+		if ($this->session->userdata('logged_in') == TRUE) {
+		
+
+			
+if ($this->form_validation->run() == TRUE) {
+				
+if ($this->Product_model->add_broadcast() == TRUE) {
+$this->session->set_flashdata('notif', 'Selamat, proses broadcast anda berhasil');
+						redirect('Admin/Broadcast');
+}
+						else {
+$this->session->set_flashdata('notif', 'Maaf, proses broadcast anda gagal');
+     
+						redirect('Admin/Broadcast');
+}
+
+}
+else{
+$this->session->set_flashdata('notif', validation_errors());
+       	
+	redirect('Admin/Broadcast');
+}
+		
+	} else{
+		redirect('Admin','refresh');
+	}
+}
 	public function DetailTransaction()
 	{
 		$id= $this->uri->segment(3);
