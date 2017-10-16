@@ -22,9 +22,13 @@ class Progress extends CI_Controller
 		}
 	}
 	public function unseen_notification(){
+<<<<<<< HEAD
 		if($this->session->userdata('logged_in') == TRUE)
 		{
 			$view = $this->input->post('view');
+=======
+		$view = $this->input->post('view');
+>>>>>>> origin/master
 		if ($view == 'view') {
 			$output = '';
 			$result=$this->Product_model->notification();
@@ -119,6 +123,7 @@ class Progress extends CI_Controller
 					}
 			echo $count;
 		}
+<<<<<<< HEAD
 		}
 		else{
 			redirect('Auth');
@@ -130,6 +135,12 @@ class Progress extends CI_Controller
 		if($this->session->userdata('logged_in') == TRUE)
 		{
 			$view = $this->input->post('view');
+=======
+		
+	}
+	public function mini_status(){
+		$view = $this->input->post('view');
+>>>>>>> origin/master
 		if ($view == 'view') {
 			$output = '';
 			$count = 0;	
@@ -226,10 +237,15 @@ class Progress extends CI_Controller
 			echo $output.'|'.$count;
 
 		}
+<<<<<<< HEAD
 		}
 		else{
 			redirect('Auth');
 		}
+=======
+		
+		
+>>>>>>> origin/master
 	}
 	public function add_product()
 	{
@@ -488,11 +504,14 @@ class Progress extends CI_Controller
 				'nameAccess'	=> $leveluser
 			];
 			$this->load->view('template', $data);
+<<<<<<< HEAD
 		}
 		else{
 			redirect('Auth');
 		}
 		
+=======
+>>>>>>> origin/master
 	}
 
 	

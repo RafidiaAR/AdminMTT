@@ -1312,9 +1312,13 @@ public function index()
 	}
 
 	public function config(){
+<<<<<<< HEAD
 		if($this->session->userdata('logged_in') == TRUE)
 		{
 			if($this->session->userdata('leveluser') == 1){
+=======
+		if($this->session->userdata('leveluser') == 1){
+>>>>>>> origin/master
 				$leveluser = 'Administrator';
 			}else{
 				$leveluser = 'Merchant';
@@ -1356,11 +1360,14 @@ public function index()
 			'main_view' => 'config',
 		];
 			$this->load->view('template', $data);
+<<<<<<< HEAD
 		}
 		else{
 			redirect('Auth');
 		}
 
+=======
+>>>>>>> origin/master
 	}
 	public function changeslide(){
 			if ($this->session->userdata('logged_in') == true) {
@@ -1440,6 +1447,42 @@ public function index()
 		redirect('Admin','refresh');
 	}
 	}
+	public function Broadcast_in(){
+		if ($this->input->post('submit')) {
+
+			# code...
+		}
+		$this->form_validation->set_rules('for_id', 'Penerima', 'trim|required');
+		$this->form_validation->set_rules('subject', 'Subject', 'trim|required');
+		$this->form_validation->set_rules('text', 'Message', 'trim|required');
+				
+		if ($this->session->userdata('logged_in') == TRUE) {
+		
+
+			
+if ($this->form_validation->run() == TRUE) {
+				
+if ($this->Product_model->add_broadcast() == TRUE) {
+$this->session->set_flashdata('notif', 'Selamat, proses broadcast anda berhasil');
+						redirect('Admin/Broadcast');
+}
+						else {
+$this->session->set_flashdata('notif', 'Maaf, proses broadcast anda gagal');
+     
+						redirect('Admin/Broadcast');
+}
+
+}
+else{
+$this->session->set_flashdata('notif', validation_errors());
+       	
+	redirect('Admin/Broadcast');
+}
+		
+	} else{
+		redirect('Admin','refresh');
+	}
+}
 	public function DetailTransaction()
 	{
 		if($this->session->userdata('logged_in') == TRUE)
